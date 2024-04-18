@@ -211,8 +211,7 @@ export function Header() {
           </SheetContent>
         </Sheet>
         <a href="/" className="mr-6 flex items-center space-x-2 md:hidden">
-          <Icons.logo className="h-6 w-6" />
-          <span className="font-bold inline-block">{appConfig.name}</span>
+          <Logo />
         </a>
         {/* right */}
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
@@ -246,9 +245,9 @@ export function Header() {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="relative  h-8 w-8 rounded-full"
+                  className="relativeh-8 w-8 rounded-full"
                 >
-                  <Avatar className="h-8 bg-zinc-950 w-8">
+                  <Avatar  className="h-8 w-8">
                     <AvatarFallback>GL</AvatarFallback>
                   </Avatar>
                 </Button>

@@ -19,6 +19,15 @@ export const mainMenu: NavItemWithChildren[] = [
     title: "Clusters",
     to: "",
   },
+  {
+    title: "Profiles",
+    to: "cluster-profiles",
+  },
+  {
+    title: "Labels",
+    to: "labels",
+  },
+
 ];
 
 export const sideMenu: NavItemWithChildren[] = [];

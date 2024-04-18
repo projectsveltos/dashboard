@@ -27,7 +27,6 @@ export const mainMenu: NavItemWithChildren[] = [
     title: "Labels",
     to: "labels",
   },
-
 ];
 
 export const sideMenu: NavItemWithChildren[] = [];

@@ -247,7 +247,7 @@ export function Header() {
                   variant="ghost"
                   className="relativeh-8 w-8 rounded-full"
                 >
-                  <Avatar  className="h-8 w-8">
+                  <Avatar className="h-8 w-8">
                     <AvatarFallback>GL</AvatarFallback>
                   </Avatar>
                 </Button>

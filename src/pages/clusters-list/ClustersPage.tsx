@@ -1,10 +1,4 @@
 import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Pagination,
   PaginationContent,
   PaginationEllipsis,
@@ -15,6 +9,8 @@ import {
 } from "@/components/ui/pagination";
 import { CardsFilterToolbar } from "@/pages/clusters-list/components/CardsFilterToolbar";
 import { ClusterCard } from "@/pages/clusters-list/components/ClusterCard";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Icons } from "@/components/icons";
 
 export default function ClustersPage() {
   const dummyClusterData = [
@@ -22,14 +18,15 @@ export default function ClustersPage() {
       name: "Cluster 1",
       version: "v1.22.3",
       namespace: "namespace1",
+      type: "clusterAPI",
       status: true,
       labels: [
         {
-          designation: "production",
+          designation: "env:production",
           color: "red",
         },
         {
-          designation: "devp1",
+          designation: "euw:devp1",
           color: "green",
         },
       ],
@@ -37,15 +34,16 @@ export default function ClustersPage() {
     {
       name: "Cluster 2",
       version: "v1.20.7",
+      type: "sveltosCluster",
       namespace: "namespace2",
       status: true,
       labels: [
         {
-          designation: "devp2",
+          designation: "ru:devp2",
           color: "amber",
         },
         {
-          designation: "engineering",
+          designation: "env:engi",
           color: "purple",
         },
       ],
@@ -53,15 +51,16 @@ export default function ClustersPage() {
     {
       name: "Cluster 2",
       version: "v1.20.7",
+      type: "clusterAPI",
       namespace: "namespace2",
       status: false,
       labels: [
         {
-          designation: "development",
+          designation: "weu:development",
           color: "yellow",
         },
         {
-          designation: "engineering",
+          designation: "env:eng",
           color: "purple",
         },
       ],
@@ -69,15 +68,16 @@ export default function ClustersPage() {
     {
       name: "Cluster 2",
       version: "v1.20.7",
+      type: "clusterAPI",
       namespace: "namespace2",
       status: true,
       labels: [
         {
-          designation: "development",
+          designation: "env:development",
           color: "yellow",
         },
         {
-          designation: "engineering",
+          designation: "euw:engineering",
           color: "purple",
         },
       ],
@@ -85,15 +85,33 @@ export default function ClustersPage() {
     {
       name: "Cluster 2",
       version: "v1.20.7",
+      type: "sveltosCluster",
       namespace: "namespace2",
       status: true,
       labels: [
         {
-          designation: "development",
+          designation: "env:development",
           color: "yellow",
         },
         {
-          designation: "engineering",
+          designation: "env:eng",
+          color: "purple",
+        },
+      ],
+    },
+    {
+      name: "Cluster 2",
+      type: "sveltosCluster",
+      version: "v1.20.7",
+      namespace: "namespace2",
+      status: false,
+      labels: [
+        {
+          designation: "euw:development",
+          color: "yellow",
+        },
+        {
+          designation: "euw:engineering",
           color: "purple",
         },
       ],
@@ -101,47 +119,33 @@ export default function ClustersPage() {
     {
       name: "Cluster 2",
       version: "v1.20.7",
+      type: "clusterAPI",
       namespace: "namespace2",
       status: false,
       labels: [
         {
-          designation: "development",
-          color: "yellow",
-        },
-        {
-          designation: "engineering",
-          color: "purple",
-        },
-      ],
-    },
-    {
-      name: "Cluster 2",
-      version: "v1.20.7",
-      namespace: "namespace2",
-      status: false,
-      labels: [
-        {
-          designation: "development",
+          designation: "euw:par1",
           color: "amber",
         },
         {
-          designation: "engineering",
+          designation: "euw:par2",
           color: "purple",
         },
       ],
     },
     {
-      name: "Cluster 3",
+      name: "Cluster 78",
       version: "v1.21.5",
+      type: "sveltosCluster",
       namespace: "namespace3",
       status: true,
       labels: [
         {
-          designation: "staging",
+          designation: "env:staging",
           color: "orange",
         },
         {
-          designation: "qa",
+          designation: "na:qa",
           color: "red",
         },
       ],
@@ -158,7 +162,6 @@ export default function ClustersPage() {
               You can view all clusters,retry failed deployments, and find
               troubleshooting guides for any cluster.
               <a href="#" className="text-main-500 hover:text-main-800">
-                {" "}
                 Retry
               </a>{" "}
               or{" "}
@@ -173,6 +176,16 @@ export default function ClustersPage() {
           </div>
           <CardsFilterToolbar />
         </div>
+        <Tabs defaultValue="account" className="w-[400px]">
+          <TabsList>
+            <TabsTrigger value="account">
+              <Icons.k8s /> SveltosAPI
+            </TabsTrigger>
+            <TabsTrigger value="password">
+              <Icons.clusterAPI /> ClusterAPI
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
         <div className="flex flex-wrap">
           {dummyClusterData.map((cluster) => (
             <div key={cluster.name} className="w-full md:w-1/2 p-2">

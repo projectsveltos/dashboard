@@ -1,3 +1,4 @@
+import { Icons } from "@/components/icons";
 import {
   AvatarRectangle,
   AvatarRectFallback,
@@ -9,7 +10,7 @@ export const FailedFlag = () => {
     <>
       <AvatarRectangle className="h-9 w-9">
         <AvatarRectFallback className={"bg-red-600 text-white"}>
-          <FlagOff className={"h-6 w-6"} />
+          <Icons.k8s className={"h-6 w-6"} />
         </AvatarRectFallback>
       </AvatarRectangle>
     </>

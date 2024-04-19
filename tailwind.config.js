@@ -22,6 +22,10 @@ module.exports = {
           500: "#4470B4",
           800: "#234f93",
         },
+        k8s: {
+          500: "#326CE5",
+          800: "#1A4BAF",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

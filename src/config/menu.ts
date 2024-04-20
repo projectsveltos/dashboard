@@ -17,15 +17,17 @@ interface NavItemWithChildren extends NavItem {
 export const mainMenu: NavItemWithChildren[] = [
   {
     title: "Clusters",
-    to: "/",
+    to: "/clusters",
   },
   {
     title: "Profiles",
     to: "cluster-profiles",
+    disabled: true,
   },
   {
     title: "Labels",
     to: "labels",
+    disabled: true,
   },
 ];
 

@@ -12,9 +12,10 @@ export const CardsFilterToolbar = () => {
         <div className="flex items-center justify-between">
           <div className="flex flex-1 items-center space-x-2">
             <Input
-              placeholder="Filter..."
+              placeholder="Filter... "
               className="h-8 w-[150px] lg:w-[250px]"
             />
+
             <CardsFacetedFilter
               title={"Labels"}
               options={[

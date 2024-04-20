@@ -10,7 +10,9 @@ import {
 import { ClusterCard } from "@/pages/clusters-list/components/ClusterCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeading } from "@/components/ui/PageHeading";
-import { appConfig } from "@/config/app";
+import { appConfig, clusterType } from "@/config/app";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function ClustersPage() {
   const dummyClusterData = [
@@ -151,6 +153,20 @@ export default function ClustersPage() {
       ],
     },
   ];
+  const navigate = useNavigate();
+  const defaultTab = appConfig.defaultType;
+  const { tab: urlTab, page: urlPage } = useParams();
+  const [currentTab, setCurrentTab] = useState<clusterType>(() => {
+    return urlTab ? (urlTab as clusterType) : defaultTab;
+  });
+
+  const [currentPage, setCurrentPage] = useState<number>(() => {
+    return urlPage ? parseInt(urlPage) : 0;
+  });
+
+  const handleTabChange = (value: clusterType) => {
+    navigate(`/clusters/${value}/${currentPage}`);
+  };
 
   return (
     <>
@@ -162,7 +178,13 @@ export default function ClustersPage() {
         }
       />
       <div className="mt-5 ">
-        <Tabs defaultValue={appConfig.sveltosType} className="w-[400px]">
+        <Tabs
+          defaultValue={currentTab}
+          className="w-[400px]"
+          onValueChange={(value) =>
+            handleTabChange(value as unknown as clusterType)
+          }
+        >
           <TabsList>
             <TabsTrigger value={appConfig.sveltosType}>SveltosAPI</TabsTrigger>
             <TabsTrigger value={appConfig.clusterAPIType}>

@@ -5,7 +5,8 @@ import { Applayout } from "./components/layouts/AppLayout";
 import NoMatch from "./pages/errors/NoMatch";
 import ClustersPage from "./pages/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
-
+const defaultTab = appConfig.sveltosType;
+const defaultPage = appConfig.defaultPage;
 export const router = createBrowserRouter(
   [
     {
@@ -14,11 +15,11 @@ export const router = createBrowserRouter(
       children: [
         {
           path: "/",
-          element: <Navigate to={`/clusters/${appConfig.sveltosType}/0`} />, // Redirect to default tab route
+          element: <Navigate to={`/clusters/${defaultTab}/${defaultPage}`} />,
         },
         {
           path: "/clusters",
-          element: <Navigate to={`/clusters/${appConfig.sveltosType}/0`} />, // Redirect to default tab route
+          element: <Navigate to={`/clusters/${defaultTab}/${defaultPage}`} />,
         },
         {
           path: "/clusters/:tab/:pageNumber",

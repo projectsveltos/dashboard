@@ -8,6 +8,7 @@ interface AppConfig {
   sveltosType: clusterType;
   clusterAPIType: clusterType;
   defaultType: clusterType;
+  defaultPage: number;
 }
 
 export const appConfig: AppConfig = {
@@ -19,4 +20,5 @@ export const appConfig: AppConfig = {
   sveltosType: "SveltosAPI",
   clusterAPIType: "ClusterAPI",
   defaultType: "SveltosAPI",
+  defaultPage: 0,
 };

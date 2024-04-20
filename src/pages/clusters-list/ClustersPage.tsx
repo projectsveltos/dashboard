@@ -155,13 +155,14 @@ export default function ClustersPage() {
   ];
   const navigate = useNavigate();
   const defaultTab = appConfig.defaultType;
+  const defaultPage = appConfig.defaultPage;
   const { tab: urlTab, page: urlPage } = useParams();
   const [currentTab, setCurrentTab] = useState<clusterType>(() => {
     return urlTab ? (urlTab as clusterType) : defaultTab;
   });
 
   const [currentPage, setCurrentPage] = useState<number>(() => {
-    return urlPage ? parseInt(urlPage) : 0;
+    return urlPage ? parseInt(urlPage) : defaultPage;
   });
 
   const handleTabChange = (value: clusterType) => {

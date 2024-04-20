@@ -1,14 +1,14 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-import { ReadyFlag } from "@/pages/clusters-list/components/flags/ReadyFlag";
-import { FailedFlag } from "@/pages/clusters-list/components/flags/FailedFlag";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { ReadyFlag } from "@/components/ui/ready-flag";
+import { FailedFlag } from "@/components/ui/failed-flag";
 
 interface ClusterCardProps {
   name: string;
@@ -30,7 +30,11 @@ export const ClusterCard = ({
 }: ClusterCardProps) => {
   return (
     <>
-      <Card className={"hover:bg-gray-100 hover:cursor-pointer"}>
+      <Card
+        className={
+          "hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer"
+        }
+      >
         <TooltipProvider>
           <div className=" flex items-center space-x-4 rounded-md  p-4">
             {status ? <ReadyFlag /> : <FailedFlag />}

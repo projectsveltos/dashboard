@@ -4,6 +4,8 @@ interface AppConfig {
     title: string;
     url: string;
   };
+  sveltosType: string;
+  clusterAPIType: string;
 }
 
 export const appConfig: AppConfig = {
@@ -12,4 +14,6 @@ export const appConfig: AppConfig = {
     title: "dashboard",
     url: "https://github.com/projectsveltos/dashboard",
   },
+  sveltosType: "SveltosAPI",
+  clusterAPIType: "ClusterAPI",
 };

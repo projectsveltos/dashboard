@@ -11,6 +11,8 @@ import { CardsFilterToolbar } from "@/pages/clusters-list/components/CardsFilter
 import { ClusterCard } from "@/pages/clusters-list/components/ClusterCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Icons } from "@/components/icons";
+import { PageHeading } from "@/components/ui/PageHeading";
+import { appConfig } from "@/config/app";
 
 export default function ClustersPage() {
   const dummyClusterData = [
@@ -154,39 +156,23 @@ export default function ClustersPage() {
 
   return (
     <>
-      <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <div className="flex items-center justify-between space-y-2">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Clusters</h2>
-            <p className="text-muted-foreground w-2/3">
-              You can view all clusters,retry failed deployments, and find
-              troubleshooting guides for any cluster.
-              <a href="#" className="text-main-500 hover:text-main-800">
-                Retry
-              </a>{" "}
-              or{" "}
-              <a
-                href="https://projectsveltos.github.io/sveltos/"
-                className="text-main-500 hover:text-main-800"
-              >
-                Docs & Troubleshooting
-              </a>
-              .
-            </p>
-          </div>
-          <CardsFilterToolbar />
-        </div>
-        <Tabs defaultValue="account" className="w-[400px]">
+      <PageHeading
+        title={"Clusters"}
+        description={
+          "You can view all clusters,retry failed deployments, and find\n" +
+          "              troubleshooting guides for any cluster."
+        }
+      />
+      <div className="mt-5 ">
+        <Tabs defaultValue={appConfig.sveltosType} className="w-[400px]">
           <TabsList>
-            <TabsTrigger value="account">
-              <Icons.k8s /> SveltosAPI
-            </TabsTrigger>
-            <TabsTrigger value="password">
-              <Icons.clusterAPI /> ClusterAPI
+            <TabsTrigger value={appConfig.sveltosType}>SveltosAPI</TabsTrigger>
+            <TabsTrigger value={appConfig.clusterAPIType}>
+              ClusterAPI
             </TabsTrigger>
           </TabsList>
         </Tabs>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap mb-4 py-4">
           {dummyClusterData.map((cluster) => (
             <div key={cluster.name} className="w-full md:w-1/2 p-2">
               <ClusterCard

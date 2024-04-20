@@ -28,7 +28,7 @@ export const FailedFlag = () => {
         </TooltipTrigger>
         <TooltipContent>
           <div className={"inline-flex items-baseline"}>
-            <AlertCircleIcon />
+            <AlertCircleIcon className={"w-4 h-4 mx-1 mt-1"} />
             <p>Unhealthy</p>
           </div>
         </TooltipContent>

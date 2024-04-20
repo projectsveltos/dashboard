@@ -7,10 +7,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { CardsFilterToolbar } from "@/pages/clusters-list/components/CardsFilterToolbar";
 import { ClusterCard } from "@/pages/clusters-list/components/ClusterCard";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Icons } from "@/components/icons";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { appConfig } from "@/config/app";
 

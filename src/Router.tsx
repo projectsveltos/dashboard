@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import { Applayout } from "./components/layouts/AppLayout";
 
-import NoMatch from "./pages/NoMatch";
+import NoMatch from "./pages/errors/NoMatch";
 import ClustersPage from "./pages/clusters-list/ClustersPage";
 
 export const router = createBrowserRouter(

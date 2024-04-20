@@ -6,7 +6,7 @@ interface NavItem {
   href?: string;
   disabled?: boolean;
   external?: boolean;
-  icon?: keyof typeof Icons;
+  icon?: JSX.Element | string;
   label?: string;
 }
 
@@ -17,7 +17,7 @@ interface NavItemWithChildren extends NavItem {
 export const mainMenu: NavItemWithChildren[] = [
   {
     title: "Clusters",
-    to: "",
+    to: "/",
   },
   {
     title: "Profiles",

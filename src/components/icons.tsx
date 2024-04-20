@@ -1,3 +1,5 @@
+import { Boxes } from "lucide-react";
+
 type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
@@ -72,4 +74,5 @@ export const Icons = {
       </defs>
     </svg>
   ),
+  boxes: (props: IconProps) => <Boxes {...props} />,
 };

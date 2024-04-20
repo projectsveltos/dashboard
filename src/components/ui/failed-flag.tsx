@@ -3,12 +3,7 @@ import {
   AvatarRectangle,
   AvatarRectFallback,
 } from "@/components/ui/avatar-rectangle";
-import {
-  AlertCircle,
-  AlertCircleIcon,
-  FlagOff,
-  MessageSquareWarningIcon,
-} from "lucide-react";
+import { ServerCrash } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
@@ -28,7 +23,7 @@ export const FailedFlag = () => {
         </TooltipTrigger>
         <TooltipContent>
           <div className={"inline-flex items-baseline"}>
-            <AlertCircleIcon className={"w-4 h-4 mx-1 mt-1"} />
+            <ServerCrash className={"w-3 h-3 mx-1 mt-1"} />
             <p>Unhealthy</p>
           </div>
         </TooltipContent>

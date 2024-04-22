@@ -187,9 +187,11 @@ export default function ClustersPage() {
           }
         >
           <TabsList>
-            <TabsTrigger value={appConfig.sveltosType}>SveltosAPI</TabsTrigger>
+            <TabsTrigger value={appConfig.sveltosType}>
+              {appConfig.sveltosType}
+            </TabsTrigger>
             <TabsTrigger value={appConfig.clusterAPIType}>
-              ClusterAPI
+              {appConfig.clusterAPIType}
             </TabsTrigger>
           </TabsList>
         </Tabs>

@@ -1,4 +1,4 @@
-export type clusterType = "SveltosAPI" | "ClusterAPI";
+export type clusterType = "SveltosCluster" | "ClusterAPI";
 interface AppConfig {
   name: string;
   github: {
@@ -17,8 +17,8 @@ export const appConfig: AppConfig = {
     title: "dashboard",
     url: "https://github.com/projectsveltos/dashboard",
   },
-  sveltosType: "SveltosAPI",
+  sveltosType: "SveltosCluster",
   clusterAPIType: "ClusterAPI",
-  defaultType: "SveltosAPI",
+  defaultType: "SveltosCluster",
   defaultPage: 0,
 };

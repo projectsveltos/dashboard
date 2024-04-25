@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Blocks, FileSliders, Upload } from "lucide-react";
+import { FileSliders } from "lucide-react";
 
 export const ClusterConfig = () => {
   return (

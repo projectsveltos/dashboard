@@ -1,5 +1,3 @@
-import { Boxes } from "lucide-react";
-
 type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
@@ -68,8 +66,8 @@ export const Icons = {
           y2="49.4291"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#326DE6" />
-          <stop offset="1" stop-color="#10FFC6" />
+          <stop stopColor="#326DE6" />
+          <stop offset="1" stopColor="#10FFC6" />
         </linearGradient>
       </defs>
     </svg>

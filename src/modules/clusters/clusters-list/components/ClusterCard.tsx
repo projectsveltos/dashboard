@@ -14,7 +14,7 @@ interface ClusterCardProps {
   name: string;
   version: string;
   namespace: string;
-  status: Boolean;
+  status: boolean;
   labels: {
     designation: string;
     color: string;

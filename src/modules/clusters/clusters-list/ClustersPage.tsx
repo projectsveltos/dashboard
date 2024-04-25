@@ -1,19 +1,8 @@
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { PageHeading } from "@/components/ui/PageHeading";
 import { appConfig, clusterType } from "@/config/app";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { ResourceTable } from "@/modules/clusters/cluster-information/components/ResourceTable";
+import { useState } from "react";
+
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
 
 export default function ClustersPage() {

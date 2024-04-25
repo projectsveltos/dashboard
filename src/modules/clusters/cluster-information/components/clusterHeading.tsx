@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { CheckCircle, ChevronLeft, RefreshCcw, XCircle } from "lucide-react";
+import { ChevronLeft, RefreshCcw, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { Icons } from "@/components/icons";
-import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
 
 type ClusterHeadingProps = {
   name: string;

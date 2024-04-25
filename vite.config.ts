@@ -10,13 +10,7 @@ export default defineConfig(({ command }) => {
 
   return {
     base: isProd ? basenameProd : "",
-    plugins: [
-      react(),
-      eslintPlugin({
-        include: ["src/**/*.ts", "src/**/*.tsx"],
-        fix: true,
-      }),
-    ],
+    plugins: [react()],
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),

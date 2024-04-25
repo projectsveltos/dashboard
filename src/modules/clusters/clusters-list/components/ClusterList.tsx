@@ -43,7 +43,7 @@ export const ClusterList = ({
           </TabsList>
         </Tabs>
         <div className="flex flex-wrap mb-4 py-4">
-          {data.map((cluster) => (
+          {data.map((cluster: any) => (
             <div key={cluster.name} className="w-full md:w-1/2 p-2">
               <ClusterCard
                 onClick={() => navigate(`/clusters/${cluster.name}`)}

@@ -1,44 +1,12 @@
-import {
-  Blocks,
-  ChevronLeft,
-  Home,
-  LineChart,
-  Package,
-  Package2,
-  PanelLeft,
-  PlusCircle,
-  Search,
-  Settings,
-  ShoppingCart,
-  Upload,
-  Users2,
-} from "lucide-react";
-
-import { Badge } from "@/components/ui/badge";
-
+import { Blocks } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import { Input } from "@/components/ui/input";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { useNavigate } from "react-router-dom";
 import { ClusterHeading } from "@/modules/clusters/cluster-information/components/clusterHeading";
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
 import { ResourceTable } from "@/modules/clusters/cluster-information/components/ResourceTable";

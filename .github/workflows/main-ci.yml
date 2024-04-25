@@ -22,9 +22,9 @@ jobs:
       - name: Run linting
         run: npm run lint
 
-# Will be added later on
-#      - name: Run tests
-#        run: npm test -- --coverage
+      # Will be added later on
+      #      - name: Run tests
+      #        run: npm test -- --coverage
 
       - name: Build
         run: npm run build

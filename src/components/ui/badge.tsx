@@ -8,6 +8,8 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
+        label:
+          "border-transparent bg-secondary   text-secondary-foreground hover:bg-secondary/80",
         default:
           "border-transparent bg-primary text-primary-foreground hover:bg-primary/80",
         secondary:
@@ -28,8 +30,10 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
+  const isLabelVariant = variant === 'label';
+
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props} />
+    <div className={` ${cn(badgeVariants({ variant }), className)}`}{...props}  style={isLabelVariant ? { maxWidth: '6rem' } : {}} />
   );
 }
 

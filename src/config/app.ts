@@ -1,14 +1,20 @@
-export type clusterType = "SveltosCluster" | "ClusterAPI";
+import {
+  ClusterApiType,
+  ClusterType,
+  SveltosClusterType,
+} from "@/types/cluster";
+import { sveltosClusterValue } from "@/types/cluster.consts";
+
 interface AppConfig {
   name: string;
   github: {
     title: string;
     url: string;
   };
-  sveltosType: clusterType;
-  clusterAPIType: clusterType;
-  defaultType: clusterType;
+  defaultType: ClusterType;
   defaultPage: number;
+  defaultSize: number;
+  maxBadges: number;
 }
 
 export const appConfig: AppConfig = {
@@ -17,8 +23,8 @@ export const appConfig: AppConfig = {
     title: "dashboard",
     url: "https://github.com/projectsveltos/dashboard",
   },
-  sveltosType: "SveltosCluster",
-  clusterAPIType: "ClusterAPI",
-  defaultType: "SveltosCluster",
+  defaultType: sveltosClusterValue,
   defaultPage: 0,
+  defaultSize: 8,
+  maxBadges: 2,
 };

@@ -29,7 +29,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Badge } from "@/components/ui/badge";
+
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -99,7 +99,7 @@ export function Header() {
                     cn(
                       "text-sm font-medium flex items-center transition-colors hover:text-primary",
                       isActive
-                        ? "bg-slate-100 dark:bg-slate-700 p-2 rounded hover:text-main-500 "
+                        ? "bg-slate-100 dark:bg-slate-800 p-2 rounded hover:text-main-500 "
                         : "text-foreground/60 hover:text-primary",
                     )
                   }

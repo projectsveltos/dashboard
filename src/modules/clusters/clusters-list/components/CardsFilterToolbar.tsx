@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
 import { CardsFacetedFilter } from "@/modules/clusters/clusters-list/components/CardsFacetedFilter";
+import { RefreshButton } from "@/components/ui/RefreshButton";
 
 export const CardsFilterToolbar = () => {
   const [isFiltered, setIsFiltered] = useState(false);
@@ -31,6 +32,7 @@ export const CardsFilterToolbar = () => {
                 { label: "Inactive", value: "inactive" },
               ]}
             />
+            <RefreshButton/>
             {isFiltered && (
               <Button variant="ghost" className="h-8 px-2 lg:px-3">
                 Reset

@@ -6,7 +6,7 @@ import NoMatch from "./modules/fallback/NoMatch";
 import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
 import { ClusterInfo } from "@/modules/clusters/cluster-information/ClusterInfo";
-const defaultTab = appConfig.sveltosType;
+const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
 export const router = createBrowserRouter(
   [

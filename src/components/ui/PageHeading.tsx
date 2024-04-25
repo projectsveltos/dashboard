@@ -2,6 +2,7 @@ import { CardsFilterToolbar } from "@/modules/clusters/clusters-list/components/
 interface PageHeadingProps {
   title: string;
   description: string;
+
 }
 export const PageHeading = ({ title, description }: PageHeadingProps) => {
   return (
@@ -12,10 +13,6 @@ export const PageHeading = ({ title, description }: PageHeadingProps) => {
             <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
             <p className="text-muted-foreground w-2/3">
               {description}
-              <a href="#" className="text-main-500 hover:text-main-800">
-                Retry
-              </a>{" "}
-              or{" "}
               <a
                 href="https://projectsveltos.github.io/sveltos/"
                 className="text-main-500 hover:text-main-800"

@@ -4,22 +4,21 @@ import { Badge } from "@/components/ui/badge";
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { ReadyFlag } from "@/components/ui/ready-flag";
 import { FailedFlag } from "@/components/ui/failed-flag";
+import { Label } from "@/types/cluster";
+import { appConfig } from "@/config/app";
 
 interface ClusterCardProps {
   name: string;
-  version: string;
-  namespace: string;
+  version?: string;
+  namespace?: string;
   status: boolean;
-  labels: {
-    designation: string;
-    color: string;
-  }[];
+  labels?: Label[];
   onClick: () => void;
+  failureMsg?: string | null;
 }
 
 export const ClusterCard = ({
@@ -28,8 +27,12 @@ export const ClusterCard = ({
   namespace,
   labels,
   onClick,
+  failureMsg,
   status,
 }: ClusterCardProps) => {
+  const labelEntries = Object.entries(labels || {});
+  const displayEntries = labelEntries.slice(0, appConfig.maxBadges);
+  const remainingCount = labelEntries.length - appConfig.maxBadges;
   return (
     <>
       <Card
@@ -39,7 +42,7 @@ export const ClusterCard = ({
         onClick={onClick}
       >
         <div className=" flex items-center space-x-4 rounded-md  p-4">
-          {status ? <ReadyFlag /> : <FailedFlag />}
+          {status ? <ReadyFlag /> : <FailedFlag msg={failureMsg} />}
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">
               {name}
@@ -56,13 +59,14 @@ export const ClusterCard = ({
               Namespace: <span className="text-main-500">{namespace}</span>
             </p>
           </div>
-          {labels?.length > 0 && (
+          {labelEntries.length > 0 && (
             <div className="flex items-center space-x-2">
-              {labels?.map((label) => (
-                <Badge key={label.designation} variant="secondary">
-                  {label.designation}
+              {displayEntries.map(([key, value]) => (
+                <Badge key={key} variant="label">
+                  <p className={"truncate"}>{`${key}: ${value}`}</p>
                 </Badge>
               ))}
+              {remainingCount > 0 && <span>+ {remainingCount} more</span>}
             </div>
           )}
         </div>

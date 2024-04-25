@@ -1,5 +1,3 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { appConfig, clusterType } from "@/config/app";
 import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
 import {
   Pagination,
@@ -11,51 +9,38 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useNavigate } from "react-router-dom";
+import { ClusterInfo } from "@/types/cluster";
+import { EmptyData } from "@/components/ui/emptyData";
 
 type ClusterListProps = {
-  data: any;
-  currentTab: clusterType;
-  handleTabChange: (value: clusterType) => void;
+  data: ClusterInfo[];
 };
-export const ClusterList = ({
-  data,
-  currentTab,
-  handleTabChange,
-}: ClusterListProps) => {
+export const ClusterList = ({ data }: ClusterListProps) => {
+
   const navigate = useNavigate();
+  if (data.length <= 0) {
+    return <EmptyData name={"clusters"}  />;
+  }
   return (
     <>
-      <div className="mt-5 ">
-        <Tabs
-          defaultValue={currentTab}
-          className="w-[400px]"
-          onValueChange={(value) =>
-            handleTabChange(value as unknown as clusterType)
-          }
-        >
-          <TabsList>
-            <TabsTrigger value={appConfig.sveltosType}>
-              {appConfig.sveltosType}
-            </TabsTrigger>
-            <TabsTrigger value={appConfig.clusterAPIType}>
-              {appConfig.clusterAPIType}
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-        <div className="flex flex-wrap mb-4 py-4">
-          {data.map((cluster: any) => (
-            <div key={cluster.name} className="w-full md:w-1/2 p-2">
-              <ClusterCard
-                onClick={() => navigate(`/clusters/${cluster.name}`)}
-                key={cluster.name}
-                name={cluster.name}
-                version={cluster.version}
-                namespace={cluster.namespace}
-                status={cluster.status}
-                labels={cluster.labels}
-              />
-            </div>
-          ))}
+      <div className="mt-5">
+        <div className="min-h-[400px] flex flex-col ">
+          <div className="flex flex-wrap mb-4 py-4">
+            {data.map((cluster: any) => (
+              <div key={cluster.name} className="w-full md:w-1/2 p-2">
+                <ClusterCard
+                  onClick={() => navigate(`/clusters/${cluster.name}`)}
+                  key={cluster.name}
+                  name={cluster.name}
+                  version={cluster.clusterInfo.version}
+                  namespace={cluster.namespace}
+                  status={cluster.clusterInfo.ready}
+                  failureMsg={cluster.clusterInfo.failureMessage}
+                  labels={cluster.clusterInfo.labels}
+                />
+              </div>
+            ))}
+          </div>
         </div>
         <Pagination>
           <PaginationContent>
@@ -82,7 +67,6 @@ export const ClusterList = ({
           </PaginationContent>
         </Pagination>
       </div>
-      ;
     </>
   );
 };

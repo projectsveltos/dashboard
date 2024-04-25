@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-export const FailedFlag = () => {
+export const FailedFlag = ({ msg }: { msg?: string | undefined | null }) => {
   return (
     <>
       <Tooltip>
@@ -25,6 +25,7 @@ export const FailedFlag = () => {
           <div className={"inline-flex items-baseline"}>
             <ServerCrash className={"w-3 h-3 mx-1 mt-1"} />
             <p>Unhealthy</p>
+            {msg && <p className={"text-muted-foreground"}>{msg}</p>}
           </div>
         </TooltipContent>
       </Tooltip>

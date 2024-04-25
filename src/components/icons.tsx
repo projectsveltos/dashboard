@@ -74,5 +74,4 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  boxes: (props: IconProps) => <Boxes {...props} />,
 };

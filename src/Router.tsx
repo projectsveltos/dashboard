@@ -2,9 +2,10 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { Applayout } from "./components/layouts/AppLayout";
 
-import NoMatch from "./pages/errors/NoMatch";
-import ClustersPage from "./pages/clusters-list/ClustersPage";
+import NoMatch from "./modules/fallback/NoMatch";
+import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
+import { ClusterInfo } from "@/modules/clusters/cluster-information/ClusterInfo";
 const defaultTab = appConfig.sveltosType;
 const defaultPage = appConfig.defaultPage;
 export const router = createBrowserRouter(
@@ -24,6 +25,10 @@ export const router = createBrowserRouter(
         {
           path: "/clusters/:tab/:pageNumber",
           element: <ClustersPage />,
+        },
+        {
+          path: "/clusters/:clusterId",
+          element: <ClusterInfo />,
         },
       ],
     },

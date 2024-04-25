@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.1",
   "type": "module",
+  "description": "Sveltos User interface d ashboard",
   "scripts": {
     "lint": "npx prettier . --write",
     "dev": " npx prettier . --write && vite",
@@ -20,7 +21,10 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@radix-ui/react-toggle": "^1.0.3",
+    "@radix-ui/react-toggle-group": "^1.0.4",
     "@radix-ui/react-tooltip": "^1.0.7",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^1.0.0",

@@ -1,4 +1,4 @@
-import { CardsFilterToolbar } from "@/pages/clusters-list/components/CardsFilterToolbar";
+import { CardsFilterToolbar } from "@/modules/clusters/clusters-list/components/CardsFilterToolbar";
 interface PageHeadingProps {
   title: string;
   description: string;

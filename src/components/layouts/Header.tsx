@@ -19,8 +19,6 @@ import {
   ChevronDownIcon,
   DividerVerticalIcon,
   HamburgerMenuIcon,
-  MobileIcon,
-  ViewVerticalIcon,
 } from "@radix-ui/react-icons";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Logo } from "../logo";
@@ -31,6 +29,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { ModeToggle } from "@/components/mode-toggle";
+import { Badge } from "@/components/ui/badge";
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -87,18 +86,29 @@ export function Header() {
                     )}
                   </DropdownMenuContent>
                 </DropdownMenu>
+              ) : menu.disabled ? (
+                <Button variant="link" disabled>
+                  {menu.icon && menu.icon}
+                  <span className="ml-1">{menu.title} </span>
+                </Button>
               ) : (
                 <NavLink
                   key={index}
                   to={menu.to ?? ""}
                   className={({ isActive }) =>
                     cn(
-                      "text-sm font-medium transition-colors hover:text-primary",
-                      isActive ? "text-foreground" : "text-foreground/60",
+                      "text-sm font-medium flex items-center transition-colors hover:text-primary",
+                      isActive
+                        ? "bg-slate-100 dark:bg-slate-700 p-2 rounded hover:text-main-500 "
+                        : "text-foreground/60 hover:text-primary",
                     )
                   }
                 >
-                  {menu.title}
+                  {menu.icon && menu.icon}
+                  <span className="ml-1">
+                    {menu.title}{" "}
+                    {menu.soon && <Badge className={"text-xs"}>Soon</Badge>}
+                  </span>
                 </NavLink>
               ),
             )}

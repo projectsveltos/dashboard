@@ -2,7 +2,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
-import { CardsFacetedFilter } from "@/pages/clusters-list/components/CardsFacetedFilter";
+import { CardsFacetedFilter } from "@/modules/clusters/clusters-list/components/CardsFacetedFilter";
 
 export const CardsFilterToolbar = () => {
   const [isFiltered, setIsFiltered] = useState(false);

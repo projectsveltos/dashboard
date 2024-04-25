@@ -2,7 +2,6 @@ import { CardsFilterToolbar } from "@/modules/clusters/clusters-list/components/
 interface PageHeadingProps {
   title: string;
   description: string;
-
 }
 export const PageHeading = ({ title, description }: PageHeadingProps) => {
   return (

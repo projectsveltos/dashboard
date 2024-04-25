@@ -16,10 +16,9 @@ type ClusterListProps = {
   data: ClusterInfo[];
 };
 export const ClusterList = ({ data }: ClusterListProps) => {
-
   const navigate = useNavigate();
   if (data.length <= 0) {
-    return <EmptyData name={"clusters"}  />;
+    return <EmptyData name={"clusters"} />;
   }
   return (
     <>

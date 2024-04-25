@@ -30,7 +30,6 @@ import {
 } from "@/components/ui/accordion";
 import { ModeToggle } from "@/components/mode-toggle";
 
-
 export function Header() {
   const [open, setOpen] = useState(false);
   const location = useLocation();

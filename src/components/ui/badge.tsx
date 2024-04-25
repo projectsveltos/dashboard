@@ -30,10 +30,14 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {}
 
 function Badge({ className, variant, ...props }: BadgeProps) {
-  const isLabelVariant = variant === 'label';
+  const isLabelVariant = variant === "label";
 
   return (
-    <div className={` ${cn(badgeVariants({ variant }), className)}`}{...props}  style={isLabelVariant ? { maxWidth: '6rem' } : {}} />
+    <div
+      className={` ${cn(badgeVariants({ variant }), className)}`}
+      {...props}
+      style={isLabelVariant ? { maxWidth: "6rem" } : {}}
+    />
   );
 }
 

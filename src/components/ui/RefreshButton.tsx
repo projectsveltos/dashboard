@@ -8,25 +8,26 @@ import { RefreshCcw } from "lucide-react";
 
 const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
-
     const queryClient = useQueryClient();
     const isFetching = useIsFetching();
-    const handleRefresh = () =>{
-         queryClient.refetchQueries();
+    const handleRefresh = () => {
+      queryClient.refetchQueries();
     };
     return (
       <Button
         variant={"outline"}
-        disabled={isFetching> 0}
+        disabled={isFetching > 0}
         onClick={handleRefresh}
-       className={className}
+        className={className}
         ref={ref}
       >
         <>
-
-
-        {isFetching>0 ?    <RefreshCcw className="w-4 h-4 animate-spin mr-2" />  : <RefreshCcw className="w-4 h-4 mr-2" />}
-        Refresh
+          {isFetching > 0 ? (
+            <RefreshCcw className="w-4 h-4 animate-spin mr-2" />
+          ) : (
+            <RefreshCcw className="w-4 h-4 mr-2" />
+          )}
+          Refresh
         </>
       </Button>
     );
@@ -34,4 +35,4 @@ const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
 );
 RefreshButton.displayName = "Button";
 
-export { RefreshButton  };
+export { RefreshButton };

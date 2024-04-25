@@ -15,7 +15,6 @@ type ErrorFetchingProps = {
 };
 
 export const ErrorQuery = ({ name, error, queryKey }: ErrorFetchingProps) => {
-
   const reportError = () => {
     window.open(appConfig.github.url + "/issues/new", "_blank");
   };
@@ -33,7 +32,7 @@ export const ErrorQuery = ({ name, error, queryKey }: ErrorFetchingProps) => {
             </span>
 
             <div className={"flex justify-end space-4"}>
-             <RefreshButton/>
+              <RefreshButton />
               <Button
                 variant="destructive"
                 onClick={reportError}

@@ -11,7 +11,6 @@ import { ClusterList } from "@/modules/clusters/clusters-list/components/Cluster
 import { ErrorQuery } from "@/components/ui/errorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
 
-
 export default function ClustersPage() {
   const navigate = useNavigate();
   const defaultTab = appConfig.defaultType;
@@ -44,7 +43,6 @@ export default function ClustersPage() {
         description={
           "You can view all clusters, retry failed deployments, and find troubleshooting guides for any cluster."
         }
-
       />
       <Tabs defaultValue={currentTab} className="w-[400px]">
         <TabsList>

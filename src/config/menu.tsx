@@ -1,4 +1,3 @@
-import { Icons } from "@/components/icons";
 import { Boxes, Tags, Users } from "lucide-react";
 
 interface NavItem {
@@ -24,14 +23,12 @@ export const mainMenu: NavItemWithChildren[] = [
   {
     title: "Profiles",
     to: "cluster-profiles",
-
     icon: <Users className={"w-4 h-4"} />,
     disabled: true,
   },
   {
     title: "Labels",
     to: "labels",
-
     disabled: true,
     icon: <Tags className={"w-4 h-4"} />,
   },

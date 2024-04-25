@@ -105,10 +105,7 @@ export function Header() {
                   }
                 >
                   {menu.icon && menu.icon}
-                  <span className="ml-1">
-                    {menu.title}{" "}
-                    {menu.soon && <Badge className={"text-xs"}>Soon</Badge>}
-                  </span>
+                  <span className="ml-1">{menu.title}</span>
                 </NavLink>
               ),
             )}

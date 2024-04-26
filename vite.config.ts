@@ -26,10 +26,6 @@ export default defineConfig(({ command }) => {
         },
       },
     },
-    define: {
-      global: {
-        basename: isProd ? basenameProd : "",
-      },
-    },
+
   };
 });

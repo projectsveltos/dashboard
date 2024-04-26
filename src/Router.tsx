@@ -37,7 +37,5 @@ export const router = createBrowserRouter(
       element: <NoMatch />,
     },
   ],
-  {
-    basename: global.basename,
-  },
+
 );

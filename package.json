@@ -1,9 +1,13 @@
 {
   "name": "sveltos-dashboard",
   "private": true,
-  "version": "0.1",
+  "version": "0.1.0",
   "type": "module",
-  "description": "Sveltos User interface d ashboard",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/projectsveltos/dashboard"
+  },
+  "description": "Sveltos User interface dashboard",
   "scripts": {
     "lint": "npx prettier . --write",
     "dev": "tsc &&  npx prettier . --write && vite",

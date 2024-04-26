@@ -1,10 +1,10 @@
 import { appConfig } from "@/config/app";
 
-export function Logo() {
+export function Logo({className="h-6 w-6"}: {className?: string}) {
   return (
     <>
       <svg
-        className={"h-6 w-6"}
+        className={className}
         viewBox="0 0 44 46"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

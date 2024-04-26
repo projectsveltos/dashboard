@@ -1,26 +1,20 @@
 import { useNavigate } from "react-router-dom";
+import { Logo } from "@/components/logo";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 
 export default function NoMatch() {
   const navigate = useNavigate();
   return (
-    <div>
-      <div className="h-screen w-screen  flex items-center">
-        <div className="container flex flex-col md:flex-row items-center justify-center px-5 ">
-          <div className="max-w-md">
-            <div className="text-5xl font-dark font-bold">404</div>
-            <p className="text-2xl md:text-3xl font-light leading-normal">
-              Sorry, we couldn’t find the page you’re looking for.
-            </p>
-
-            <button
-              onClick={() => navigate(-1)}
-              className="px-4 mt-4 inline py-2 text-sm font-medium leading-5 shadow text-white transition-colors duration-150 border border-transparent rounded-lg focus:outline-none focus:shadow-outline-blue bg-blue-600 active:bg-blue-600 hover:bg-blue-700"
-            >
-              Back
-            </button>
-          </div>
-        </div>
-      </div>
+    <div className="flex flex-col items-center justify-center mt-12 h-1/2">
+      <div
+        className="  px-4 md:px-8 lg:px-24 py-8 ">
+      <p className="text-6xl md:text-7xl lg:text-9xl font-bold tracking-wider text-gray-300">404</p>
+      <p className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">Page Not Found</p>
+      <p className="text-gray-500 mt-4 pb-4 border-b-2 text-center">Sorry, the page you are looking for could not be
+        found.</p>
+      <Button onClick={() => navigate(-1)} className="mt-4 w-full"><ChevronLeft className={"animate-pulse"}/> Go Back</Button>
+    </div>
     </div>
   );
 }

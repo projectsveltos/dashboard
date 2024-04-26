@@ -30,6 +30,10 @@ export const router = createBrowserRouter(
           path: "/clusters/:clusterId",
           element: <ClusterInfo />,
         },
+        {
+          path: "*",
+          element: <NoMatch />,
+        },
       ],
     },
     {

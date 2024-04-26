@@ -25,13 +25,10 @@ export const FailedFlag = ({ msg }: { msg?: string | undefined | null }) => {
           <div className={"inline-flex items-baseline"}>
             <ServerCrash className={"w-3 h-3 mx-1 mt-1"} />
             <p>Unhealthy</p>
-
           </div>
-          <br/>
+          <br />
 
           {msg && <p className={"text-muted-foreground w-24"}>{msg}</p>}
-
-
         </TooltipContent>
       </Tooltip>
     </>

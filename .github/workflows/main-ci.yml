@@ -31,4 +31,4 @@ jobs:
 
       - name: Build Docker image
         run: |
-            docker build -t sveltos-dashboard-ui:latest .
+          docker build -t sveltos-dashboard-ui:latest .

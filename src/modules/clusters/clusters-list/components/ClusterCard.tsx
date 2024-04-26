@@ -62,37 +62,35 @@ export const ClusterCard = ({
           </div>
           <Tooltip>
             <TooltipTrigger>
-          {labelEntries.length > 0 && (
-            <div className="flex items-center space-x-2">
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                {displayEntries.map(([key, value]) => (
-                  <Badge key={key} className={"my-0.5"} variant="label">
-                    <p className="truncate">{`${key}: ${value}`}</p>
-                  </Badge>
-                ))}
-              </div>
-              {remainingCount > 0 && <span>+ {remainingCount} more</span>}
-            </div>
-
-          )}
+              {labelEntries.length > 0 && (
+                <div className="flex items-center space-x-2">
+                  <div style={{ display: "flex", flexDirection: "column" }}>
+                    {displayEntries.map(([key, value]) => (
+                      <Badge key={key} className={"my-0.5"} variant="label">
+                        <p className="truncate">{`${key}: ${value}`}</p>
+                      </Badge>
+                    ))}
+                  </div>
+                  {remainingCount > 0 && <span>+ {remainingCount} more</span>}
+                </div>
+              )}
             </TooltipTrigger>
             <TooltipContent className={"w-min h-64 px-4 overflow-auto"}>
               <div className={"inline-flex items-baseline "}>
                 <Tags className={"w-3 h-3 mx-1 mt-1"} />
                 <p>Labels:</p>
-
               </div>
-              <br/>
+              <br />
 
-              {
-                labelEntries.map(([key, value]) => (
-                    <Badge key={key} className={"my-0.5 rounded overflow-auto"} variant="label">
-                      <p>{`${key}: ${value}`}</p>
-                    </Badge>
-                  ))
-              }
-
-
+              {labelEntries.map(([key, value]) => (
+                <Badge
+                  key={key}
+                  className={"my-0.5 rounded overflow-auto"}
+                  variant="label"
+                >
+                  <p>{`${key}: ${value}`}</p>
+                </Badge>
+              ))}
             </TooltipContent>
           </Tooltip>
         </div>

@@ -8,38 +8,35 @@ import { appConfig } from "@/config/app";
 import { ClusterInfo } from "@/modules/clusters/cluster-information/ClusterInfo";
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
-export const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Applayout />,
-      children: [
-        {
-          path: "/",
-          element: <Navigate to={`/clusters/${defaultTab}/${defaultPage}`} />,
-        },
-        {
-          path: "/clusters",
-          element: <Navigate to={`/clusters/${defaultTab}/${defaultPage}`} />,
-        },
-        {
-          path: "/clusters/:tab/:pageNumber",
-          element: <ClustersPage />,
-        },
-        {
-          path: "/clusters/:clusterId",
-          element: <ClusterInfo />,
-        },
-        {
-          path: "*",
-          element: <NoMatch />,
-        },
-      ],
-    },
-    {
-      path: "*",
-      element: <NoMatch />,
-    },
-  ],
-
-);
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Applayout />,
+    children: [
+      {
+        path: "/",
+        element: <Navigate to={`/clusters/${defaultTab}/${defaultPage}`} />,
+      },
+      {
+        path: "/clusters",
+        element: <Navigate to={`/clusters/${defaultTab}/${defaultPage}`} />,
+      },
+      {
+        path: "/clusters/:tab/:pageNumber",
+        element: <ClustersPage />,
+      },
+      {
+        path: "/clusters/:clusterId",
+        element: <ClusterInfo />,
+      },
+      {
+        path: "*",
+        element: <NoMatch />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NoMatch />,
+  },
+]);

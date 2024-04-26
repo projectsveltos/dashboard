@@ -10,6 +10,7 @@ import { ReadyFlag } from "@/components/ui/ready-flag";
 import { FailedFlag } from "@/components/ui/failed-flag";
 import { Label } from "@/types/cluster";
 import { appConfig } from "@/config/app";
+import { ServerCrash, Tags } from "lucide-react";
 
 interface ClusterCardProps {
   name: string;
@@ -59,16 +60,41 @@ export const ClusterCard = ({
               Namespace: <span className="text-main-500">{namespace}</span>
             </p>
           </div>
+          <Tooltip>
+            <TooltipTrigger>
           {labelEntries.length > 0 && (
             <div className="flex items-center space-x-2">
-              {displayEntries.map(([key, value]) => (
-                <Badge key={key} variant="label">
-                  <p className={"truncate"}>{`${key}: ${value}`}</p>
-                </Badge>
-              ))}
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {displayEntries.map(([key, value]) => (
+                  <Badge key={key} className={"my-0.5"} variant="label">
+                    <p className="truncate">{`${key}: ${value}`}</p>
+                  </Badge>
+                ))}
+              </div>
               {remainingCount > 0 && <span>+ {remainingCount} more</span>}
             </div>
+
           )}
+            </TooltipTrigger>
+            <TooltipContent className={"w-min h-64 px-4 overflow-auto"}>
+              <div className={"inline-flex items-baseline "}>
+                <Tags className={"w-3 h-3 mx-1 mt-1"} />
+                <p>Labels:</p>
+
+              </div>
+              <br/>
+
+              {
+                labelEntries.map(([key, value]) => (
+                    <Badge key={key} className={"my-0.5 rounded overflow-auto"} variant="label">
+                      <p>{`${key}: ${value}`}</p>
+                    </Badge>
+                  ))
+              }
+
+
+            </TooltipContent>
+          </Tooltip>
         </div>
       </Card>
     </>

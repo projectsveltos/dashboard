@@ -4,17 +4,19 @@ on:
   push:
     branches:
       - main
+      - dev
   pull_request:
-    branches:
-      - main
+      types: [ opened, edited, synchronize, reopened ]
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
 
       - name: Install dependencies
         run: npm install

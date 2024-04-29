@@ -21,3 +21,8 @@ interface ClusterInfo {
     failureMessage?: string | null;
   };
 }
+
+export type ClusterListResponse= {
+  totalClusters: number;
+  managedClusters: ClusterType[];
+}

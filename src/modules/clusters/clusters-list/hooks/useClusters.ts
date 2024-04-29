@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery, UseQueryResult } from "react-query";
 
 import client from "@/api-client/apiClient";
 import { ClusterType } from "@/types/cluster";
@@ -7,6 +7,7 @@ import { appConfig } from "@/config/app";
 const params = {
   limit: appConfig.defaultSize,
 };
+
 const fetchClusters = async (type: ClusterType) => {
   let endpoint;
   if (type === clusterAPIValue) {
@@ -20,8 +21,8 @@ const fetchClusters = async (type: ClusterType) => {
   return data;
 };
 
-const useClusters = (type: ClusterType) => {
-  return useQuery(["clusters", type], () => fetchClusters(type));
+const useClusters = (type: ClusterType):  UseQueryResult<ClusterListResponse, Error>  => {
+  return useQuery(["clusters", type], () => fetchClusters(type))
 };
 
 export default useClusters;

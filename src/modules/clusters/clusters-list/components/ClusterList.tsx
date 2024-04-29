@@ -9,15 +9,20 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { useNavigate } from "react-router-dom";
-import { ClusterInfo } from "@/types/cluster";
+import { ClusterInfo, ClusterListResponse } from "@/types/cluster";
 import { EmptyData } from "@/components/ui/emptyData";
+import { usePagination } from "@/hooks/usePagination";
 
 type ClusterListProps = {
-  data: ClusterInfo[];
+  data: ClusterListResponse;
 };
 export const ClusterList = ({ data }: ClusterListProps) => {
   const navigate = useNavigate();
-  if (data.length <= 0) {
+  const totalItems = 55; // Total number of items
+  const visiblePages = 3; // Number of visible pages
+
+  const [PaginationUI, { currentPage, setPage }] = usePagination(totalItems, visiblePages);
+  if (data.managedClusters.length <= 0 && !data.managedClusters) {
     return <EmptyData name={"clusters"} />;
   }
   return (
@@ -25,7 +30,7 @@ export const ClusterList = ({ data }: ClusterListProps) => {
       <div className="mt-5">
         <div className="min-h-[400px] flex flex-col ">
           <div className="flex flex-wrap mb-4 py-4">
-            {data.map((cluster: any) => (
+            {data.managedClusters.map((cluster: any) => (
               <div key={cluster.name} className="w-full md:w-1/2 p-2">
                 <ClusterCard
                   onClick={() => navigate(`/clusters/${cluster.name}`)}
@@ -41,30 +46,7 @@ export const ClusterList = ({ data }: ClusterListProps) => {
             ))}
           </div>
         </div>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
+        <PaginationUI currentPage={currentPage} setPage={setPage} />
       </div>
     </>
   );

@@ -22,7 +22,7 @@ interface ClusterInfo {
   };
 }
 
-export type ClusterListResponse= {
+export type ClusterListResponse = {
   totalClusters: number;
   managedClusters: ClusterType[];
-}
+};

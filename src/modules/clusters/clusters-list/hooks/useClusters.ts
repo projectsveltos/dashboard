@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "react-query";
 
 import client from "@/api-client/apiClient";
-import { ClusterType } from "@/types/cluster";
+import { ClusterListResponse, ClusterType } from "@/types/cluster";
 import { clusterAPIValue, sveltosClusterValue } from "@/types/cluster.consts";
 import { appConfig } from "@/config/app";
 const params = {
@@ -21,8 +21,10 @@ const fetchClusters = async (type: ClusterType) => {
   return data;
 };
 
-const useClusters = (type: ClusterType):  UseQueryResult<ClusterListResponse, Error>  => {
-  return useQuery(["clusters", type], () => fetchClusters(type))
+const useClusters = (
+  type: ClusterType,
+): UseQueryResult<ClusterListResponse, Error> => {
+  return useQuery(["clusters", type], () => fetchClusters(type));
 };
 
 export default useClusters;

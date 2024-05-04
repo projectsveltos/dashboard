@@ -1,10 +1,12 @@
 import { FC, useState } from "react";
 import {
   Pagination,
-  PaginationContent, PaginationEllipsis,
+  PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
-  PaginationLink, PaginationNext,
-  PaginationPrevious
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 
 interface PaginationState {
@@ -19,7 +21,7 @@ interface PaginationUIProps {
 
 export const usePagination = (
   totalItems: number,
-  visiblePages: number = 5
+  visiblePages: number = 5,
 ): [FC<PaginationUIProps>, PaginationState] => {
   const [currentPage, setCurrentPage] = useState(1);
   const isFirstPage = currentPage === 1;
@@ -33,7 +35,7 @@ export const usePagination = (
     const firstVisiblePage = Math.max(1, currentPage - halfVisiblePages);
     const lastVisiblePage = Math.min(
       Math.ceil(totalItems / visiblePages),
-      firstVisiblePage + visiblePages - 1
+      firstVisiblePage + visiblePages - 1,
     );
 
     const handleEllipsisClick = (next: boolean) => {
@@ -51,29 +53,41 @@ export const usePagination = (
           >
             {i}
           </PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
     }
 
     const ellipsisPrev = firstVisiblePage > 1 && (
-      <PaginationItem key="ellipsisPrev" className={"hover:cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md"}>
+      <PaginationItem
+        key="ellipsisPrev"
+        className={
+          "hover:cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md"
+        }
+      >
         <PaginationEllipsis onClick={() => handleEllipsisClick(false)} />
       </PaginationItem>
     );
 
-    const ellipsisNext =
-      lastVisiblePage < Math.ceil(totalItems / visiblePages) && (
-        <PaginationItem key="ellipsisNext" className={"hover:cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md"}>
-          <PaginationEllipsis onClick={() => handleEllipsisClick(true)} />
-        </PaginationItem>
-      );
+    const ellipsisNext = lastVisiblePage <
+      Math.ceil(totalItems / visiblePages) && (
+      <PaginationItem
+        key="ellipsisNext"
+        className={
+          "hover:cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md"
+        }
+      >
+        <PaginationEllipsis onClick={() => handleEllipsisClick(true)} />
+      </PaginationItem>
+    );
 
     return (
       <Pagination>
         <PaginationContent>
-          <PaginationItem  >
+          <PaginationItem>
             <PaginationPrevious
-              onClick={() =>currentPage === 1?null: setPage(currentPage - 1)}
+              onClick={() =>
+                currentPage === 1 ? null : setPage(currentPage - 1)
+              }
               isActive={!isFirstPage}
             />
           </PaginationItem>
@@ -82,7 +96,7 @@ export const usePagination = (
           {ellipsisNext}
           <PaginationItem>
             <PaginationNext
-              onClick={() => isLastPage?null: setPage(currentPage + 1)}
+              onClick={() => (isLastPage ? null : setPage(currentPage + 1))}
               isActive={!isLastPage}
             />
           </PaginationItem>
@@ -92,4 +106,4 @@ export const usePagination = (
   };
 
   return [PaginationUI, { currentPage, setPage }];
-}
+};

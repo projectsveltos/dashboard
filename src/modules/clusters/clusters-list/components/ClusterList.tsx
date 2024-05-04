@@ -12,17 +12,21 @@ import { useNavigate } from "react-router-dom";
 import { ClusterInfo, ClusterListResponse } from "@/types/cluster";
 import { EmptyData } from "@/components/ui/emptyData";
 import { usePagination } from "@/hooks/usePagination";
+import { FC } from "react";
 
 type ClusterListProps = {
   data: ClusterListResponse;
 };
-export const ClusterList = ({ data }: ClusterListProps) => {
+export const ClusterList: FC<ClusterListProps> = ({ data }) => {
   const navigate = useNavigate();
   const totalItems = 55; // Total number of items
   const visiblePages = 3; // Number of visible pages
 
-  const [PaginationUI, { currentPage, setPage }] = usePagination(totalItems, visiblePages);
-  if (data.managedClusters.length <= 0 && !data.managedClusters) {
+  const [PaginationUI, { currentPage, setPage }] = usePagination(
+    totalItems,
+    visiblePages,
+  );
+  if (data?.managedClusters.length <= 0 && !data.managedClusters) {
     return <EmptyData name={"clusters"} />;
   }
   return (

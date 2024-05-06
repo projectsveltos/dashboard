@@ -24,5 +24,5 @@ interface ClusterInfo {
 
 export type ClusterListResponse = {
   totalClusters: number;
-  managedClusters: ClusterType[];
+  managedClusters: ClusterInfo[];
 };

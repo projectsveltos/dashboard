@@ -23,11 +23,17 @@ export default function ClustersPage() {
   const [currentPage, setCurrentPage] = useState<number>(() => {
     return urlPage ? parseInt(urlPage) : defaultPage;
   });
-  const { data, isLoading, isError, isSuccess, error, refetch } =
-    useClusters(currentTab);
+  const { data, isLoading, isError, isSuccess, error, refetch } = useClusters(
+    currentTab,
+    currentPage,
+  );
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
     navigate(`/clusters/${value}/${currentPage}`);
+  };
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    navigate(`/clusters/${currentTab}/${page}`);
   };
 
   return (
@@ -53,7 +59,13 @@ export default function ClustersPage() {
       </Tabs>
       {isLoading && <LoadingCards />}
       {isError && <ErrorQuery name={"clusters"} error={error} />}
-      {isSuccess && data && <ClusterList data={data} />}
+      {isSuccess && data && (
+        <ClusterList
+          onChangePage={handlePageChange}
+          page={currentPage}
+          data={data}
+        />
+      )}
     </>
   );
 }

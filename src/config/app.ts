@@ -24,7 +24,7 @@ export const appConfig: AppConfig = {
     url: "https://github.com/projectsveltos/dashboard",
   },
   defaultType: sveltosClusterValue,
-  defaultPage: 0,
+  defaultPage: 1,
   defaultSize: 8,
   maxBadges: 2,
 };

@@ -1,32 +1,25 @@
 import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
+
 import { useNavigate } from "react-router-dom";
-import { ClusterInfo, ClusterListResponse } from "@/types/cluster";
+import { ClusterListResponse } from "@/types/cluster";
 import { EmptyData } from "@/components/ui/emptyData";
 import { usePagination } from "@/hooks/usePagination";
 import { FC } from "react";
 
 type ClusterListProps = {
   data: ClusterListResponse;
+  page: number;
+  onChangePage: any;
 };
-export const ClusterList: FC<ClusterListProps> = ({ data }) => {
+export const ClusterList: FC<ClusterListProps> = ({
+  data,
+  page,
+  onChangePage,
+}) => {
   const navigate = useNavigate();
-  const totalItems = 55; // Total number of items
-  const visiblePages = 3; // Number of visible pages
-
-  const [PaginationUI, { currentPage, setPage }] = usePagination(
-    totalItems,
-    visiblePages,
-  );
-  if (data?.managedClusters.length <= 0 && !data.managedClusters) {
+  const totalElements = data.totalClusters;
+  const [PaginationUI] = usePagination(totalElements, page, onChangePage);
+  if (data?.managedClusters.length <= 0 || !data.managedClusters) {
     return <EmptyData name={"clusters"} />;
   }
   return (
@@ -50,7 +43,7 @@ export const ClusterList: FC<ClusterListProps> = ({ data }) => {
             ))}
           </div>
         </div>
-        <PaginationUI currentPage={currentPage} setPage={setPage} />
+        <PaginationUI />
       </div>
     </>
   );

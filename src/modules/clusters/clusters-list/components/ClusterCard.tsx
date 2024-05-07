@@ -56,8 +56,10 @@ export const ClusterCard = ({
                 </Tooltip>
               </span>
             </p>
-            <p className="text-sm text-muted-foreground">
-              Namespace: <span className="text-main-500">{namespace}</span>
+            <p
+              className="text-sm text-muted-foreground  py-1"
+            >
+              Namespace: <span className="text-main-500 ">{namespace}</span>
             </p>
           </div>
           <Tooltip>

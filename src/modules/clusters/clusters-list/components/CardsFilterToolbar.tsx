@@ -9,30 +9,26 @@ export const CardsFilterToolbar = () => {
   const [isFiltered, setIsFiltered] = useState(false);
   return (
     <>
-      <div className="flex items-center space-x-2">
-        <div className="flex items-center justify-between">
+      <div className="flex  space-x-2">
+        <div className="flex items-center ">
           <div className="flex flex-1 items-center space-x-2">
-            <Input
-              placeholder="Filter... "
-              className="h-8 w-[150px] lg:w-[250px]"
-            />
 
-            <CardsFacetedFilter
-              title={"Labels"}
-              options={[
-                { label: "Active", value: "active" },
-                { label: "Inactive", value: "inactive" },
-              ]}
-            />
-            <CardsFacetedFilter
-              title={"Status"}
-              options={[
-                { label: "All", value: "all" },
-                { label: "Active", value: "active" },
-                { label: "Inactive", value: "inactive" },
-              ]}
-            />
-            <RefreshButton className={"w-26 h-8"} />
+            {/*<CardsFacetedFilter*/}
+            {/*  title={"Labels"}*/}
+            {/*  options={[*/}
+            {/*    { label: "Active", value: "active" },*/}
+            {/*    { label: "Inactive", value: "inactive" },*/}
+            {/*  ]}*/}
+            {/*/>*/}
+            {/*<CardsFacetedFilter*/}
+            {/*  title={"Status"}*/}
+            {/*  options={[*/}
+            {/*    { label: "All", value: "all" },*/}
+            {/*    { label: "Active", value: "active" },*/}
+            {/*    { label: "Inactive", value: "inactive" },*/}
+            {/*  ]}*/}
+            {/*/>*/}
+            <RefreshButton className={"w-26 h-8 "} />
             {isFiltered && (
               <Button variant="ghost" className="h-8 px-2 lg:px-3">
                 Reset

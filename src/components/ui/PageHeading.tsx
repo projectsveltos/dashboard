@@ -7,7 +7,7 @@ export const PageHeading = ({ title, description }: PageHeadingProps) => {
   return (
     <>
       <div className="hidden space-y-8 p-8 flex-col md:flex">
-        <div className="flex items-center justify-between=">
+        <div className="flex items-center justify-between">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">{title}</h2>
             <p className="text-muted-foreground w-2/3">
@@ -21,7 +21,10 @@ export const PageHeading = ({ title, description }: PageHeadingProps) => {
               .
             </p>
           </div>
-          <CardsFilterToolbar />
+          <div className="justify-end">
+            <CardsFilterToolbar />
+          </div>
+
         </div>
       </div>
     </>

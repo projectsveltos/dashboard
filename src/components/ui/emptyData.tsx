@@ -16,25 +16,25 @@ export const EmptyData = ({
   clearFilter,
   refreshKey,
 }: EmptyDataProps) => {
-  const queryClient = useQueryClient();
-  const handleRefresh = () => {
-    queryClient.invalidateQueries();
-  };
+
   return (
     <>
-      <div className="w-full flex items-center mt-5 flex-wrap justify-center gap-10">
-        <div className="grid gap-4 w-60">
+      <div className="w-full mt-16 flex items-center flex-wrap justify-center gap-10">
+        <div className="grid gap-4 w-64">
           <div className="w-20 h-20 mx-auto bg-slate-50 dark:bg-slate-800 rounded-full shadow-sm justify-center items-center inline-flex">
             <CircleOff className="w-10 h-10 text-gray-500" />
           </div>
           <div>
             <h2 className="text-center  text-base font-semibold leading-relaxed pb-1">
-              There’s no {name} here
+              There’s no {name} found.
             </h2>
-            <p className="text-center  text-sm font-normal leading-snug pb-4">
-              {isFiltered
-                ? "Try changing the filter criteria or clear the filter"
-                : "Try refreshing the page or check back later"}
+            <p className="text-base  text-xs font-normal leading-snug pb-4">
+<ul>
+  <li>
+    Try changing the filter criteria or clear the filter
+  </li>
+  <li>Try refreshing the page or check back later</li>
+</ul>
             </p>
             <div className="flex gap-3">
               {isFiltered && (

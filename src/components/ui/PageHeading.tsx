@@ -24,7 +24,6 @@ export const PageHeading = ({ title, description }: PageHeadingProps) => {
           <div className="justify-end">
             <CardsFilterToolbar />
           </div>
-
         </div>
       </div>
     </>

@@ -10,12 +10,15 @@ import { clusterTypes } from "@/types/cluster.consts";
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
 import { ErrorQuery } from "@/components/ui/errorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
+import { SearchFields } from "@/modules/clusters/clusters-list/components/SearchFields";
+import { useQueryClient } from "react-query";
 
 export default function ClustersPage() {
   const navigate = useNavigate();
   const defaultTab = appConfig.defaultType;
   const defaultPage = appConfig.defaultPage;
   const { tab: urlTab, page: urlPage } = useParams();
+  const [searchParams, setSearchParams] = useState<Record<string, string>>({});
   const [currentTab, setCurrentTab] = useState<ClusterType>(() => {
     return urlTab ? (urlTab as ClusterType) : defaultTab;
   });
@@ -26,6 +29,7 @@ export default function ClustersPage() {
   const { data, isLoading, isError, isSuccess, error, refetch } = useClusters(
     currentTab,
     currentPage,
+    searchParams,
   );
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
@@ -34,6 +38,10 @@ export default function ClustersPage() {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
     navigate(`/clusters/${currentTab}/${page}`);
+  };
+  const updateQueryParams = (searchTerms: Record<string, string>) => {
+    handlePageChange(appConfig.defaultPage)
+    setSearchParams(searchTerms);
   };
 
   return (
@@ -57,14 +65,17 @@ export default function ClustersPage() {
           ))}
         </TabsList>
       </Tabs>
+      <SearchFields updateQueryParams={updateQueryParams} />
       {isLoading && <LoadingCards />}
       {isError && <ErrorQuery name={"clusters"} error={error} />}
       {isSuccess && data && (
-        <ClusterList
-          onChangePage={handlePageChange}
-          page={currentPage}
-          data={data}
-        />
+        <>
+          <ClusterList
+            onChangePage={handlePageChange}
+            page={currentPage}
+            data={data}
+          />
+        </>
       )}
     </>
   );

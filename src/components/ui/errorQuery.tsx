@@ -20,7 +20,7 @@ export const ErrorQuery = ({ name, error, queryKey }: ErrorFetchingProps) => {
   };
 
   return (
-    <>
+    <div className={"mt-16"}>
       <Alert variant="destructive" className={"mt-4"}>
         <ExclamationTriangleIcon className="h-4 w-4" />
         <AlertTitle className={"font-bold "}>Error</AlertTitle>
@@ -49,6 +49,6 @@ export const ErrorQuery = ({ name, error, queryKey }: ErrorFetchingProps) => {
         </AlertDescription>
         <br />
       </Alert>
-    </>
+    </div>
   );
 };

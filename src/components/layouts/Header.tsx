@@ -43,7 +43,10 @@ export function Header() {
           <NavLink to="/" className="mr-6 flex items-center space-x-2">
             <Logo />
             {version && (
-              <Badge  variant="secondary"  className="text-xs text-muted-foreground">
+              <Badge
+                variant="secondary"
+                className="text-xs text-muted-foreground"
+              >
                 {isPublicPreview ? "Public preview" : version}
               </Badge>
             )}

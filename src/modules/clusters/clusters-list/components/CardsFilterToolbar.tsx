@@ -12,7 +12,6 @@ export const CardsFilterToolbar = () => {
       <div className="flex  space-x-2">
         <div className="flex items-center ">
           <div className="flex flex-1 items-center space-x-2">
-
             {/*<CardsFacetedFilter*/}
             {/*  title={"Labels"}*/}
             {/*  options={[*/}

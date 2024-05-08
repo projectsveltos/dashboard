@@ -26,7 +26,7 @@ const ClearableInput = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {props.value  && (
+        {props.value && (
           <button
             className="absolute inset-y-0 right-0 flex items-center px-3 focus:outline-none"
             onClick={handleClear}
@@ -35,8 +35,8 @@ const ClearableInput = React.forwardRef<HTMLInputElement, InputProps>(
           </button>
         )}
       </div>
-    )
-  }
+    );
+  },
 );
 ClearableInput.displayName = "Input";
 

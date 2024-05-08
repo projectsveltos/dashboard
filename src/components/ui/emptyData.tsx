@@ -1,22 +1,18 @@
-import { CircleOff, FilterX, RefreshCcw } from "lucide-react";
+import { CircleOff, FilterX } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useQueryClient } from "react-query";
 import { RefreshButton } from "@/components/ui/RefreshButton";
 
 type EmptyDataProps = {
   name: string;
   isFiltered?: boolean;
   clearFilter?: () => void;
-  refreshKey?: string;
 };
 
 export const EmptyData = ({
   name,
   isFiltered,
   clearFilter,
-  refreshKey,
 }: EmptyDataProps) => {
-
   return (
     <>
       <div className="w-full mt-16 flex items-center flex-wrap justify-center gap-10">
@@ -29,12 +25,10 @@ export const EmptyData = ({
               There’s no {name} found.
             </h2>
             <p className="text-base  text-xs font-normal leading-snug pb-4">
-<ul>
-  <li>
-    Try changing the filter criteria or clear the filter
-  </li>
-  <li>Try refreshing the page or check back later</li>
-</ul>
+              <ul>
+                <li>Try changing the filter criteria or clear the filter</li>
+                <li>Try refreshing the page or check back later</li>
+              </ul>
             </p>
             <div className="flex gap-3">
               {isFiltered && (

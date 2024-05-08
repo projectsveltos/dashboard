@@ -1,16 +1,31 @@
-import React, { useState, useRef, ChangeEvent, KeyboardEvent, useEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+  useEffect,
+} from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 interface TagInputProps {
-  tags: string[] ;
-  setTags : (tags: string[]) => void;
-  placeholder:string
+  tags: string[];
+  setTags: (tags: string[]) => void;
+  placeholder: string;
   className?: string;
 }
 
-const TagInput: React.FC<TagInputProps> = ({ tags,className,placeholder, setTags }) => {
+const TagInput: React.FC<TagInputProps> = ({
+  tags,
+  className,
+  placeholder,
+  setTags,
+}) => {
   const [inputValue, setInputValue] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -19,7 +34,13 @@ const TagInput: React.FC<TagInputProps> = ({ tags,className,placeholder, setTags
   };
 
   const handleInputKeyPress = (e: KeyboardEvent) => {
-    if ((e.key === "Enter" || e.key === "," ||e.key===" "|| e.key ==="Spacebar") && inputValue.trim() !== "") {
+    if (
+      (e.key === "Enter" ||
+        e.key === "," ||
+        e.key === " " ||
+        e.key === "Spacebar") &&
+      inputValue.trim() !== ""
+    ) {
       addTag(inputValue.trim());
     }
   };
@@ -32,7 +53,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags,className,placeholder, setTags
     }
   };
   const removeTag = (tagToRemove: string) => {
-    const updatedTags = tags.filter(tag => tag !== tagToRemove);
+    const updatedTags = tags.filter((tag) => tag !== tagToRemove);
     setTags(updatedTags);
   };
 
@@ -48,7 +69,7 @@ const TagInput: React.FC<TagInputProps> = ({ tags,className,placeholder, setTags
         <input
           type="text"
           ref={inputRef}
-          value={tags.length >= 0 || inputValue !="" ?inputValue:""}
+          value={tags.length >= 0 || inputValue != "" ? inputValue : ""}
           onChange={handleInputChange}
           onKeyPress={handleInputKeyPress}
           onBlur={handleInputBlur}
@@ -59,46 +80,48 @@ const TagInput: React.FC<TagInputProps> = ({ tags,className,placeholder, setTags
           )}
         />
 
-          <span className={"mt-2 flex items-center mx-1"}>
-            {tags.slice(0, 3).map((tag, index) => (
-              <div key={index} className="flex items-center  bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2">
-                <span className="mr-1">{tag}</span>
-                <button
-                  className="focus:outline-none"
-                  onClick={() => removeTag(tag)}
-                >
-                  <X size={16} />
-                </button>
-              </div>
-            ))}
+        <span className={"mt-2 flex items-center mx-1"}>
+          {tags.slice(0, 3).map((tag, index) => (
+            <div
+              key={index}
+              className="flex items-center  bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2"
+            >
+              <span className="mr-1">{tag}</span>
+              <button
+                className="focus:outline-none"
+                onClick={() => removeTag(tag)}
+              >
+                <X size={16} />
+              </button>
+            </div>
+          ))}
 
-            {tags.length > 3 && (
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="flex items-center bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2 cursor-pointer" >
-                    <span>+{tags.length - 3} more</span>
+          {tags.length > 3 && (
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <div className="flex items-center bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2 cursor-pointer">
+                  <span>+{tags.length - 3} more</span>
+                </div>
+              </TooltipTrigger>
+              <TooltipContent>
+                {tags.slice(3).map((tag, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2"
+                  >
+                    <span className="mr-1">{tag}</span>
+                    <button
+                      className="focus:outline-none"
+                      onClick={() => removeTag(tag)}
+                    >
+                      <X size={16} />
+                    </button>
                   </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  { tags.slice(3).map((tag, index) => (
-                    <div key={index} className="flex items-center bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2">
-                      <span className="mr-1">{tag}</span>
-                      <button
-                        className="focus:outline-none"
-                        onClick={() => removeTag(tag)}
-                      >
-                        <X size={16} />
-                      </button>
-                    </div>
-                  ))
-                  }
-                </TooltipContent>
-              </Tooltip>
-
-            )}
-          </span>
-
-
+                ))}
+              </TooltipContent>
+            </Tooltip>
+          )}
+        </span>
       </div>
     </div>
   );

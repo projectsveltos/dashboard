@@ -11,6 +11,10 @@ import { ClusterHeading } from "@/modules/clusters/cluster-information/component
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
 import { ResourceTable } from "@/modules/clusters/cluster-information/components/ResourceTable";
 import { ClusterConfig } from "@/modules/clusters/cluster-information/components/ClusterConfig";
+import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
+import { useParams } from "react-router-dom";
+import { ClusterType } from "@/types/cluster";
+import { useEffect, useState } from "react";
 
 export const data = {
   name: "Cluster 1",
@@ -84,21 +88,39 @@ export const data = {
 };
 
 export function ClusterInfo() {
+  const { tab: type, name, namespace } = useParams();
+  const [infoData, setInfoData] = useState(null);
+  const queries = useClusterInfo(namespace, name, type as ClusterType);
+
+  const [resourcesQuery, helmChartQuery, InfoQuery] = queries;
+  useEffect(() => {
+    if(resourcesQuery.isSuccess && helmChartQuery.isSuccess && InfoQuery.isSuccess){
+      setInfoData(InfoQuery.data.managedClusters[0])
+    }
+  }, [InfoQuery]);
+
+  const resourcesData = resourcesQuery.data;
+  const helmChartData = helmChartQuery.data;
+
   return (
     <div>
       <div>
         <main>
           <div className="mx-auto grid mt-4 flex-1 auto-rows-max gap-4">
-            <ClusterHeading
-              name={data.name}
-              status={data.status}
-              version={data.version}
-            />
+            {InfoQuery.isSuccess && infoData && (
+              <ClusterHeading
+                name={infoData.name}
+                status={infoData?.clusterInfo.ready}
+                version={infoData?.clusterInfo.version}
+              />
+            )}
             <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
               <ResourceTable />
 
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-                <LabelsCard labels={data.labels} />
+                {InfoQuery.isSuccess && infoData && (
+                <LabelsCard labels={infoData?.clusterInfo?.labels} />
+                )}
                 <ClusterConfig />
                 <Card x-chunk="dashboard-07-chunk-5">
                   <CardHeader>

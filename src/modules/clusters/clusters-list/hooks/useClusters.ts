@@ -4,7 +4,8 @@ import client from "@/api-client/apiClient";
 import { ClusterListResponse, ClusterType } from "@/types/cluster";
 import { clusterAPIValue, sveltosClusterValue } from "@/types/cluster.consts";
 import { appConfig } from "@/config/app";
-
+import { API_ENDPOINTS } from "@/api-client/endpoints";
+import { pathFromType } from "@/api-client/util/GetPathFromType";
 const fetchClusters = async (
   type: ClusterType,
   page: number,
@@ -12,14 +13,8 @@ const fetchClusters = async (
 ) => {
   let endpoint;
   const itemsToSkip = (page - 1) * appConfig.defaultSize;
-  if (type === clusterAPIValue) {
-    endpoint = "/capiclusters";
-  } else if (type === sveltosClusterValue) {
-    endpoint = "/sveltosclusters";
-  } else {
-    throw new Error("Invalid cluster type");
-  }
-  const { data } = await client.get(endpoint, {
+
+  const { data } = await client.get(pathFromType(type), {
     params: {
       skip: itemsToSkip,
       limit: appConfig.defaultSize,

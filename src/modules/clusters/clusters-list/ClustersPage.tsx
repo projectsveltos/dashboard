@@ -10,8 +10,7 @@ import { clusterTypes } from "@/types/cluster.consts";
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
 import { ErrorQuery } from "@/components/ui/errorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
-import { SearchFields } from "@/modules/clusters/clusters-list/components/SearchFields";
-import { useQueryClient } from "react-query";
+import { SearchFields } from "@/modules/clusters/clusters-list/components/searchFields";
 
 export default function ClustersPage() {
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ export default function ClustersPage() {
     navigate(`/clusters/${currentTab}/${page}`);
   };
   const updateQueryParams = (searchTerms: Record<string, string>) => {
-    handlePageChange(appConfig.defaultPage)
+    handlePageChange(appConfig.defaultPage);
     setSearchParams(searchTerms);
   };
 

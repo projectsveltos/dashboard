@@ -1,6 +1,6 @@
 import { Label } from "@/components/ui/label";
 import { ALargeSmall, Blocks, Eraser, Tags } from "lucide-react";
-import {  useState } from "react";
+import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/button";
 import { ClearableInput } from "@/components/ui/clearable-input";
@@ -36,11 +36,13 @@ export const SearchFields = ({
       label: "Labels",
       placeholder: "Filter clusters by labels...",
       termKey: "labels",
-      isTag: true
+      isTag: true,
     },
   ];
 
-  const [searchTerms, setSearchTerms] = useState<Record<string, string | string[]>>(() => {
+  const [searchTerms, setSearchTerms] = useState<
+    Record<string, string | string[]>
+  >(() => {
     const initialSearchTerms: Record<string, string | string[]> = {};
     searchFieldsData.forEach((field) => {
       initialSearchTerms[field.termKey] = "";
@@ -61,7 +63,7 @@ export const SearchFields = ({
       updateQueryParams(updatedSearchTerms);
     },
     [searchTerms],
-    1000
+    1000,
   );
 
   function handleChange(key: string, value: string | string[]) {
@@ -76,14 +78,18 @@ export const SearchFields = ({
       Object.keys(prevState).forEach((key) => {
         clearedFilters[key] = Array.isArray(prevState[key]) ? [] : "";
       });
-      const tagsKeys = Object.keys(prevState).filter(key => Array.isArray(prevState[key]));
-      tagsKeys.forEach(key => {
+      const tagsKeys = Object.keys(prevState).filter((key) =>
+        Array.isArray(prevState[key]),
+      );
+      tagsKeys.forEach((key) => {
         clearedFilters[key] = "";
       });
       return clearedFilters;
     });
   }
-  const isFilterApplied= Object.values(searchTerms).some((value) => value !== "" || Array.isArray(value) && value.length > 0)
+  const isFilterApplied = Object.values(searchTerms).some(
+    (value) => value !== "" || (Array.isArray(value) && value.length > 0),
+  );
 
   return (
     <>
@@ -100,10 +106,12 @@ export const SearchFields = ({
               <TagInput
                 placeholder={field.placeholder}
                 className="h-8 w-[150px] lg:w-[250px]"
-                tags={Array.isArray(searchTerms[field.termKey])
-                  ? searchTerms[field.termKey] as string[]
-                  : [] }
-                setTags={(tags:string[]) => handleChange(field.termKey, tags)}
+                tags={
+                  Array.isArray(searchTerms[field.termKey])
+                    ? (searchTerms[field.termKey] as string[])
+                    : []
+                }
+                setTags={(tags: string[]) => handleChange(field.termKey, tags)}
               />
             ) : (
               <ClearableInput
@@ -119,14 +127,17 @@ export const SearchFields = ({
           </div>
         ))}
 
-          {isFilterApplied ? (
-            <Button onClick={clearFilters} variant={"outline"} className={" mt-5 w-13 h-8"}>
-              <Eraser className="mr-2 h-4 w-4" /> Clear
-            </Button>
-          ):
-            <div className="w-[89px] h-8"></div>
-          }
-
+        {isFilterApplied ? (
+          <Button
+            onClick={clearFilters}
+            variant={"outline"}
+            className={" mt-5 w-13 h-8"}
+          >
+            <Eraser className="mr-2 h-4 w-4" /> Clear
+          </Button>
+        ) : (
+          <div className="w-[89px] h-8"></div>
+        )}
       </div>
     </>
   );

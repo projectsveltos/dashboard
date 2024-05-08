@@ -2,32 +2,40 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tags } from "lucide-react";
 import { Label } from "@/types/cluster";
 import { Badge } from "@/components/ui/badge";
+import { useEffect } from "react";
 
 type LabelsCardProps = {
   labels: Label[];
 };
 
 export const LabelsCard = ({ labels }: LabelsCardProps) => {
+  useEffect(() => {
+    console.log("LabelsCard", labels);
+
+  }, [labels]);
+  const labelEntries = Object.entries(labels || {});
   return (
+
     <>
       <div>
         <Card x-chunk="dashboard-07-chunk-3">
           <CardHeader>
             <CardTitle className={"flex items-center space-x-3"}>
               <Tags className={"w-4 h-4 mx-0.5"} /> Labels{" "}
-              <Badge variant="outline"> Total : {labels.length}</Badge>
+              <Badge variant="outline"> Total : {labelEntries.length}</Badge>
             </CardTitle>
           </CardHeader>
 
           <CardContent>
             <div className="flex flex-wrap ">
-              {labels.map((label) => (
+              {labelEntries.length>0 && labelEntries.map(([key, value]) => (
                 <Badge
-                  key={label.designation}
+                  key={key}
                   className={"m-2 p-2 rounded"}
                   variant="secondary"
                 >
-                  {label.designation}
+
+                  <p>{`${key}: ${value}`}</p>
                 </Badge>
               ))}
             </div>

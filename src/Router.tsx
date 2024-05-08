@@ -26,7 +26,7 @@ export const router = createBrowserRouter([
         element: <ClustersPage />,
       },
       {
-        path: "/clusters/:clusterId",
+        path: "/cluster/:tab/:namespace/:name",
         element: <ClusterInfo />,
       },
       {

@@ -1,15 +1,10 @@
 import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ClusterListResponse } from "@/types/cluster";
 import { EmptyData } from "@/components/ui/emptyData";
 import { usePagination } from "@/hooks/usePagination";
-import { FC, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { Label } from "@/components/ui/label";
-import { ALargeSmall, Blocks, Filter, Tags } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { FC } from "react";
 type ClusterListProps = {
   data: ClusterListResponse;
   page: number;
@@ -26,7 +21,7 @@ export const ClusterList: FC<ClusterListProps> = ({
   if (data?.managedClusters.length <= 0 || !data.managedClusters) {
     return <EmptyData name={"clusters"} />;
   }
-
+  const { tab } = useParams();
   return (
     <>
       <div className="mt-5">
@@ -35,7 +30,11 @@ export const ClusterList: FC<ClusterListProps> = ({
             {data.managedClusters.map((cluster: any) => (
               <div key={cluster.name} className="w-full md:w-1/2 p-2">
                 <ClusterCard
-                  onClick={() => navigate(`/clusters/${cluster.name}`)}
+                  onClick={() =>
+                    navigate(
+                      `/cluster/${tab}/${cluster.namespace}/${cluster.name}`,
+                    )
+                  }
                   key={cluster.name}
                   name={cluster.name}
                   version={cluster.clusterInfo.version}

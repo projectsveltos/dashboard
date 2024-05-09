@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ClusterType } from "@/types/cluster";
+import { ClusterType } from "@/types/cluster.types";
 import useClusters from "@/modules/clusters/clusters-list/hooks/useClusters";
 import { clusterTypes } from "@/types/cluster.consts";
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
@@ -12,13 +12,16 @@ import { ErrorQuery } from "@/components/ui/errorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
 import { SearchFields } from "@/modules/clusters/clusters-list/components/searchFields";
 import useExtendValue from "@/hooks/useExtendValue";
+import { clusterSearchfields } from "@/modules/clusters/clusters-list/config/clusterSearchfields.consts";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { RocketIcon } from "lucide-react";
 
 export default function ClustersPage() {
   const navigate = useNavigate();
   const defaultTab = appConfig.defaultType;
   const defaultPage = appConfig.defaultPage;
   const { tab: urlTab, page: urlPage } = useParams();
-  const [searchParams, setSearchParams] = useState<Record<string, string>>({});
+  const [searchParams, setSearchParams] = useState<Record<string, string|string[]>>({});
   const [currentTab, setCurrentTab] = useState<ClusterType>(() => {
     return urlTab ? (urlTab as ClusterType) : defaultTab;
   });
@@ -33,7 +36,7 @@ export default function ClustersPage() {
     isError,
     isSuccess,
     error,
-    refetch,
+
   } = useClusters(currentTab, currentPage, searchParams);
   const isExtendedLoading = useExtendValue(isLoading);
   const handleTabChange = (value: ClusterType) => {
@@ -44,7 +47,7 @@ export default function ClustersPage() {
     setCurrentPage(page);
     navigate(`/clusters/${currentTab}/${page}`);
   };
-  const updateQueryParams = (searchTerms: Record<string, string>) => {
+  const updateQueryParams = (searchTerms: Record<string, string|string[]>) => {
     handlePageChange(appConfig.defaultPage);
     setSearchParams(searchTerms);
   };
@@ -70,8 +73,8 @@ export default function ClustersPage() {
           ))}
         </TabsList>
       </Tabs>
-      <SearchFields updateQueryParams={updateQueryParams} />
-      {(isExtendedLoading || isPreviousData) && <LoadingCards />}
+      <SearchFields searchFieldsData={clusterSearchfields} updateQueryParams={updateQueryParams} />
+      {(isLoading || isPreviousData) && <LoadingCards />}
       {isError && <ErrorQuery name={"clusters"} error={error} />}
       {isSuccess && data && (
         <>

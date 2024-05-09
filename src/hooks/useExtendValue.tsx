@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const useExtendValue = (value: boolean) => {
   const [isExtendedValue, setIsExtendedValue] = useState(value);
@@ -7,10 +7,10 @@ const useExtendValue = (value: boolean) => {
     let timeoutId: string | number | NodeJS.Timeout | undefined;
     if (value) {
       timeoutId = setTimeout(() => {
-        setIsExtendedValue(false);
-      }, 3000); // 3 seconds
+        setIsExtendedValue(true);
+      }, 3000);
     } else {
-      setIsExtendedValue(true); // Set to true if value is initially false
+      setIsExtendedValue(false);
     }
     return () => clearTimeout(timeoutId);
   }, [value]);

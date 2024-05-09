@@ -1,4 +1,4 @@
-import { ClusterType } from "@/types/cluster";
+import { ClusterType } from "@/types/cluster.types";
 import {
   clusterAPIValue,
   clusterInfoCapiType,

@@ -1,7 +1,7 @@
 import { useQuery, UseQueryResult } from "react-query";
 
 import client from "@/api-client/apiClient";
-import { ClusterListResponse, ClusterType } from "@/types/cluster";
+import { ClusterListResponse, ClusterType } from "@/types/cluster.types";
 import { clusterAPIValue, sveltosClusterValue } from "@/types/cluster.consts";
 import { appConfig } from "@/config/app";
 import { API_ENDPOINTS } from "@/api-client/endpoints";

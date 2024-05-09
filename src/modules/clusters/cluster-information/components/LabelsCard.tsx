@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tags } from "lucide-react";
-import { Label } from "@/types/cluster";
+import { Label } from "@/types/cluster.types";
 import { Badge } from "@/components/ui/badge";
 import { useEffect } from "react";
 
@@ -9,9 +9,6 @@ type LabelsCardProps = {
 };
 
 export const LabelsCard = ({ labels }: LabelsCardProps) => {
-  useEffect(() => {
-    console.log("LabelsCard", labels);
-  }, [labels]);
   const labelEntries = Object.entries(labels || {});
   return (
     <>

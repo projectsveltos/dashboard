@@ -9,12 +9,13 @@ import {
 } from "@/components/ui/card";
 import { ClusterHeading } from "@/modules/clusters/cluster-information/components/clusterHeading";
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
-import { ResourceTable } from "@/modules/clusters/cluster-information/components/ResourceTable";
+import { AddonsTabs } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTabs";
 import { ClusterConfig } from "@/modules/clusters/cluster-information/components/ClusterConfig";
 import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
 import { useParams } from "react-router-dom";
-import { ClusterInfoType, ClusterType, Label } from "@/types/cluster";
+import { ClusterInfoType, ClusterType, Label } from "@/types/cluster.types";
 import { useEffect, useState } from "react";
+import { HelmReleaseType } from "@/types/helm.types";
 
 export const data = {
   name: "Cluster 1",
@@ -90,22 +91,46 @@ export const data = {
 export function ClusterInfo() {
   const { tab: type, name, namespace } = useParams();
   const [infoData, setInfoData] = useState<ClusterInfoType | null>(null);
+  const [helmReleaseData, setHelmReleaseData] = useState<HelmReleaseType[] | {}>({});
   const queries = useClusterInfo(namespace, name, type as ClusterType);
-
   const [resourcesQuery, helmChartQuery, InfoQuery] = queries;
   useEffect(() => {
     if (
       resourcesQuery.isSuccess &&
       helmChartQuery.isSuccess &&
-      InfoQuery.isSuccess
+      InfoQuery.isSuccess &&
+      InfoQuery.data.managedClusters.length > 0
     ) {
       setInfoData(InfoQuery.data.managedClusters[0]);
+      setHelmReleaseData(helmChartQuery.data.helmReleases)
     }
-  }, [InfoQuery]);
+  }, [queries]);
 
   const resourcesData = resourcesQuery.data;
   const helmChartData = helmChartQuery.data;
+  const addonTypes = [
+    { value: 'all', label: 'All' },
+    { value: 'resource', label: 'Resources' },
+    { value: 'helm', label: 'Helm Charts' }
+  ];
+  const addonsData={
+    all: [
+      {
+        cluster: 'default/clusterapi-workload',
+        resourceType: 'helm chart',
+        namespace: 'kyverno',
+        name: 'kyverno-latest',
+        version: '3.1.4',
+        time: '2023-07-12 10:42 AM',
+        profiles: 'ClusterProfile/deploy-kyverno'
+      },
 
+    ],
+    resource: [
+      helmReleaseData
+    ],
+    helm:helmReleaseData
+  }
   return (
     <div>
       <div>
@@ -119,10 +144,12 @@ export function ClusterInfo() {
                 version={infoData?.clusterInfo.version}
               />
             )}
-            <div className="grid gap-4 md:grid-cols-[1fr_250px] lg:grid-cols-3 lg:gap-8">
-              <ResourceTable />
-
-              <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
+            <div className="grid gap-4 md:grid-cols-[1fr_150px] lg:grid-cols-3 ">
+              {addonsData && helmChartQuery.isSuccess  &&  (
+                <AddonsTabs addonTypes={addonTypes} addonsData={addonsData} />
+                )
+              }
+              <div className="grid auto-rows-max items-start gap-4 ">
                 {InfoQuery.isSuccess && infoData && (
                   <LabelsCard labels={infoData?.clusterInfo?.labels} />
                 )}

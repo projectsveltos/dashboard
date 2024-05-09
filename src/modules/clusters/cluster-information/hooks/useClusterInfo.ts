@@ -1,9 +1,8 @@
-import { useQueries, useQuery, UseQueryResult } from "react-query";
-
+import { useQueries  } from "react-query";
 import client from "@/api-client/apiClient";
 
 import { API_ENDPOINTS } from "@/api-client/endpoints";
-import { ClusterType } from "@/types/cluster";
+import { ClusterType } from "@/types/cluster.types";
 import { pathFromType } from "@/api-client/util/GetPathFromType";
 import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
 const { Endresources, EndhelmChart } = API_ENDPOINTS;

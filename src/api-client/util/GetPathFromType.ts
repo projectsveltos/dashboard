@@ -1,4 +1,4 @@
-import { ClusterType } from "@/types/cluster";
+import { ClusterType } from "@/types/cluster.types";
 import { clusterAPIValue, sveltosClusterValue } from "@/types/cluster.consts";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 

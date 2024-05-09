@@ -5,40 +5,22 @@ import useDebounce from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/button";
 import { ClearableInput } from "@/components/ui/clearable-input";
 import TagInput from "@/components/ui/TagInput";
-export const SearchFields = ({
-  updateQueryParams,
-}: {
-  updateQueryParams: any;
-}) => {
-  interface SearchField {
-    icon: React.ElementType;
-    label: string;
-    placeholder: string;
-    termKey: string;
-    isTag?: boolean;
-  }
+export interface SearchField {
+  icon: React.ElementType;
+  label: string;
+  placeholder: string;
+  termKey: string;
+  isTag?: boolean;
+}
 
-  const searchFieldsData: SearchField[] = [
-    {
-      icon: ALargeSmall,
-      label: "Name",
-      placeholder: "Filter clusters by name...",
-      termKey: "name",
-    },
-    {
-      icon: Blocks,
-      label: "Namespace",
-      placeholder: "Filter clusters by namespace...",
-      termKey: "namespace",
-    },
-    {
-      icon: Tags,
-      label: "Labels",
-      placeholder: "Filter clusters by labels...",
-      termKey: "labels",
-      isTag: true,
-    },
-  ];
+export const SearchFields = ({
+  updateQueryParams,searchFieldsData
+}: {
+  updateQueryParams: (searchTerms: Record<string, string |string[]>) => void;
+  searchFieldsData: SearchField[];
+}) => {
+
+
 
   const [searchTerms, setSearchTerms] = useState<
     Record<string, string | string[]>

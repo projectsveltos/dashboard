@@ -2,7 +2,7 @@ import {
   ClusterApiType,
   ClusterType,
   SveltosClusterType,
-} from "@/types/cluster";
+} from "@/types/cluster.types";
 
 export const clusterAPIValue: ClusterType | ClusterApiType = "ClusterAPI";
 export const sveltosClusterValue: ClusterType | SveltosClusterType =

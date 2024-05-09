@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { ReadyFlag } from "@/components/ui/ready-flag";
 import { FailedFlag } from "@/components/ui/failed-flag";
-import { Label } from "@/types/cluster";
+import { Label } from "@/types/cluster.types";
 import { appConfig } from "@/config/app";
 import { ServerCrash, Tags } from "lucide-react";
 

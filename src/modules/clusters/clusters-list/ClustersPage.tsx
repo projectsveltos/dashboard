@@ -11,6 +11,7 @@ import { ClusterList } from "@/modules/clusters/clusters-list/components/Cluster
 import { ErrorQuery } from "@/components/ui/errorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
 import { SearchFields } from "@/modules/clusters/clusters-list/components/searchFields";
+import useExtendValue from "@/hooks/useExtendValue";
 
 export default function ClustersPage() {
   const navigate = useNavigate();
@@ -34,6 +35,7 @@ export default function ClustersPage() {
     error,
     refetch,
   } = useClusters(currentTab, currentPage, searchParams);
+  const isExtendedLoading = useExtendValue(isLoading);
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
     navigate(`/clusters/${value}/${currentPage}`);
@@ -69,7 +71,7 @@ export default function ClustersPage() {
         </TabsList>
       </Tabs>
       <SearchFields updateQueryParams={updateQueryParams} />
-      {(isLoading || isPreviousData) && <LoadingCards />}
+      {(isExtendedLoading || isPreviousData) && <LoadingCards />}
       {isError && <ErrorQuery name={"clusters"} error={error} />}
       {isSuccess && data && (
         <>

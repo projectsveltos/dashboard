@@ -67,7 +67,7 @@ export const ClusterCard = ({
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     {displayEntries.map(([key, value]) => (
                       <Badge
-                        key={key}
+                        key={`${key}: ${value}`}
                         className={
                           "my-0.5 dark:bg-slate-800 bg-slate-300 hover:animate-in border-2 rounded"
                         }
@@ -90,7 +90,7 @@ export const ClusterCard = ({
 
               {labelEntries.map(([key, value]) => (
                 <Badge
-                  key={key}
+                  key={`${key}: ${value}`}
                   className={"my-0.5 rounded overflow-auto "}
                   variant="label"
                 >

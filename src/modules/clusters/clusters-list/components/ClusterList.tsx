@@ -1,7 +1,7 @@
 import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
 
 import { useNavigate, useParams } from "react-router-dom";
-import { ClusterListResponse } from "@/types/cluster";
+import { ClusterInfoType, ClusterListResponse } from "@/types/cluster";
 import { EmptyData } from "@/components/ui/emptyData";
 import { usePagination } from "@/hooks/usePagination";
 import { FC } from "react";
@@ -21,19 +21,22 @@ export const ClusterList: FC<ClusterListProps> = ({
   if (data?.managedClusters.length <= 0 || !data.managedClusters) {
     return <EmptyData name={"clusters"} />;
   }
+  function handleNavigation(cluster:ClusterInfoType) {
+    navigate(
+      `/cluster/${tab}/${cluster.namespace}/${cluster.name}`,
+    )
+  }
   const { tab } = useParams();
   return (
     <>
       <div className="mt-5">
         <div className="min-h-[400px] flex flex-col ">
           <div className="flex flex-wrap mb-4 py-4">
-            {data.managedClusters.map((cluster: any) => (
+            {data.managedClusters.map((cluster: ClusterInfoType) => (
               <div key={cluster.name} className="w-full md:w-1/2 p-2">
                 <ClusterCard
                   onClick={() =>
-                    navigate(
-                      `/cluster/${tab}/${cluster.namespace}/${cluster.name}`,
-                    )
+                   handleNavigation(cluster)
                   }
                   key={cluster.name}
                   name={cluster.name}

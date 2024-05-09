@@ -11,11 +11,9 @@ type LabelsCardProps = {
 export const LabelsCard = ({ labels }: LabelsCardProps) => {
   useEffect(() => {
     console.log("LabelsCard", labels);
-
   }, [labels]);
   const labelEntries = Object.entries(labels || {});
   return (
-
     <>
       <div>
         <Card x-chunk="dashboard-07-chunk-3">
@@ -28,16 +26,16 @@ export const LabelsCard = ({ labels }: LabelsCardProps) => {
 
           <CardContent>
             <div className="flex flex-wrap ">
-              {labelEntries.length>0 && labelEntries.map(([key, value]) => (
-                <Badge
-                  key={key}
-                  className={"m-2 p-2 rounded"}
-                  variant="secondary"
-                >
-
-                  <p>{`${key}: ${value}`}</p>
-                </Badge>
-              ))}
+              {labelEntries.length > 0 &&
+                labelEntries.map(([key, value]) => (
+                  <Badge
+                    key={key}
+                    className={"m-2 p-2 rounded"}
+                    variant="secondary"
+                  >
+                    <p>{`${key}: ${value}`}</p>
+                  </Badge>
+                ))}
             </div>
           </CardContent>
         </Card>

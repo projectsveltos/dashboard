@@ -14,7 +14,7 @@ export default function App() {
           toast.error(`Something went wrong: ${error.message}`);
         }
       },
-      staleTime: 10000,
+
       refetchOnWindowFocus: "always",
     },
   });

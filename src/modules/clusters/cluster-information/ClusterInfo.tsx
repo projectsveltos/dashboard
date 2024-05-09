@@ -13,7 +13,7 @@ import { ResourceTable } from "@/modules/clusters/cluster-information/components
 import { ClusterConfig } from "@/modules/clusters/cluster-information/components/ClusterConfig";
 import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
 import { useParams } from "react-router-dom";
-import { ClusterType } from "@/types/cluster";
+import { ClusterInfoType, ClusterType, Label } from "@/types/cluster";
 import { useEffect, useState } from "react";
 
 export const data = {
@@ -89,13 +89,17 @@ export const data = {
 
 export function ClusterInfo() {
   const { tab: type, name, namespace } = useParams();
-  const [infoData, setInfoData] = useState(null);
+  const [infoData, setInfoData] = useState<ClusterInfoType | null>(null);
   const queries = useClusterInfo(namespace, name, type as ClusterType);
 
   const [resourcesQuery, helmChartQuery, InfoQuery] = queries;
   useEffect(() => {
-    if(resourcesQuery.isSuccess && helmChartQuery.isSuccess && InfoQuery.isSuccess){
-      setInfoData(InfoQuery.data.managedClusters[0])
+    if (
+      resourcesQuery.isSuccess &&
+      helmChartQuery.isSuccess &&
+      InfoQuery.isSuccess
+    ) {
+      setInfoData(InfoQuery.data.managedClusters[0]);
     }
   }, [InfoQuery]);
 
@@ -111,6 +115,7 @@ export function ClusterInfo() {
               <ClusterHeading
                 name={infoData.name}
                 status={infoData?.clusterInfo.ready}
+                namespace={infoData.namespace}
                 version={infoData?.clusterInfo.version}
               />
             )}
@@ -119,7 +124,7 @@ export function ClusterInfo() {
 
               <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
                 {InfoQuery.isSuccess && infoData && (
-                <LabelsCard labels={infoData?.clusterInfo?.labels} />
+                  <LabelsCard labels={infoData?.clusterInfo?.labels} />
                 )}
                 <ClusterConfig />
                 <Card x-chunk="dashboard-07-chunk-5">

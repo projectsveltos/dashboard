@@ -25,11 +25,15 @@ export default function ClustersPage() {
   const [currentPage, setCurrentPage] = useState<number>(() => {
     return urlPage ? parseInt(urlPage) : defaultPage;
   });
-  const { data, isLoading, isError, isSuccess, error, refetch } = useClusters(
-    currentTab,
-    currentPage,
-    searchParams,
-  );
+  const {
+    data,
+    isLoading,
+    isPreviousData,
+    isError,
+    isSuccess,
+    error,
+    refetch,
+  } = useClusters(currentTab, currentPage, searchParams);
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
     navigate(`/clusters/${value}/${currentPage}`);
@@ -65,7 +69,7 @@ export default function ClustersPage() {
         </TabsList>
       </Tabs>
       <SearchFields updateQueryParams={updateQueryParams} />
-      {isLoading && <LoadingCards />}
+      {(isLoading || isPreviousData) && <LoadingCards />}
       {isError && <ErrorQuery name={"clusters"} error={error} />}
       {isSuccess && data && (
         <>

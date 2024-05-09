@@ -8,12 +8,14 @@ type ClusterHeadingProps = {
   name: string;
   version: string;
   status: boolean;
+  namespace?: string;
 };
 
 export const ClusterHeading = ({
   name,
   version,
   status,
+  namespace,
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
   return (
@@ -39,11 +41,18 @@ export const ClusterHeading = ({
         </Badge>
         <Badge
           variant="outline"
+          className="ml-auto sm:ml-0  flex items-center "
+        >
+          namespace : {namespace}
+        </Badge>
+        <Badge
+          variant="outline"
           className={`ml-auto sm:ml-0 ${status ? "bg-main-500" : "bg-red-500"}  flex items-center text-white`}
         >
           <Icons.k8s className="w-4 h-4 mr-1" />
           {status ? "Healthy" : "Failed"}
         </Badge>
+
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
           <Button variant="outline" size="sm">
             <RefreshCcw className={"w-3 h-3 mx-1"} /> Refresh

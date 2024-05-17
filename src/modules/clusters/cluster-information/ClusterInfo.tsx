@@ -9,13 +9,14 @@ import {
 } from "@/components/ui/card";
 import { ClusterHeading } from "@/modules/clusters/cluster-information/components/clusterHeading";
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
-import { AddonsTabs } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTabs";
+import { Addons } from "@/modules/clusters/cluster-information/components/AddonsTable/Addons";
 import { ClusterConfig } from "@/modules/clusters/cluster-information/components/ClusterConfig";
 import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
 import { useParams } from "react-router-dom";
 import { ClusterInfoType, ClusterType, Label } from "@/types/cluster.types";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { HelmReleaseType } from "@/types/helm.types";
+import { LoadingAddons } from "@/modules/clusters/cluster-information/components/AddonsTable/LoadingAddons";
 
 export const data = {
   name: "Cluster 1",
@@ -90,97 +91,60 @@ export const data = {
 
 export function ClusterInfo() {
   const { tab: type, name, namespace } = useParams();
-  const [infoData, setInfoData] = useState<ClusterInfoType | null>(null);
-  const [helmReleaseData, setHelmReleaseData] = useState<HelmReleaseType[] | {}>({});
   const queries = useClusterInfo(namespace, name, type as ClusterType);
   const [resourcesQuery, helmChartQuery, InfoQuery] = queries;
-  useEffect(() => {
-    if (
-      resourcesQuery.isSuccess &&
-      helmChartQuery.isSuccess &&
-      InfoQuery.isSuccess &&
-      InfoQuery.data.managedClusters.length > 0
-    ) {
-      setInfoData(InfoQuery.data.managedClusters[0]);
-      setHelmReleaseData(helmChartQuery.data.helmReleases)
-    }
-  }, [queries]);
 
-  const resourcesData = resourcesQuery.data;
-  const helmChartData = helmChartQuery.data;
   const addonTypes = [
-    { value: 'all', label: 'All' },
-    { value: 'resource', label: 'Resources' },
-    { value: 'helm', label: 'Helm Charts' }
+    { value: "all", label: "All" },
+    { value: "resource", label: "Resources" },
+    { value: "helm", label: "Helm Charts" },
   ];
-  const addonsData={
-    all: [
-      {
-        cluster: 'default/clusterapi-workload',
-        resourceType: 'helm chart',
-        namespace: 'kyverno',
-        name: 'kyverno-latest',
-        version: '3.1.4',
-        time: '2023-07-12 10:42 AM',
-        profiles: 'ClusterProfile/deploy-kyverno'
-      },
 
-    ],
-    resource: [
-      helmReleaseData
-    ],
-    helm:helmReleaseData
+  if(queries.some((query) => query.isLoading)){
+    return <LoadingAddons />
   }
+
   return (
-    <div>
-      <div>
-        <main>
-          <div className="mx-auto grid mt-4 flex-1 auto-rows-max gap-4">
-            {InfoQuery.isSuccess && infoData && (
-              <ClusterHeading
-                name={infoData.name}
-                status={infoData?.clusterInfo.ready}
-                namespace={infoData.namespace}
-                version={infoData?.clusterInfo.version}
-              />
-            )}
-            <div className="grid gap-4 md:grid-cols-[1fr_150px] lg:grid-cols-3 ">
-              {addonsData && helmChartQuery.isSuccess  &&  (
-                <AddonsTabs addonTypes={addonTypes} addonsData={addonsData} />
-                )
-              }
-              <div className="grid auto-rows-max items-start gap-4 ">
-                {InfoQuery.isSuccess && infoData && (
-                  <LabelsCard labels={infoData?.clusterInfo?.labels} />
-                )}
-                <ClusterConfig />
-                <Card x-chunk="dashboard-07-chunk-5">
-                  <CardHeader>
-                    <CardTitle className={"flex items-center"}>
-                      <Blocks className={"w-4 h-4"} /> Cluster Configuration
-                    </CardTitle>
-                    <CardDescription>
-                      Lipsum dolor sit amet, consectetur adipiscing elit.
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <div></div>
-                    <Button size="sm" variant="secondary">
-                      Archive Product
-                    </Button>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-            <div className="flex items-center justify-center gap-2 md:hidden">
-              <Button variant="outline" size="sm">
-                Discard
-              </Button>
-              <Button size="sm">Save Product</Button>
+    <main className="mx-auto grid mt-4 flex-1 auto-rows-max gap-4">
+
+      {/* TODO handle if infoquery empty or fails */}
+{/*      {InfoQuery.isSuccess && (*/}
+{/*          <ClusterHeading*/}
+{/*            name={InfoQuery.data.managedClusters[0].name}*/}
+{/*            status={InfoQuery.data.managedClusters[0]?.clusterInfo.ready}*/}
+{/*            namespace={InfoQuery.data.managedClusters[0].namespace}*/}
+{/*            version={InfoQuery.data.managedClusters[0]?.clusterInfo.version}*/}
+{/*          />*/}
+{/*)}*/}
+          <div className="grid gap-4 md:grid-cols-[1fr_150px] lg:grid-cols-3 ">
+            {helmChartQuery.isSuccess && resourcesQuery.isSuccess && <Addons addonTypes={addonTypes} addonsData={{helm: helmChartQuery.data.helmReleases, resource: resourcesQuery.data.resources}} />}
+            <div className="grid auto-rows-max items-start gap-4 ">
+              {InfoQuery.isSuccess && InfoQuery.data && <LabelsCard labels={InfoQuery.data.managedClusters[0]?.clusterInfo?.labels} />}
+              <ClusterConfig />
+              <Card x-chunk="dashboard-07-chunk-5">
+                <CardHeader>
+                  <CardTitle className={"flex items-center"}>
+                    <Blocks className={"w-4 h-4"} /> Cluster Configuration
+                  </CardTitle>
+                  <CardDescription>
+                    Lipsum dolor sit amet, consectetur adipiscing elit.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button size="sm" variant="secondary">
+                    Archive Product
+                  </Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
-        </main>
-      </div>
-    </div>
+          <div className="flex items-center justify-center gap-2 md:hidden">
+            <Button variant="outline" size="sm">
+              Discard
+            </Button>
+            <Button size="sm">Save Product</Button>
+          </div>
+
+    </main>
   );
 }

@@ -1,4 +1,4 @@
-import { useQueries  } from "react-query";
+import { useQueries } from "react-query";
 import client from "@/api-client/apiClient";
 
 import { API_ENDPOINTS } from "@/api-client/endpoints";
@@ -58,8 +58,7 @@ function useClusterInfo(
     clusterName === undefined ||
     clusterType === undefined
   ) {
-    // You can return an empty array or handle it according to your use case
-    return [];
+  return [];
   }
   const queries = useQueries([
     {

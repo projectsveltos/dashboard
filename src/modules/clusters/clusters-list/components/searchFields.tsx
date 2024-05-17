@@ -14,14 +14,12 @@ export interface SearchField {
 }
 
 export const SearchFields = ({
-  updateQueryParams,searchFieldsData
+  updateQueryParams,
+  searchFieldsData,
 }: {
-  updateQueryParams: (searchTerms: Record<string, string |string[]>) => void;
+  updateQueryParams: (searchTerms: Record<string, string | string[]>) => void;
   searchFieldsData: SearchField[];
 }) => {
-
-
-
   const [searchTerms, setSearchTerms] = useState<
     Record<string, string | string[]>
   >(() => {

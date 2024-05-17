@@ -8,7 +8,6 @@ export interface HelmReleaseType {
   icon: string;
   lastAppliedTime: string;
   profileName: string;
-
 }
 
 export type HelmReleaseReponse = {

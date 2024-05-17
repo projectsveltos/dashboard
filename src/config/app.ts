@@ -15,6 +15,7 @@ interface AppConfig {
   defaultPage: number;
   defaultSize: number;
   maxBadges: number;
+  defaultTableSize: number;
 }
 
 export const appConfig: AppConfig = {
@@ -26,5 +27,6 @@ export const appConfig: AppConfig = {
   defaultType: sveltosClusterValue,
   defaultPage: 1,
   defaultSize: 8,
+  defaultTableSize: 6,
   maxBadges: 2,
 };

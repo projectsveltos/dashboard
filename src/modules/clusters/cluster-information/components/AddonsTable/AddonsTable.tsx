@@ -20,7 +20,7 @@ export const AddonsTable = ({
 }) => {
   const navigateRepoURL = (url: string) => {
     window.open(url, "_blank");
-  }
+  };
   return (
     <>
       <>
@@ -42,8 +42,13 @@ export const AddonsTable = ({
                 {/*<TableCell className="hidden md:table-cell" ><a className={"flex items-center text-blue-700"} href={"#"}>{row.repoURL}</a> </TableCell>*/}
 
                 <TableCell className="hidden md:table-cell">
-                <div>{new Date(row.lastAppliedTime)?.toLocaleDateString("en-US")} </div>
-                  {new Date(row.lastAppliedTime)?.toLocaleTimeString("en-US", { hour: '2-digit', minute: '2-digit' })}
+                  <div>
+                    {new Date(row.lastAppliedTime)?.toLocaleDateString("en-US")}{" "}
+                  </div>
+                  {new Date(row.lastAppliedTime)?.toLocaleTimeString("en-US", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   {row.profileName}
@@ -58,9 +63,13 @@ export const AddonsTable = ({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                      <DropdownMenuItem onSelect={()=>navigateRepoURL(row.repoURL)}><ExternalLink className={"w-4 h-4 mx-1"} /> repoURL</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onSelect={() => navigateRepoURL(row.repoURL)}
+                      >
+                        <ExternalLink className={"w-4 h-4 mx-1"} /> repoURL
+                      </DropdownMenuItem>
                       <DropdownMenuItem disabled>Edit</DropdownMenuItem>
-                      <DropdownMenuItem disabled >Delete</DropdownMenuItem>
+                      <DropdownMenuItem disabled>Delete</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>

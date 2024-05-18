@@ -1,10 +1,10 @@
 import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
 
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ClusterInfoType, ClusterListResponse } from "@/types/cluster.types";
 import { EmptyData } from "@/components/ui/emptyData";
 import { usePagination } from "@/hooks/usePagination";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 type ClusterListProps = {
   data: ClusterListResponse;
   page: number;
@@ -21,10 +21,14 @@ export const ClusterList: FC<ClusterListProps> = ({
   if (data?.managedClusters.length <= 0 || !data.managedClusters) {
     return <EmptyData name={"clusters"} />;
   }
-  function handleNavigation(cluster: ClusterInfoType) {
-    navigate(`/cluster/${tab}/${cluster.namespace}/${cluster.name}`);
-  }
   const { tab } = useParams();
+  const location = useLocation();
+
+  const currentTab = window.location.pathname.split("/")[2];
+  function handleNavigation(cluster: ClusterInfoType) {
+    navigate(`/cluster/${currentTab}/${cluster.namespace}/${cluster.name}`);
+  }
+
   return (
     <>
       <div className="mt-5">

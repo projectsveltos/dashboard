@@ -58,7 +58,7 @@ function useClusterInfo(
     clusterName === undefined ||
     clusterType === undefined
   ) {
-  return [];
+    return [];
   }
   const queries = useQueries([
     {

@@ -1,7 +1,7 @@
 import { PageHeading } from "@/components/ui/PageHeading";
 import { appConfig } from "@/config/app";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ClusterType } from "@/types/cluster.types";
@@ -11,10 +11,8 @@ import { ClusterList } from "@/modules/clusters/clusters-list/components/Cluster
 import { ErrorQuery } from "@/components/ui/errorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
 import { SearchFields } from "@/modules/clusters/clusters-list/components/searchFields";
-import useExtendValue from "@/hooks/useExtendValue";
+
 import { clusterSearchfields } from "@/modules/clusters/clusters-list/config/clusterSearchfields.consts";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { RocketIcon } from "lucide-react";
 
 export default function ClustersPage() {
   const navigate = useNavigate();
@@ -33,7 +31,7 @@ export default function ClustersPage() {
   });
   const { data, isLoading, isPreviousData, isError, isSuccess, error } =
     useClusters(currentTab, currentPage, searchParams);
-  const isExtendedLoading = useExtendValue(isLoading);
+
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
     navigate(`/clusters/${value}/${currentPage}`);
@@ -45,7 +43,11 @@ export default function ClustersPage() {
   const updateQueryParams = (
     searchTerms: Record<string, string | string[]>,
   ) => {
-    handlePageChange(appConfig.defaultPage);
+    const newPathname = location.pathname.replace(
+      `/${urlPage}`,
+      `/${defaultPage}`,
+    );
+    navigate(newPathname);
     setSearchParams(searchTerms);
   };
 

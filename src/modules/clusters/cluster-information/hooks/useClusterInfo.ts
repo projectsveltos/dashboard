@@ -7,6 +7,8 @@ import { pathFromType } from "@/api-client/util/GetPathFromType";
 import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
 import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
 import { appConfig } from "@/config/app";
+import { useState } from "react";
+import { AddonTypes } from "@/types/addon.types";
 
 const { Endresources, EndhelmChart } = API_ENDPOINTS;
 
@@ -45,6 +47,7 @@ const getHelmCharts = async (
   return data;
 };
 
+
 const getClusterInfo = async (
   namespace: string,
   clusterName: string,
@@ -59,32 +62,40 @@ const getClusterInfo = async (
   return data;
 };
 function useClusterInfo(
-  namespace: string | undefined,
-  clusterName: string | undefined,
-  clusterType: ClusterType | undefined,
-  page: number,
+  namespace: string ,
+  clusterName: string ,
+  clusterType: ClusterType ,
 ) {
-  if (
-    namespace === undefined ||
-    clusterName === undefined ||
-    clusterType === undefined
-  ) {
-    return [];
+  const [helmPage, setHelmPage] = useState(appConfig.defaultPage);
+  const [resourcePage, setResourcePage] = useState(appConfig.defaultPage);
+  const setPage= (page:number,type:AddonTypes) => {
+  if(type==AddonTypes.HELM){
+    setHelmPage(page)
+  }else if(type==AddonTypes.RESOURCE){
+    setResourcePage(page)
   }
-  return useQueries([
+  }
+  const queries = useQueries([
     {
-      queryKey: ["resources", namespace, clusterName, clusterType, page],
-      queryFn: () => getResources(namespace, clusterName, clusterType, page),
+      queryKey: ["resources", namespace, clusterName, clusterType, resourcePage],
+      queryFn: () => getResources(namespace, clusterName, clusterType, resourcePage),
+      enabled: !!namespace && !!clusterName && !!clusterType,
+      placeholderData: { data: [], isLoading: true, error: null },
     },
     {
-      queryKey: ["helmChart", namespace, clusterName, clusterType, page],
-      queryFn: () => getHelmCharts(namespace, clusterName, clusterType, page),
+      queryKey: ["helmChart", namespace, clusterName, clusterType, helmPage],
+      queryFn: () => getHelmCharts(namespace, clusterName, clusterType, helmPage),
+      enabled: !!namespace && !!clusterName && !!clusterType,
+      placeholderData: { data: [], isLoading: true, error: null },
     },
     {
       queryKey: ["clusterInfo", namespace, clusterName, clusterType],
       queryFn: () => getClusterInfo(namespace, clusterName, clusterType),
+      enabled: !!namespace && !!clusterName && !!clusterType,
+      placeholderData: { data: {}, isLoading: true, error: null },
     },
   ]);
+  return {queries,setPage}
 }
 
-export default useClusterInfo;
+export default useClusterInfo

@@ -15,34 +15,29 @@ import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClus
 import { useParams } from "react-router-dom";
 import { ClusterType } from "@/types/cluster.types";
 import { LoadingAddons } from "@/modules/clusters/cluster-information/components/AddonsTable/LoadingAddons";
-
-import { useState } from "react";
-import { appConfig } from "@/config/app";
-import { AddonTypes, addonTypes } from "@/types/addon.types";
+import { AddonTypes } from "@/types/addon.types";
 import { ErrorQuery } from "@/components/ui/errorQuery";
 
 export function ClusterInfoById() {
   const { tab: type, name, namespace } = useParams();
-  const [page, setPage] = useState<number>(appConfig.defaultPage);
-  const queries = useClusterInfo(namespace, name, type as ClusterType, page);
-  const [resourcesQuery, helmChartQuery, InfoQuery] = queries;
+   const {queries,setPage} = useClusterInfo(namespace as string, name as string, type as ClusterType);
+  const [resourcesQuery, helmChartQuery, InfoQuery] = queries.map(query => query);
 
-  if (queries.some((query) => query.isLoading)) {
+  if (InfoQuery.data.isLoading) {
     return <LoadingAddons />;
   }
-  if (queries.some((query) => query.isError)) {
-    const firstErrorQuery = queries.find((query) => query.isError);
+  if (queries.some((query) => query.data.isError)) {
+    const firstErrorQuery = queries.find((query) => query.data.isError);
     return (
       <>
-        <ClusterHeading name={name ? name : "Unkown"} namespace={namespace} />
+        <ClusterHeading name={name ? name : "Unknown"} namespace={namespace} />
         <ErrorQuery name={"cluster"} error={firstErrorQuery?.error} />
       </>
     );
   }
   return (
     <main className="mx-auto grid mt-4 flex-1 auto-rows-max gap-4">
-      {/* TODO handle if infoquery empty or fails (NOT FOUND) */}
-      {InfoQuery.isSuccess && (
+      {InfoQuery.data.isSuccess && (
         <ClusterHeading
           name={InfoQuery.data.managedClusters[0].name}
           status={InfoQuery.data.managedClusters[0]?.clusterInfo.ready}
@@ -52,17 +47,18 @@ export function ClusterInfoById() {
       )}
       <div className="grid gap-4   lg:grid-cols-3  ">
         {/* TOODO HANDLE LOADING*/}
-        {helmChartQuery.isSuccess && resourcesQuery.isSuccess && (
           <Addons
-            addonTypes={addonTypes}
+            setPage={setPage}
+            loading={helmChartQuery.data.isLoading||resourcesQuery.data.isLoading}
             addonsData={{
-              totalHelmReleases: helmChartQuery.data.totalHelmReleases,
-              totalClusters: resourcesQuery.data.totalResources,
-              [AddonTypes.HELM]: helmChartQuery.data.helmReleases,
-              [AddonTypes.RESOURCE]: resourcesQuery.data.resources,
+              totalHelmReleases: helmChartQuery.data?.totalHelmReleases || 0,
+              totalClusters: resourcesQuery.data?.totalResources || 0,
+              [AddonTypes.HELM]: helmChartQuery.data?.helmReleases || [],
+              [AddonTypes.RESOURCE]: resourcesQuery.data?.resources || [],
             }}
+
           />
-        )}
+
         <div className="grid auto-rows-max items-start gap-4 ">
           {InfoQuery.isSuccess && InfoQuery.data && (
             <LabelsCard

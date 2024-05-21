@@ -1,30 +1,25 @@
 import { Blocks, File, PlusCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AddonsTable } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTable";
 import { useMemo, useState } from "react";
 
-import { AddonTypes } from "@/types/addon.types";
+import { addonTypes, AddonTypes } from "@/types/addon.types";
 
 interface ResourceTableProps {
   addonsData: any;
-  addonTypes: any;
+  loading:boolean
+  setPage:(page:number,type:AddonTypes)=>void
+
 }
 
-export function Addons({ addonsData, addonTypes }: ResourceTableProps) {
-  const [activeTab, setActiveTab] = useState(addonTypes[0]);
-
+export function Addons({ addonsData,setPage,loading }: ResourceTableProps) {
+  /* Bydefault we show helm charts , this will be hardcoded for now */
+  const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
   const totalElements = useMemo(() => {
     if (activeTab === AddonTypes.HELM) {
       return addonsData.totalHelmReleases;
@@ -40,7 +35,7 @@ export function Addons({ addonsData, addonTypes }: ResourceTableProps) {
       <main>
         <Tabs
           value={activeTab}
-          onValueChange={(value) => setActiveTab(value)}
+          onValueChange={(value) => setActiveTab(value as AddonTypes)}
           orientation="vertical"
         >
           <Card>
@@ -81,10 +76,12 @@ export function Addons({ addonsData, addonTypes }: ResourceTableProps) {
                   </TabsTrigger>
                 ))}
               </TabsList>
-              {addonTypes.map((type: any) => (
+              {addonTypes.map((type: AddonTypes) => (
                 <TabsContent className={"w-[800px] "} key={type} value={type}>
                   <AddonsTable
                     type={type}
+                    loading={loading}
+                    setPage={setPage}
                     data={addonsData[type]}
                     total={totalElements}
                   />

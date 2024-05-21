@@ -3,11 +3,12 @@ import { ChevronLeft, RefreshCcw, XCircle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { Icons } from "@/components/icons";
+import { RefreshButton } from "@/components/ui/RefreshButton";
 
 type ClusterHeadingProps = {
   name: string;
-  version: string;
-  status: boolean;
+  version?: string;
+  status?: boolean;
   namespace?: string;
 };
 
@@ -33,30 +34,31 @@ export const ClusterHeading = ({
         <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
           {name}
         </h1>
-        <Badge
-          variant="outline"
-          className="ml-auto sm:ml-0  flex items-center "
-        >
-          version : {version}
-        </Badge>
+        {version && (
+          <Badge
+            variant="outline"
+            className="ml-auto sm:ml-0  flex items-center "
+          >
+            version : {version}
+          </Badge>
+        )}
         <Badge
           variant="outline"
           className="ml-auto sm:ml-0  flex items-center "
         >
           namespace : {namespace}
         </Badge>
-        <Badge
-          variant="outline"
-          className={`ml-auto sm:ml-0 ${status ? "bg-main-500" : "bg-red-500"}  flex items-center text-white`}
-        >
-          <Icons.k8s className="w-4 h-4 mr-1" />
-          {status ? "Healthy" : "Failed"}
-        </Badge>
-
+        {status && (
+          <Badge
+            variant="outline"
+            className={`ml-auto sm:ml-0 ${status ? "bg-main-500" : "bg-red-500"}  flex items-center text-white`}
+          >
+            <Icons.k8s className="w-4 h-4 mr-1" />
+            {status ? "Healthy" : "Failed"}
+          </Badge>
+        )}
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
-          <Button variant="outline" size="sm">
-            <RefreshCcw className={"w-3 h-3 mx-1"} /> Refresh
-          </Button>
+          <RefreshButton />
         </div>
       </div>
     </>

@@ -5,7 +5,7 @@ import { Applayout } from "./components/layouts/AppLayout";
 import NoMatch from "./modules/fallback/NoMatch";
 import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
-import { ClusterInfo } from "@/modules/clusters/cluster-information/ClusterInfo";
+import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterInfoById";
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
 export const router = createBrowserRouter([
@@ -27,7 +27,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/cluster/:tab/:namespace/:name",
-        element: <ClusterInfo />,
+        element: <ClusterInfoById />,
       },
       {
         path: "*",

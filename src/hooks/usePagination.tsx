@@ -80,27 +80,32 @@ export const usePagination = (
     return (
       <Pagination>
         <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious
-              onClick={() =>
-                currentPage === 1 ? null : setPage(currentPage - 1)
-              }
-              isActive={!isFirstPage}
-            />
-          </PaginationItem>
+          {!isFirstPage && (
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() =>
+                  currentPage === 1 ? null : setPage(currentPage - 1)
+                }
+                isActive={!isFirstPage}
+              />
+            </PaginationItem>
+          )}
+
           {!isFirstPage && startPage >= 2 && firstPage}
           {ellipsisPrev}
           {pages}
           {ellipsisNext}
           {!isLastPage && endPage < totalPages && lastPage}
-          <PaginationItem>
-            <PaginationNext
-              onClick={() => (isLastPage ? null : setPage(currentPage + 1))}
-              isActive={
-                !isLastPage && currentPage !== totalPages && totalPages !== 1
-              }
-            />
-          </PaginationItem>
+          {!isLastPage && currentPage !== totalPages && totalPages >= 1 && (
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => (isLastPage ? null : setPage(currentPage + 1))}
+                isActive={
+                  !isLastPage && currentPage !== totalPages && totalPages !== 1
+                }
+              />
+            </PaginationItem>
+          )}
         </PaginationContent>
       </Pagination>
     );

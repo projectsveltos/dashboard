@@ -5,18 +5,24 @@ import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ClusterType } from "@/types/cluster.types";
 import { pathFromType } from "@/api-client/util/GetPathFromType";
 import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
+import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
+import { appConfig } from "@/config/app";
+
 const { Endresources, EndhelmChart } = API_ENDPOINTS;
 
 const getResources = async (
   namespace: string,
   clusterName: string,
   clusterType: ClusterType,
+  page: number,
 ) => {
   const { data } = await client.get(Endresources, {
     params: {
       namespace: namespace,
       name: clusterName,
       type: getClusterInfoType(clusterType),
+      skip: getItemsToSkip(page, appConfig.defaultTableSize),
+      limit: appConfig.defaultTableSize,
     },
   });
   return data;
@@ -25,16 +31,20 @@ const getHelmCharts = async (
   namespace: string,
   clusterName: string,
   clusterType: ClusterType,
+  page: number,
 ) => {
   const { data } = await client.get(EndhelmChart, {
     params: {
       namespace: namespace,
       name: clusterName,
       type: getClusterInfoType(clusterType),
+      skip: getItemsToSkip(page, appConfig.defaultTableSize),
+      limit: appConfig.defaultTableSize,
     },
   });
   return data;
 };
+
 const getClusterInfo = async (
   namespace: string,
   clusterName: string,
@@ -52,6 +62,7 @@ function useClusterInfo(
   namespace: string | undefined,
   clusterName: string | undefined,
   clusterType: ClusterType | undefined,
+  page: number,
 ) {
   if (
     namespace === undefined ||
@@ -60,22 +71,20 @@ function useClusterInfo(
   ) {
     return [];
   }
-  const queries = useQueries([
+  return useQueries([
     {
-      queryKey: ["resources", namespace, clusterName, clusterType],
-      queryFn: () => getResources(namespace, clusterName, clusterType),
+      queryKey: ["resources", namespace, clusterName, clusterType, page],
+      queryFn: () => getResources(namespace, clusterName, clusterType, page),
     },
     {
-      queryKey: ["helmChart", namespace, clusterName, clusterType],
-      queryFn: () => getHelmCharts(namespace, clusterName, clusterType),
+      queryKey: ["helmChart", namespace, clusterName, clusterType, page],
+      queryFn: () => getHelmCharts(namespace, clusterName, clusterType, page),
     },
     {
       queryKey: ["clusterInfo", namespace, clusterName, clusterType],
       queryFn: () => getClusterInfo(namespace, clusterName, clusterType),
     },
   ]);
-
-  return queries;
 }
 
 export default useClusterInfo;

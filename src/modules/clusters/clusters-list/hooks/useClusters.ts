@@ -2,21 +2,18 @@ import { useQuery, UseQueryResult } from "react-query";
 
 import client from "@/api-client/apiClient";
 import { ClusterListResponse, ClusterType } from "@/types/cluster.types";
-import { clusterAPIValue, sveltosClusterValue } from "@/types/cluster.consts";
 import { appConfig } from "@/config/app";
-import { API_ENDPOINTS } from "@/api-client/endpoints";
+
 import { pathFromType } from "@/api-client/util/GetPathFromType";
+import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
 const fetchClusters = async (
   type: ClusterType,
   page: number,
   searchParams: any,
 ) => {
-  let endpoint;
-  const itemsToSkip = (page - 1) * appConfig.defaultSize;
-
   const { data } = await client.get(pathFromType(type), {
     params: {
-      skip: itemsToSkip,
+      skip: getItemsToSkip(page, appConfig.defaultSize),
       limit: appConfig.defaultSize,
       ...searchParams,
     },

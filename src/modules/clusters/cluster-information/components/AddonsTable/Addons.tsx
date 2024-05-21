@@ -1,7 +1,5 @@
 import { Blocks, File, PlusCircle } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,18 +10,12 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { HelmReleaseType } from "@/types/helm.types";
+
 import { AddonsTable } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTable";
-import { Key, useState } from "react";
+import { useMemo, useState } from "react";
+
+import { AddonTypes } from "@/types/addon.types";
 
 interface ResourceTableProps {
   addonsData: any;
@@ -31,7 +23,18 @@ interface ResourceTableProps {
 }
 
 export function Addons({ addonsData, addonTypes }: ResourceTableProps) {
-  const [activeTab, setActiveTab] = useState(addonTypes[0].value);
+  const [activeTab, setActiveTab] = useState(addonTypes[0]);
+
+  const totalElements = useMemo(() => {
+    if (activeTab === AddonTypes.HELM) {
+      return addonsData.totalHelmReleases;
+    } else if (activeTab === AddonTypes.RESOURCE) {
+      return addonsData.totalClusters;
+    } else {
+      throw new Error("No Tab matches the selected value.");
+    }
+  }, [activeTab, addonsData]);
+
   return (
     <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
       <main>
@@ -40,7 +43,7 @@ export function Addons({ addonsData, addonTypes }: ResourceTableProps) {
           onValueChange={(value) => setActiveTab(value)}
           orientation="vertical"
         >
-          <Card x-chunk="dashboard-06-chunk-0">
+          <Card>
             <CardHeader>
               <CardTitle className={"flex items-center"}>
                 <Blocks className={"w-4 h-4"} /> Addons
@@ -70,52 +73,25 @@ export function Addons({ addonsData, addonTypes }: ResourceTableProps) {
               <TabsList>
                 {addonTypes.map((tab: any) => (
                   <TabsTrigger
-                    key={tab.value}
-                    value={tab.value}
-                    onClick={() => setActiveTab(tab.value)}
+                    key={tab}
+                    value={tab}
+                    onClick={() => setActiveTab(tab)}
                   >
-                    {tab.label}
+                    {tab}
                   </TabsTrigger>
                 ))}
               </TabsList>
               {addonTypes.map((type: any) => (
-                <TabsContent key={type} value={type.value}>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead></TableHead>
-                        <TableHead>Name</TableHead>
-                        <TableHead>Namespace</TableHead>
-                        <TableHead className={"hidden sm:table-cell"}>
-                          Version
-                        </TableHead>
-                        {/*<TableHead className={"hidden sm:table-cell"}>repo</TableHead>*/}
-                        <TableHead className={"hidden sm:table-cell"}>
-                          Last Applied
-                        </TableHead>
-                        <TableHead className={"hidden sm:table-cell"}>
-                          Profile
-                        </TableHead>
-                        <TableHead>
-                          <span className="sr-only">Actions</span>
-                        </TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <AddonsTable
-                        type={type.value}
-                        data={addonsData[type.value]}
-                      />
-                    </TableBody>
-                  </Table>
+                <TabsContent className={"w-[800px] "} key={type} value={type}>
+                  <AddonsTable
+                    type={type}
+                    data={addonsData[type]}
+                    total={totalElements}
+                  />
                 </TabsContent>
               ))}
             </CardContent>
-            <CardFooter>
-              <div className="text-xs text-muted-foreground">
-                Showing <strong>1-10</strong> of <strong>4</strong> addons
-              </div>
-            </CardFooter>
+            <CardFooter></CardFooter>
           </Card>
         </Tabs>
       </main>

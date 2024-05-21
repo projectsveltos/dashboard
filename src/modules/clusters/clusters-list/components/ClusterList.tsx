@@ -22,11 +22,9 @@ export const ClusterList: FC<ClusterListProps> = ({
     return <EmptyData name={"clusters"} />;
   }
   const { tab } = useParams();
-  const location = useLocation();
 
-  const currentTab = window.location.pathname.split("/")[2];
   function handleNavigation(cluster: ClusterInfoType) {
-    navigate(`/cluster/${currentTab}/${cluster.namespace}/${cluster.name}`);
+    navigate(`/cluster/${tab}/${cluster.namespace}/${cluster.name}`);
   }
 
   return (

@@ -1,7 +1,14 @@
 import { Blocks, File, PlusCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -9,33 +16,28 @@ import { AddonsTable } from "@/modules/clusters/cluster-information/components/A
 import { useMemo, useState } from "react";
 
 import { addonTypes, AddonTypes } from "@/types/addon.types";
+import { appConfig } from "@/config/app";
 
 interface ResourceTableProps {
   addonsData: any;
-  loading:boolean
-  setPage:(page:number,type:AddonTypes)=>void
-
+  loading: boolean;
+  setPage: (page: number, type: AddonTypes) => void;
 }
 
-export function Addons({ addonsData,setPage,loading }: ResourceTableProps) {
+export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
   /* Bydefault we show helm charts , this will be hardcoded for now */
   const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
-  const totalElements = useMemo(() => {
-    if (activeTab === AddonTypes.HELM) {
-      return addonsData.totalHelmReleases;
-    } else if (activeTab === AddonTypes.RESOURCE) {
-      return addonsData.totalClusters;
-    } else {
-      throw new Error("No Tab matches the selected value.");
-    }
-  }, [activeTab, addonsData]);
 
+  const handleChangeTab = (tab: AddonTypes) => {
+    setActiveTab(tab);
+    setPage(appConfig.defaultPage, tab);
+  };
   return (
-    <div className="grid auto-rows-max items-start gap-4 lg:col-span-2 lg:gap-8">
+    <div className="grid auto-rows-max items-start">
       <main>
         <Tabs
           value={activeTab}
-          onValueChange={(value) => setActiveTab(value as AddonTypes)}
+          onValueChange={(value) => handleChangeTab(value as AddonTypes)}
           orientation="vertical"
         >
           <Card>
@@ -77,18 +79,16 @@ export function Addons({ addonsData,setPage,loading }: ResourceTableProps) {
                 ))}
               </TabsList>
               {addonTypes.map((type: AddonTypes) => (
-                <TabsContent className={"w-[800px] "} key={type} value={type}>
+                <TabsContent key={type} value={type}>
                   <AddonsTable
                     type={type}
                     loading={loading}
                     setPage={setPage}
                     data={addonsData[type]}
-                    total={totalElements}
                   />
                 </TabsContent>
               ))}
             </CardContent>
-            <CardFooter></CardFooter>
           </Card>
         </Tabs>
       </main>

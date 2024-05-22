@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { useEffect } from "react";
 
 type LabelsCardProps = {
-  labels: Label[];
+  labels: Label[] | [];
 };
 
 export const LabelsCard = ({ labels }: LabelsCardProps) => {
@@ -13,29 +13,26 @@ export const LabelsCard = ({ labels }: LabelsCardProps) => {
   return (
     <>
       <div>
-        <Card x-chunk="dashboard-07-chunk-3">
-          <CardHeader>
-            <CardTitle className={"flex items-center space-x-3"}>
+        {labelEntries.length > 0 && (
+          <Card className={"px-4"}>
+            <CardTitle className={"flex items-center m-2  space-x-3"}>
               <Tags className={"w-4 h-4 mx-0.5"} /> Labels{" "}
               <Badge variant="outline"> Total : {labelEntries.length}</Badge>
             </CardTitle>
-          </CardHeader>
-
-          <CardContent>
-            <div className="flex flex-wrap ">
+            <div className="overflow-x-auto h-14 whitespace-nowrap">
               {labelEntries.length > 0 &&
                 labelEntries.map(([key, value]) => (
                   <Badge
                     key={key}
-                    className={"m-2 p-2 rounded"}
+                    className="inline-block m-2 max-h-10 p-2 rounded"
                     variant="secondary"
                   >
-                    <p>{`${key}: ${value}`}</p>
+                    <p className="inline">{`${key}: ${value}`}</p>
                   </Badge>
                 ))}
             </div>
-          </CardContent>
-        </Card>
+          </Card>
+        )}
       </div>
     </>
   );

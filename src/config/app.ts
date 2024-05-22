@@ -27,6 +27,6 @@ export const appConfig: AppConfig = {
   defaultType: sveltosClusterValue,
   defaultPage: 1,
   defaultSize: 8,
-  defaultTableSize: 6,
+  defaultTableSize: 5,
   maxBadges: 2,
 };

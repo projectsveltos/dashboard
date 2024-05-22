@@ -78,36 +78,47 @@ export const usePagination = (
       </PaginationItem>
     );
     return (
-      <Pagination>
-        <PaginationContent>
-          {!isFirstPage && (
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() =>
-                  currentPage === 1 ? null : setPage(currentPage - 1)
-                }
-                isActive={!isFirstPage}
-              />
-            </PaginationItem>
-          )}
+      <span className={"mx-auto w-1/2"}>
+        <Pagination>
+          <PaginationContent>
+            {!isFirstPage && (
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() =>
+                    currentPage === 1 ? null : setPage(currentPage - 1)
+                  }
+                  isActive={!isFirstPage}
+                />
+              </PaginationItem>
+            )}
 
-          {!isFirstPage && startPage >= 2 && firstPage}
-          {ellipsisPrev}
-          {pages}
-          {ellipsisNext}
-          {!isLastPage && endPage < totalPages && lastPage}
-          {!isLastPage && currentPage !== totalPages && totalPages >= 1 && (
-            <PaginationItem>
-              <PaginationNext
-                onClick={() => (isLastPage ? null : setPage(currentPage + 1))}
-                isActive={
-                  !isLastPage && currentPage !== totalPages && totalPages !== 1
-                }
-              />
-            </PaginationItem>
-          )}
-        </PaginationContent>
-      </Pagination>
+            {!isFirstPage && startPage >= 2 && firstPage}
+            {ellipsisPrev}
+            {pages}
+            {ellipsisNext}
+            {!isLastPage && endPage < totalPages && lastPage}
+            {!isLastPage && currentPage !== totalPages && totalPages >= 1 && (
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => (isLastPage ? null : setPage(currentPage + 1))}
+                  isActive={
+                    !isLastPage &&
+                    currentPage !== totalPages &&
+                    totalPages !== 1
+                  }
+                />
+              </PaginationItem>
+            )}
+          </PaginationContent>
+        </Pagination>
+        {totalPages >= 1 && (
+          <div className="text-center">
+            <p className={"text-sm mt-1 text-slate-500"}>
+              Page <b>{currentPage}</b>/{totalPages}
+            </p>
+          </div>
+        )}
+      </span>
     );
   };
 

@@ -1,6 +1,7 @@
 export enum AddonTypes {
-  RESOURCE = "Resources",
   HELM = "Helm Charts",
+  RESOURCE = "Resources",
+  PROFILE = "Cluster profiles",
 }
 
 export const addonTypes: AddonTypes[] = Object.values(AddonTypes);

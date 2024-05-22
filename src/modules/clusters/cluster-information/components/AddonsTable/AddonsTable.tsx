@@ -1,6 +1,6 @@
 import {
-  TableBody,
   Table,
+  TableBody,
   TableCell,
   TableHead,
   TableHeader,
@@ -14,105 +14,201 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import {  ExternalLink, MoreHorizontal, Unplug } from "lucide-react";
-import { HelmReleaseType } from "@/types/helm.types";
+import {
+  Check,
+  ExternalLink,
+  MoreHorizontal,
+  ServerCrash,
+  Unplug,
+} from "lucide-react";
 import { EmptyData } from "@/components/ui/emptyData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { appConfig } from "@/config/app";
 import { usePagination } from "@/hooks/usePagination";
 import { AddonTypes } from "@/types/addon.types";
+import { LoadingTableRow } from "@/components/ui/loadingTableRow";
 
 export const AddonsTable = ({
   data,
   type,
-  total,
+
   setPage,
-  loading
+  loading,
 }: {
-  data: HelmReleaseType[];
+  data: any;
   type: AddonTypes;
-  total: number;
-  setPage:(page: number, type: AddonTypes)=>void
-  loading:boolean
+
+  setPage: (page: number, type: AddonTypes) => void;
+  loading: boolean;
 }) => {
   const navigateRepoURL = (url: string) => {
     window.open(url, "_blank");
   };
+  const [total, setTotal] = useState<number>(0);
   const [page, setUIPage] = useState<number>(appConfig.defaultPage);
+  const [rows, setRows] = useState<any>([]);
+  const isProfile = type == AddonTypes.PROFILE;
+  useEffect(() => {
+    switch (type) {
+      case AddonTypes.HELM:
+        setRows(data.helmReleases);
+        setTotal(data.totalHelmReleases);
+        break;
+      case AddonTypes.RESOURCE:
+        setRows(data.resources);
+        setTotal(data.totalResources);
+        break;
+      case AddonTypes.PROFILE:
+        setRows(
+          Object.keys(data.profiles).map((key) => ({
+            name: key,
+            failure: data.profiles[key],
+            isFailed: data.profiles[key].length > 0,
+            icon:
+              data.profiles[key].length <= 0 ? (
+                <Check className={"w-4 h-4 "} />
+              ) : (
+                <ServerCrash className={"w-4 h-4"} />
+              ),
+          })),
+        );
+        setTotal(data.profiles.length);
+        break;
+      default:
+        throw new Error("Invalid AddonType provided.");
+    }
+  }, [data]);
+  const handlePageChange = (page: number) => {
+    setPage(page, type);
+    setUIPage(page);
+  };
 
-  const handlePageChange= (page: number) => {
-    setPage(page,type)
-    setUIPage(page)
-  }
-
-  const [PaginationUI] = usePagination(total, page, handlePageChange,appConfig.defaultTableSize);
+  const [PaginationUI] = usePagination(
+    total,
+    page,
+    handlePageChange,
+    appConfig.defaultTableSize,
+  );
+  const columns = [
+    { label: "", className: "" },
+    { label: "Name", className: "" },
+    { label: isProfile ? "Failed Resources" : "Namespace", className: "" },
+    {
+      label: "Version",
+      className: isProfile ? "hidden" : "hidden sm:table-cell",
+    },
+    {
+      label: "Last Applied",
+      className: isProfile ? "hidden" : "hidden sm:table-cell",
+    },
+    {
+      label: "Profile",
+      className: isProfile ? "hidden" : "hidden sm:table-cell",
+    },
+    { label: "Actions", className: "", isSrOnly: true },
+  ];
 
   return (
     <>
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead></TableHead>
-            <TableHead>Name</TableHead>
-            <TableHead>Namespace</TableHead>
-            <TableHead className={"hidden sm:table-cell"}>Version</TableHead>
-            <TableHead className={"hidden sm:table-cell"}>
-              Last Applied
-            </TableHead>
-            <TableHead className={"hidden sm:table-cell"}>Profile</TableHead>
-            <TableHead>
-              <span className="sr-only">Actions</span>
-            </TableHead>
+            {columns.map((column, index) => (
+              <TableHead key={index} className={column.className}>
+                {column.isSrOnly ? (
+                  <span className="sr-only">{column.label}</span>
+                ) : (
+                  column.label
+                )}
+              </TableHead>
+            ))}
           </TableRow>
         </TableHeader>
-        {loading?
-          <span>loading</span>
-        : <TableBody>
-            {data && data.length > 0 ? (
+        {loading ? (
+          <LoadingTableRow columns={appConfig.defaultTableSize} />
+        ) : (
+          <TableBody>
+            {rows && rows.length > 0 ? (
               <>
-                {data.map((row: any, index: number) => (
+                {rows.map((row: any, index: number) => (
                   <TableRow key={index}>
                     <TableCell className={"flex item-center w-120 h-120"}>
-                      <Avatar>
-                        <AvatarImage src={row.icon} />
-                        <AvatarFallback>
-                          <Unplug className={"w-4 h-4"} />
-                        </AvatarFallback>
-                      </Avatar>
+                      {isProfile ? (
+                        <Avatar>
+                          <AvatarFallback
+                            className={`${row.isFailed ? "bg-red-500" : "bg-green-600"} text-white`}
+                          >
+                            {row.icon}
+                          </AvatarFallback>
+                        </Avatar>
+                      ) : (
+                        <Avatar>
+                          <AvatarImage src={row.icon} />
+                          <AvatarFallback>
+                            <Unplug className={"w-4 h-4"} />
+                          </AvatarFallback>
+                        </Avatar>
+                      )}
                     </TableCell>
 
                     <TableCell>
-                      {" "}
                       {row.releaseName ? row.releaseName : row.name}
                     </TableCell>
-                    <TableCell className={"text-main-500"}>
-                      {row.namespace}
+
+                    <TableCell colSpan={isProfile ? 7 : 1} className="py-4 ">
+                      <span className={"text-main-500"}> {row.namespace}</span>
+
+                      {row.failure && row.failure.length > 0 && (
+                        <Table>
+                          <TableHeader>
+                            <TableHead>Feature</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Message</TableHead>
+                          </TableHeader>
+                          <TableBody className={"text-sm "}>
+                            {row.failure.map(
+                              (failure: any, failureIndex: number) => (
+                                <TableRow key={failureIndex}>
+                                  <TableCell>{failure.featureID}</TableCell>
+                                  <TableCell>{failure.status}</TableCell>
+                                  <TableCell>
+                                    {failure.failureMessage}
+                                  </TableCell>
+                                </TableRow>
+                              ),
+                            )}
+                          </TableBody>
+                        </Table>
+                      )}
                     </TableCell>
                     <TableCell className="hidden md:table-cell ">
                       {row.chartVersion ? row.chartVersion : row.version}
                     </TableCell>
-                    <TableCell className="hidden md:table-cell">
-                      <div>
-                        {new Date(row.lastAppliedTime)?.toLocaleDateString(
+                    {row.lastAppliedTime && (
+                      <TableCell className="hidden md:table-cell">
+                        <div>
+                          {new Date(row.lastAppliedTime)?.toLocaleDateString(
+                            "en-US",
+                          )}
+                        </div>
+                        {new Date(row.lastAppliedTime)?.toLocaleTimeString(
                           "en-US",
+                          {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          },
                         )}
-                      </div>
-                      {new Date(row.lastAppliedTime)?.toLocaleTimeString(
-                        "en-US",
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        },
-                      )}
-                    </TableCell>
+                      </TableCell>
+                    )}
+
                     <TableCell className="hidden md:table-cell">
                       {/*TODO handle multiple names (with tags)*/}
                       {row.profileName
                         ? row.profileName
-                        : row.profileNames.map((name: string) => (
-                          <span key={name}>{name}</span>
-                        ))}
+                        : row?.profileNames?.map((name: string) => (
+                            <span key={name}>{name}</span>
+                          ))}
                     </TableCell>
                     <TableCell>
                       <DropdownMenu>
@@ -132,7 +228,8 @@ export const AddonsTable = ({
                             <DropdownMenuItem
                               onSelect={() => navigateRepoURL(row.repoURL)}
                             >
-                              <ExternalLink className={"w-4 h-4 mx-1"} /> repoURL
+                              <ExternalLink className={"w-4 h-4 mx-1"} />{" "}
+                              repoURL
                             </DropdownMenuItem>
                           )}
 
@@ -149,13 +246,12 @@ export const AddonsTable = ({
                 <EmptyData name={type} />
               </TableCell>
             )}
-          </TableBody>}
-
+          </TableBody>
+        )}
       </Table>
       <div className="px-1 mt-1">
         <PaginationUI />
       </div>
-
     </>
   );
 };

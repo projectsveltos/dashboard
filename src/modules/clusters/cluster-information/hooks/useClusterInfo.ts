@@ -10,7 +10,7 @@ import { appConfig } from "@/config/app";
 import { useState } from "react";
 import { AddonTypes } from "@/types/addon.types";
 
-const { Endresources, EndhelmChart } = API_ENDPOINTS;
+const { Endresources, EndhelmChart, EndprofileStatuses } = API_ENDPOINTS;
 
 const getResources = async (
   namespace: string,
@@ -19,6 +19,23 @@ const getResources = async (
   page: number,
 ) => {
   const { data } = await client.get(Endresources, {
+    params: {
+      namespace: namespace,
+      name: clusterName,
+      type: getClusterInfoType(clusterType),
+      skip: getItemsToSkip(page, appConfig.defaultTableSize),
+      limit: appConfig.defaultTableSize,
+    },
+  });
+  return data;
+};
+const getClusterProfileStatuses = async (
+  namespace: string,
+  clusterName: string,
+  clusterType: ClusterType,
+  page: number,
+) => {
+  const { data } = await client.get(EndprofileStatuses, {
     params: {
       namespace: namespace,
       name: clusterName,
@@ -47,7 +64,6 @@ const getHelmCharts = async (
   return data;
 };
 
-
 const getClusterInfo = async (
   namespace: string,
   clusterName: string,
@@ -62,29 +78,58 @@ const getClusterInfo = async (
   return data;
 };
 function useClusterInfo(
-  namespace: string ,
-  clusterName: string ,
-  clusterType: ClusterType ,
+  namespace: string,
+  clusterName: string,
+  clusterType: ClusterType,
 ) {
   const [helmPage, setHelmPage] = useState(appConfig.defaultPage);
   const [resourcePage, setResourcePage] = useState(appConfig.defaultPage);
-  const setPage= (page:number,type:AddonTypes) => {
-  if(type==AddonTypes.HELM){
-    setHelmPage(page)
-  }else if(type==AddonTypes.RESOURCE){
-    setResourcePage(page)
-  }
-  }
+  const [profilePage, setProfilePage] = useState(appConfig.defaultPage);
+  const setPage = (page: number, type: AddonTypes) => {
+    switch (type) {
+      case AddonTypes.HELM:
+        setHelmPage(page);
+        break;
+      case AddonTypes.RESOURCE:
+        setResourcePage(page);
+        break;
+      case AddonTypes.PROFILE:
+        setProfilePage(page);
+        break;
+      default:
+        throw new Error("Invalid AddonType provided.");
+    }
+  };
   const queries = useQueries([
     {
-      queryKey: ["resources", namespace, clusterName, clusterType, resourcePage],
-      queryFn: () => getResources(namespace, clusterName, clusterType, resourcePage),
+      queryKey: [
+        "resources",
+        namespace,
+        clusterName,
+        clusterType,
+        resourcePage,
+      ],
+      queryFn: () =>
+        getResources(namespace, clusterName, clusterType, resourcePage),
+      enabled: !!namespace && !!clusterName && !!clusterType,
+      placeholderData: { data: [], isLoading: true, error: null },
+    },
+    {
+      queryKey: ["profile", namespace, clusterName, clusterType, resourcePage],
+      queryFn: () =>
+        getClusterProfileStatuses(
+          namespace,
+          clusterName,
+          clusterType,
+          profilePage,
+        ),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
     },
     {
       queryKey: ["helmChart", namespace, clusterName, clusterType, helmPage],
-      queryFn: () => getHelmCharts(namespace, clusterName, clusterType, helmPage),
+      queryFn: () =>
+        getHelmCharts(namespace, clusterName, clusterType, helmPage),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
     },
@@ -95,7 +140,7 @@ function useClusterInfo(
       placeholderData: { data: {}, isLoading: true, error: null },
     },
   ]);
-  return {queries,setPage}
+  return { queries, setPage };
 }
 
-export default useClusterInfo
+export default useClusterInfo;

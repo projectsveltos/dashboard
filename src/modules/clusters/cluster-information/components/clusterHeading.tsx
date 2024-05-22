@@ -10,18 +10,20 @@ type ClusterHeadingProps = {
   version?: string;
   status?: boolean;
   namespace?: string;
+  hideDetails?: boolean;
 };
 
 export const ClusterHeading = ({
   name,
   version,
   status,
+  hideDetails,
   namespace,
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
   return (
     <>
-      <div className="flex items-center gap-4">
+      <div className="flex my-4 items-center gap-4">
         <Button
           variant="outline"
           size="icon"
@@ -34,7 +36,7 @@ export const ClusterHeading = ({
         <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
           {name}
         </h1>
-        {version && (
+        {version && !hideDetails && (
           <Badge
             variant="outline"
             className="ml-auto sm:ml-0  flex items-center "
@@ -48,7 +50,7 @@ export const ClusterHeading = ({
         >
           namespace : {namespace}
         </Badge>
-        {status && (
+        {!hideDetails && (
           <Badge
             variant="outline"
             className={`ml-auto sm:ml-0 ${status ? "bg-main-500" : "bg-red-500"}  flex items-center text-white`}
@@ -57,6 +59,7 @@ export const ClusterHeading = ({
             {status ? "Healthy" : "Failed"}
           </Badge>
         )}
+
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
           <RefreshButton />
         </div>

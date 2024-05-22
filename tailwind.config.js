@@ -80,8 +80,8 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       minHeight: {
-        '120': '30rem',
-      }
+        120: "20rem",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

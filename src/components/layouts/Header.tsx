@@ -257,7 +257,9 @@ export function Header() {
               </div>
             </a>
             <DividerVerticalIcon />
-            <DropdownMenu>
+            {/* Hide User menu
+
+                 <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
@@ -281,6 +283,7 @@ export function Header() {
                 <DropdownMenuItem>Log out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
+            */}
           </nav>
         </div>
       </div>

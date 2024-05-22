@@ -10,7 +10,7 @@
   "description": "Sveltos User interface dashboard",
   "scripts": {
     "lint": "npx prettier . --write",
-    "dev": "tsc &&  npx prettier . --write && vite",
+    "dev": "tsc && npx prettier . --write && vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },

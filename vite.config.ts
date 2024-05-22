@@ -24,6 +24,8 @@ export default defineConfig(({ command }) => {
         },
       },
     },
-    define: {},
+    define: {
+      "import.meta.env.VITE_BACKEND_PORT": process.env.VITE_BACKEND_PORT,
+    },
   };
 });

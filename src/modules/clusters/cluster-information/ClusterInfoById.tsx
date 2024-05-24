@@ -1,7 +1,6 @@
 import { ClusterHeading } from "@/modules/clusters/cluster-information/components/clusterHeading";
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
 import { Addons } from "@/modules/clusters/cluster-information/components/AddonsTable/Addons";
-import { ClusterConfig } from "@/modules/clusters/cluster-information/components/ClusterConfig";
 import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
 import { useParams } from "react-router-dom";
 import { ClusterType } from "@/types/cluster.types";
@@ -11,7 +10,7 @@ import { ErrorQuery } from "@/components/ui/errorQuery";
 
 export function ClusterInfoById() {
   const { tab: type, name, namespace } = useParams();
-  const { queries, setPage } = useClusterInfo(
+  const { queries, setPage, setToggleFailFilter } = useClusterInfo(
     namespace as string,
     name as string,
     type as ClusterType,
@@ -47,7 +46,6 @@ export function ClusterInfoById() {
           />
         )}
         <div className={"space-y-1 min-w-3/4"}>
-          {/* TOODO HANDLE LOADING*/}
           <div>
             {InfoQuery.isSuccess && InfoQuery.data?.managedClusters && (
               <LabelsCard
@@ -64,6 +62,7 @@ export function ClusterInfoById() {
               resourcesQuery.data.isLoading ||
               profileQuery.data.isLoading
             }
+            toggleFailure={setToggleFailFilter}
             addonsData={{
               [AddonTypes.HELM]: helmChartQuery.data || [],
               [AddonTypes.RESOURCE]: resourcesQuery.data || [],

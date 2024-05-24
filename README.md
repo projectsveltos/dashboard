@@ -40,16 +40,18 @@ the default backend port is 9000
 the default backend port is 9000
 
 ##### Example :
+
 `set VITE_BACKEND_PORT=8000`
 
 You should have the backend project up and running, please refer to the guide in the [backend repository](https://github.com/projectsveltos/ui-backend) to get started.
 
 ### Configure the frontend port
- 
+
 `npm run dev -- --port {port}` to run the project on a different port
 if the port is not available , it will automatically switch to the next available port.
 
 ##### Example :
+
 `npm run dev -- --port 3000`
 
 ## Contributing

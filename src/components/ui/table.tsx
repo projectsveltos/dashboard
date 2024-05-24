@@ -1,5 +1,10 @@
 import * as React from "react";
-
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 
 const Table = React.forwardRef<
@@ -83,10 +88,11 @@ TableHead.displayName = "TableHead";
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
+  React.TdHTMLAttributes<HTMLTableCellElement> & { content?: string }
+>(({ className, content, ...props }, ref) => (
   <td
     ref={ref}
+    title={content}
     className={cn(
       " p-4 text-sm  max-w-[6rem] overflow-auto   truncate align-middle [&:has([role=checkbox])]:pr-0",
       className,

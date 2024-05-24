@@ -34,6 +34,7 @@ const getClusterProfileStatuses = async (
   clusterName: string,
   clusterType: ClusterType,
   page: number,
+  toggleFailFilter: boolean,
 ) => {
   const { data } = await client.get(EndprofileStatuses, {
     params: {
@@ -42,6 +43,7 @@ const getClusterProfileStatuses = async (
       type: getClusterInfoType(clusterType),
       skip: getItemsToSkip(page, appConfig.defaultTableSize),
       limit: appConfig.defaultTableSize,
+      failed: toggleFailFilter,
     },
   });
   return data;
@@ -85,6 +87,7 @@ function useClusterInfo(
   const [helmPage, setHelmPage] = useState(appConfig.defaultPage);
   const [resourcePage, setResourcePage] = useState(appConfig.defaultPage);
   const [profilePage, setProfilePage] = useState(appConfig.defaultPage);
+  const [toggleFailFilter, setToggleFailFilter] = useState(false);
   const setPage = (page: number, type: AddonTypes) => {
     switch (type) {
       case AddonTypes.HELM:
@@ -115,13 +118,21 @@ function useClusterInfo(
       placeholderData: { data: [], isLoading: true, error: null },
     },
     {
-      queryKey: ["profile", namespace, clusterName, clusterType, resourcePage],
+      queryKey: [
+        "profile",
+        namespace,
+        toggleFailFilter,
+        clusterName,
+        clusterType,
+        resourcePage,
+      ],
       queryFn: () =>
         getClusterProfileStatuses(
           namespace,
           clusterName,
           clusterType,
           profilePage,
+          toggleFailFilter,
         ),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
@@ -140,7 +151,7 @@ function useClusterInfo(
       placeholderData: { data: {}, isLoading: true, error: null },
     },
   ]);
-  return { queries, setPage };
+  return { queries, setPage, setToggleFailFilter };
 }
 
 export default useClusterInfo;

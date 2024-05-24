@@ -21,10 +21,16 @@ import { appConfig } from "@/config/app";
 interface ResourceTableProps {
   addonsData: any;
   loading: boolean;
+  toggleFailure: (value: boolean) => void;
   setPage: (page: number, type: AddonTypes) => void;
 }
 
-export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
+export function Addons({
+  addonsData,
+  setPage,
+  loading,
+  toggleFailure,
+}: ResourceTableProps) {
   /* Bydefault we show helm charts , this will be hardcoded for now */
   const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
 
@@ -82,6 +88,7 @@ export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
                 <TabsContent key={type} value={type}>
                   <AddonsTable
                     type={type}
+                    toggleFailure={toggleFailure}
                     loading={loading}
                     setPage={setPage}
                     data={addonsData[type]}

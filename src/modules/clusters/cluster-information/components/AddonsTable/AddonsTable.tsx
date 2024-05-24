@@ -28,17 +28,20 @@ import { appConfig } from "@/config/app";
 import { usePagination } from "@/hooks/usePagination";
 import { AddonTypes } from "@/types/addon.types";
 import { LoadingTableRow } from "@/components/ui/loadingTableRow";
+import { Badge } from "@/components/ui/badge";
+import { colorFromStatus } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export const AddonsTable = ({
   data,
   type,
-
   setPage,
   loading,
+  toggleFailure,
 }: {
   data: any;
   type: AddonTypes;
-
+  toggleFailure: (value: boolean) => void;
   setPage: (page: number, type: AddonTypes) => void;
   loading: boolean;
 }) => {
@@ -60,23 +63,10 @@ export const AddonsTable = ({
         setTotal(data.totalResources);
         break;
       case AddonTypes.PROFILE:
-        setRows(
-          Object.keys(data.profiles).map((key) => ({
-            name: key,
-            failure: data.profiles[key],
-            isFailed: data.profiles[key].length > 0,
-            icon:
-              data.profiles[key].length <= 0 ? (
-                <Check className={"w-4 h-4 "} />
-              ) : (
-                <ServerCrash className={"w-4 h-4"} />
-              ),
-          })),
-        );
-        setTotal(data.profiles.length);
+        setRows(data.profiles);
+        setTotal(data.totalResources);
         break;
       default:
-        throw new Error("Invalid AddonType provided.");
     }
   }, [data]);
   const handlePageChange = (page: number) => {
@@ -91,23 +81,29 @@ export const AddonsTable = ({
     appConfig.defaultTableSize,
   );
   const columns = [
-    { label: "", className: "" },
-    { label: "Name", className: "" },
-    { label: isProfile ? "Failed Resources" : "Namespace", className: "" },
     {
-      label: "Version",
-      className: isProfile ? "hidden" : "hidden sm:table-cell",
+      label: isProfile ? "Failed only" : "",
+      className: "",
+      isCheckbox: isProfile,
     },
-    {
-      label: "Last Applied",
-      className: isProfile ? "hidden" : "hidden sm:table-cell",
-    },
+    { label: isProfile ? "Feature" : "Name", className: "" },
     {
       label: "Profile",
-      className: isProfile ? "hidden" : "hidden sm:table-cell",
+      className: "hidden sm:table-cell",
     },
+    { label: "Namespace", className: isProfile ? "hidden" : "" },
+    {
+      label: isProfile ? "Status" : "Version",
+      className: "hidden sm:table-cell",
+    },
+    {
+      label: isProfile ? "Error" : "Last Applied",
+      className: "hidden sm:table-cell",
+    },
+
     { label: "Actions", className: "", isSrOnly: true },
   ];
+  const [failureCheck, setFailureCheck] = useState(false);
 
   return (
     <>
@@ -116,6 +112,16 @@ export const AddonsTable = ({
           <TableRow>
             {columns.map((column, index) => (
               <TableHead key={index} className={column.className}>
+                {column.isCheckbox && (
+                  <Checkbox
+                    id="filters"
+                    onCheckedChange={(checked) => {
+                      toggleFailure(!!checked);
+                      setFailureCheck(!!checked);
+                    }}
+                    className={"mx-2 mb-2 text-center"}
+                  />
+                )}
                 {column.isSrOnly ? (
                   <span className="sr-only">{column.label}</span>
                 ) : (
@@ -132,14 +138,26 @@ export const AddonsTable = ({
             {rows && rows.length > 0 ? (
               <>
                 {rows.map((row: any, index: number) => (
-                  <TableRow key={index}>
-                    <TableCell className={"flex item-center w-120 h-120"}>
+                  <TableRow
+                    key={index}
+                    className={
+                      row.failureMessage ? "bg-slate-200 dark:bg-slate-700" : ""
+                    }
+                  >
+                    <TableCell
+                      content={row.failureMessage}
+                      className={"flex item-center w-120 h-120"}
+                    >
                       {isProfile ? (
                         <Avatar>
                           <AvatarFallback
-                            className={`${row.isFailed ? "bg-red-500" : "bg-green-600"} text-white`}
+                            className={`${row.failureMessage ? "bg-red-500" : "bg-green-600"} text-white`}
                           >
-                            {row.icon}
+                            {row.failureMessage ? (
+                              <ServerCrash className={"w-4 h-4"} />
+                            ) : (
+                              <Check className={"w-4 h-4"} />
+                            )}
                           </AvatarFallback>
                         </Avatar>
                       ) : (
@@ -152,64 +170,70 @@ export const AddonsTable = ({
                       )}
                     </TableCell>
 
-                    <TableCell>
-                      {row.releaseName ? row.releaseName : row.name}
+                    <TableCell
+                      content={row.releaseName || row.name || row.featureID}
+                    >
+                      {row.releaseName || row.name || row.featureID}
                     </TableCell>
-
-                    <TableCell colSpan={isProfile ? 7 : 1} className="py-4 ">
-                      <span className={"text-main-500"}> {row.namespace}</span>
-
-                      {row.failure && row.failure.length > 0 && (
-                        <Table>
-                          <TableHeader>
-                            <TableHead>Feature</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Message</TableHead>
-                          </TableHeader>
-                          <TableBody className={"text-sm "}>
-                            {row.failure.map(
-                              (failure: any, failureIndex: number) => (
-                                <TableRow key={failureIndex}>
-                                  <TableCell>{failure.featureID}</TableCell>
-                                  <TableCell>{failure.status}</TableCell>
-                                  <TableCell>
-                                    {failure.failureMessage}
-                                  </TableCell>
-                                </TableRow>
-                              ),
-                            )}
-                          </TableBody>
-                        </Table>
-                      )}
-                    </TableCell>
-                    <TableCell className="hidden md:table-cell ">
-                      {row.chartVersion ? row.chartVersion : row.version}
-                    </TableCell>
-                    {row.lastAppliedTime && (
-                      <TableCell className="hidden md:table-cell">
+                    <TableCell
+                      content={row.profileName}
+                      className="hidden md:table-cell"
+                    >
+                      {row.profileType && (
                         <div>
-                          {new Date(row.lastAppliedTime)?.toLocaleDateString(
-                            "en-US",
-                          )}
+                          <Badge variant={"outline"}>{row.profileType}</Badge>
                         </div>
-                        {new Date(row.lastAppliedTime)?.toLocaleTimeString(
-                          "en-US",
-                          {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          },
-                        )}
-                      </TableCell>
-                    )}
+                      )}
 
-                    <TableCell className="hidden md:table-cell">
-                      {/*TODO handle multiple names (with tags)*/}
                       {row.profileName
                         ? row.profileName
                         : row?.profileNames?.map((name: string) => (
                             <span key={name}>{name}</span>
                           ))}
                     </TableCell>
+                    {!isProfile && (
+                      <TableCell content={row.namespace} className="py-4 ">
+                        <span className={"text-main-500"}>
+                          {" "}
+                          {row.namespace}
+                        </span>
+                      </TableCell>
+                    )}
+
+                    <TableCell className="hidden md:table-cell ">
+                      {row.chartVersion || row.version || (
+                        <Badge className={colorFromStatus(row.status)}>
+                          {" "}
+                          {row.status}
+                        </Badge>
+                      )}
+                    </TableCell>
+
+                    <TableCell
+                      content={row.failureMessage}
+                      colSpan={isProfile ? 2 : 1}
+                      className="hidden md:table-cell"
+                    >
+                      {row.failureMessage}
+                      {row.lastAppliedTime && (
+                        <>
+                          {" "}
+                          <div>
+                            {new Date(row.lastAppliedTime)?.toLocaleDateString(
+                              "en-US",
+                            )}
+                          </div>
+                          {new Date(row.lastAppliedTime)?.toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            },
+                          )}
+                        </>
+                      )}
+                    </TableCell>
+
                     <TableCell>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>

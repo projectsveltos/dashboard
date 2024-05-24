@@ -10,11 +10,11 @@ export interface InputProps
 
 const ClearableInput = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, onClear, ...props }, ref) => {
-    const handleClear = () => {
+    function handleClear() {
       if (onClear) {
         onClear();
       }
-    };
+    }
     return (
       <div className="relative">
         <input

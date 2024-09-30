@@ -17,9 +17,9 @@ import { Button } from "@/components/ui/button";
 import {
   Check,
   ExternalLink,
+  ImageOff,
   MoreHorizontal,
   ServerCrash,
-  Unplug,
 } from "lucide-react";
 import { EmptyData } from "@/components/ui/emptyData";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -31,27 +31,31 @@ import { LoadingTableRow } from "@/components/ui/loadingTableRow";
 import { Badge } from "@/components/ui/badge";
 import { colorFromStatus } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export const AddonsTable = ({
   data,
   type,
   setPage,
   loading,
-  toggleFailure,
 }: {
   data: any;
   type: AddonTypes;
-  toggleFailure: (value: boolean) => void;
   setPage: (page: number, type: AddonTypes) => void;
   loading: boolean;
 }) => {
   const navigateRepoURL = (url: string) => {
     window.open(url, "_blank");
   };
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [total, setTotal] = useState<number>(0);
   const [page, setUIPage] = useState<number>(appConfig.defaultPage);
   const [rows, setRows] = useState<any>([]);
   const isProfile = type == AddonTypes.PROFILE;
+  const failedOnly = searchParams.get("failure") === "true";
+
   useEffect(() => {
     switch (type) {
       case AddonTypes.HELM:
@@ -69,14 +73,18 @@ export const AddonsTable = ({
       default:
     }
   }, [data]);
+  useEffect(() => {
+    setFailureCheck(failedOnly);
+  }, [failedOnly]);
+
   const handlePageChange = (page: number) => {
-    setPage(page, type);
     setUIPage(page);
+    setPage(page, type);
   };
 
   const [PaginationUI] = usePagination(
     total,
-    page,
+    Number(page),
     handlePageChange,
     appConfig.defaultTableSize,
   );
@@ -103,8 +111,15 @@ export const AddonsTable = ({
 
     { label: "Actions", className: "", isSrOnly: true },
   ];
-  const [failureCheck, setFailureCheck] = useState(false);
+  const [failureCheck, setFailureCheck] = useState<boolean>(failedOnly);
 
+  const handleCheckedChange = (checked: boolean) => {
+    setFailureCheck(checked);
+    searchParams.set("failure", checked.toString());
+    navigate({
+      search: searchParams.toString(),
+    });
+  };
   return (
     <>
       <Table>
@@ -115,10 +130,8 @@ export const AddonsTable = ({
                 {column.isCheckbox && (
                   <Checkbox
                     id="filters"
-                    onCheckedChange={(checked) => {
-                      toggleFailure(!!checked);
-                      setFailureCheck(!!checked);
-                    }}
+                    checked={failureCheck}
+                    onCheckedChange={handleCheckedChange}
                     className={"mx-2 mb-2 text-center"}
                   />
                 )}
@@ -162,9 +175,12 @@ export const AddonsTable = ({
                         </Avatar>
                       ) : (
                         <Avatar>
-                          <AvatarImage src={row.icon} />
+                          <AvatarImage
+                            className="object-contain object-center"
+                            src={row.icon}
+                          />
                           <AvatarFallback>
-                            <Unplug className={"w-4 h-4"} />
+                            <ImageOff className={"w-4 h-4"} />
                           </AvatarFallback>
                         </Avatar>
                       )}
@@ -188,22 +204,18 @@ export const AddonsTable = ({
                       {row.profileName
                         ? row.profileName
                         : row?.profileNames?.map((name: string) => (
-                            <span key={name}>{name}</span>
+                            <div key={name}>{name}</div>
                           ))}
                     </TableCell>
                     {!isProfile && (
                       <TableCell content={row.namespace} className="py-4 ">
-                        <span className={"text-main-500"}>
-                          {" "}
-                          {row.namespace}
-                        </span>
+                        <span> {row.namespace}</span>
                       </TableCell>
                     )}
 
                     <TableCell className="hidden md:table-cell ">
                       {row.chartVersion || row.version || (
                         <Badge className={colorFromStatus(row.status)}>
-                          {" "}
                           {row.status}
                         </Badge>
                       )}

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "sonner";
 
 const client = axios.create({
   baseURL: "/api",

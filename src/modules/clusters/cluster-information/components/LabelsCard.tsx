@@ -1,8 +1,7 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Tags } from "lucide-react";
 import { Label } from "@/types/cluster.types";
 import { Badge } from "@/components/ui/badge";
-import { useEffect } from "react";
 
 type LabelsCardProps = {
   labels: Label[] | [];

@@ -1,16 +1,17 @@
 import { ClusterHeading } from "@/modules/clusters/cluster-information/components/clusterHeading";
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
 import { Addons } from "@/modules/clusters/cluster-information/components/AddonsTable/Addons";
-import useClusterInfo from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
+
 import { useParams } from "react-router-dom";
 import { ClusterType } from "@/types/cluster.types";
 import { LoadingAddons } from "@/modules/clusters/cluster-information/components/AddonsTable/LoadingAddons";
 import { AddonTypes } from "@/types/addon.types";
 import { ErrorQuery } from "@/components/ui/errorQuery";
+import { useClusterInfo } from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
 
 export function ClusterInfoById() {
   const { tab: type, name, namespace } = useParams();
-  const { queries, setPage, setToggleFailFilter } = useClusterInfo(
+  const { queries, setPage } = useClusterInfo(
     namespace as string,
     name as string,
     type as ClusterType,
@@ -62,7 +63,6 @@ export function ClusterInfoById() {
               resourcesQuery.data.isLoading ||
               profileQuery.data.isLoading
             }
-            toggleFailure={setToggleFailFilter}
             addonsData={{
               [AddonTypes.HELM]: helmChartQuery.data || [],
               [AddonTypes.RESOURCE]: resourcesQuery.data || [],

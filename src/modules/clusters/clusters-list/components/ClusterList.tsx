@@ -1,10 +1,11 @@
-import { ClusterCard } from "@/modules/clusters/clusters-list/components/ClusterCard";
+import {ClusterCard} from "@/modules/clusters/clusters-list/components/ClusterCard";
 
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { ClusterInfoType, ClusterListResponse } from "@/types/cluster.types";
-import { EmptyData } from "@/components/ui/emptyData";
-import { usePagination } from "@/hooks/usePagination";
-import { FC, useEffect, useState } from "react";
+import {useNavigate, useParams} from "react-router-dom";
+import {ClusterInfoType, ClusterListResponse} from "@/types/cluster.types";
+import {EmptyData} from "@/components/ui/emptyData";
+import {usePagination} from "@/hooks/usePagination";
+import {FC} from "react";
+
 type ClusterListProps = {
   data: ClusterListResponse;
   page: number;

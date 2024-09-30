@@ -5,7 +5,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -13,7 +12,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { AddonsTable } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTable";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { addonTypes, AddonTypes } from "@/types/addon.types";
 import { appConfig } from "@/config/app";
@@ -21,16 +20,11 @@ import { appConfig } from "@/config/app";
 interface ResourceTableProps {
   addonsData: any;
   loading: boolean;
-  toggleFailure: (value: boolean) => void;
+
   setPage: (page: number, type: AddonTypes) => void;
 }
 
-export function Addons({
-  addonsData,
-  setPage,
-  loading,
-  toggleFailure,
-}: ResourceTableProps) {
+export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
   /* Bydefault we show helm charts , this will be hardcoded for now */
   const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
 
@@ -88,7 +82,6 @@ export function Addons({
                 <TabsContent key={type} value={type}>
                   <AddonsTable
                     type={type}
-                    toggleFailure={toggleFailure}
                     loading={loading}
                     setPage={setPage}
                     data={addonsData[type]}

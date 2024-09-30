@@ -193,7 +193,7 @@ export const AddonsTable = ({
                     </TableCell>
                     <TableCell
                       content={row.profileName}
-                      className="hidden md:table-cell"
+                      className="hidden md:table-cell break-words whitespace-normal"
                     >
                       {row.profileType && (
                         <div>

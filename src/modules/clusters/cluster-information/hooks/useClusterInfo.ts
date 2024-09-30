@@ -9,6 +9,7 @@ import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
 import { appConfig } from "@/config/app";
 import { useState } from "react";
 import { AddonTypes } from "@/types/addon.types";
+import { useParams, useSearchParams } from "react-router-dom";
 
 const { Endresources, EndhelmChart, EndprofileStatuses } = API_ENDPOINTS;
 
@@ -84,10 +85,12 @@ function useClusterInfo(
   clusterName: string,
   clusterType: ClusterType,
 ) {
+  const [searchParams] = useSearchParams();
+  const failedOnly = searchParams.get("failure") === "true";
   const [helmPage, setHelmPage] = useState(appConfig.defaultPage);
   const [resourcePage, setResourcePage] = useState(appConfig.defaultPage);
   const [profilePage, setProfilePage] = useState(appConfig.defaultPage);
-  const [toggleFailFilter, setToggleFailFilter] = useState(false);
+
   const setPage = (page: number, type: AddonTypes) => {
     switch (type) {
       case AddonTypes.HELM:
@@ -121,10 +124,10 @@ function useClusterInfo(
       queryKey: [
         "profile",
         namespace,
-        toggleFailFilter,
+        failedOnly,
         clusterName,
         clusterType,
-        resourcePage,
+        profilePage,
       ],
       queryFn: () =>
         getClusterProfileStatuses(
@@ -132,7 +135,7 @@ function useClusterInfo(
           clusterName,
           clusterType,
           profilePage,
-          toggleFailFilter,
+          failedOnly,
         ),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
@@ -151,7 +154,7 @@ function useClusterInfo(
       placeholderData: { data: {}, isLoading: true, error: null },
     },
   ]);
-  return { queries, setPage, setToggleFailFilter };
+  return { queries, setPage };
 }
 
-export default useClusterInfo;
+export { useClusterInfo };

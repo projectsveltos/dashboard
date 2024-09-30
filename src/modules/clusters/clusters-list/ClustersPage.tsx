@@ -18,7 +18,7 @@ export default function ClustersPage() {
   const navigate = useNavigate();
   const defaultTab = appConfig.defaultType;
   const defaultPage = appConfig.defaultPage;
-  const { tab: urlTab, page: urlPage } = useParams();
+  const { tab: urlTab, pageNumber: urlPage } = useParams();
   const [searchParams, setSearchParams] = useState<
     Record<string, string | string[]>
   >({});

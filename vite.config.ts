@@ -2,13 +2,14 @@ import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dotenv from "dotenv";
-const basenameProd = "/";
+
 
 export default defineConfig(({ command }) => {
   dotenv.config();
-  const { VITE_BACKEND_PORT, VITE_BACKEND_NAME } =
+  const { VITE_BACKEND_PORT, VITE_BACKEND_NAME,VITE_BACKEND_PROTOCOL } =
     process.env;
-  const VITE_BACKEND_URL = `http://${VITE_BACKEND_NAME}:${VITE_BACKEND_PORT}`;
+  const protocol = VITE_BACKEND_PROTOCOL === "https" || VITE_BACKEND_PROTOCOL === "http" ? VITE_BACKEND_PROTOCOL : "http";
+  const VITE_BACKEND_URL = `${protocol}://${VITE_BACKEND_NAME}:${VITE_BACKEND_PORT}`;
   return {
     plugins: [react()],
     resolve: {

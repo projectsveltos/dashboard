@@ -14,10 +14,10 @@ spec:
         app: dashboard
     spec:
       containers:
-        - name: dashboard
-          image: projectsveltos/dashboard:dev
-          ports:
-            - containerPort: 5173
+      - name: dashboard
+        image: docker.io/projectsveltos/dashboard:main
+        ports:
+        - containerPort: 5173
 ---
 apiVersion: v1
 kind: Service

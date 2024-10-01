@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+manifest.yaml-e
+
+# Needed tools
+hack/tools/bin/
+

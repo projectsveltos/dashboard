@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-Apache-blue.svg)](LICENSE)
 [![Twitter Follow](https://img.shields.io/twitter/follow/projectsveltos?style=social)](https://twitter.com/projectsveltos)
 
-<img src="https://raw.githubusercontent.com/projectsveltos/sveltos/main/docs/assets/logo.png" width="200">
+<img alt="sveltosUI" src="https://raw.githubusercontent.com/projectsveltos/sveltos/main/docs/assets/logo.png" width="200">
 
 Please refere to sveltos [documentation](https://projectsveltos.github.io/sveltos/).
 
@@ -25,28 +25,36 @@ to get started with the project, you need to have the following installed on you
 - `npm run dev` using Vite to start the development server
 - `npm run build` to build the project for production
 
+You should have the backend project up and running, please refer to the guide in the [backend repository](https://github.com/projectsveltos/ui-backend) to get started.
+
 ### Configure the backend port
 
 `set VITE_BACKEND_PORT={port}` before running `npm run dev`
-the default backend port is 9000
+the default backend port is `9000`
 
 ##### Example :
 
 `set VITE_BACKEND_PORT=8000`
 
-### Configure the backend url (optional)
+### Configure the backend IP / NAME
 
-if sveltos backend is hosted on a different host, you can set the url by running the following command:
+name could be the IP address or the cluster name
 
-`set VITE_APP_BACKEND_URL={url}` before running `npm run dev`
+`set VITE_BACKEND_NAME ` before running `npm run dev`
 
-there is no default url.
+default : `localhost`
 
 ##### Example :
 
-`set VITE_BACKEND_PORT=8000`
+`set VITE_BACKEND_NAME= ui-backend`
 
-You should have the backend project up and running, please refer to the guide in the [backend repository](https://github.com/projectsveltos/ui-backend) to get started.
+
+
+### Configure the  protocol
+to change the protocol to `https` set the following environment variable
+`set VITE_BACKEND_PROTOCOL= https`
+
+default : `http`
 
 ### Configure the frontend port
 
@@ -56,6 +64,8 @@ if the port is not available , it will automatically switch to the next availabl
 ##### Example :
 
 `npm run dev -- --port 3000`
+
+
 
 ## Contributing
 

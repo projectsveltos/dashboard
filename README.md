@@ -39,6 +39,9 @@ the default backend port is 9000
 if sveltos backend is hosted on a different host, you can set the url by running the following command:
 
 `set VITE_APP_BACKEND_URL={url}` before running `npm run dev`
+##### Example :
+
+`set VITE_APP_BACKEND_URL= http://127.7.05.5`
 
 there is no default url.
 

@@ -6,10 +6,9 @@ const basenameProd = "/";
 
 export default defineConfig(({ command }) => {
   dotenv.config();
-  const { VITE_BACKEND_PORT, VITE_BACKEND_NAME, VITE_APP_BACKEND_URL } =
+  const { VITE_BACKEND_PORT, VITE_BACKEND_NAME } =
     process.env;
-  const VITE_BACKEND_URL =
-    VITE_APP_BACKEND_URL ?? `http://${VITE_BACKEND_NAME}:${VITE_BACKEND_PORT}`;
+  const VITE_BACKEND_URL = `http://${VITE_BACKEND_NAME}:${VITE_BACKEND_PORT}`;
   return {
     plugins: [react()],
     resolve: {

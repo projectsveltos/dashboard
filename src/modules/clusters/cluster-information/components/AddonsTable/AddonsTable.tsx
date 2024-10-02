@@ -32,6 +32,12 @@ import { Badge } from "@/components/ui/badge";
 import { colorFromStatus } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  helmColumns,
+  profileColumns,
+  resourceColumns,
+} from "@/modules/clusters/cluster-information/components/AddonsTable/Columns";
+import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
 
 export const AddonsTable = ({
   data,
@@ -88,29 +94,7 @@ export const AddonsTable = ({
     handlePageChange,
     appConfig.defaultTableSize,
   );
-  const columns = [
-    {
-      label: isProfile ? "Failed only" : "",
-      className: "",
-      isCheckbox: isProfile,
-    },
-    { label: isProfile ? "Feature" : "Name", className: "" },
-    {
-      label: "Profile",
-      className: "hidden sm:table-cell",
-    },
-    { label: "Namespace", className: isProfile ? "hidden" : "" },
-    {
-      label: isProfile ? "Status" : "Version",
-      className: "hidden sm:table-cell",
-    },
-    {
-      label: isProfile ? "Error" : "Last Applied",
-      className: "hidden sm:table-cell",
-    },
 
-    { label: "Actions", className: "", isSrOnly: true },
-  ];
   const [failureCheck, setFailureCheck] = useState<boolean>(failedOnly);
 
   const handleCheckedChange = (checked: boolean) => {
@@ -120,14 +104,20 @@ export const AddonsTable = ({
       search: searchParams.toString(),
     });
   };
+  const columns =
+    type === AddonTypes.HELM
+      ? helmColumns
+      : type === AddonTypes.RESOURCE
+        ? resourceColumns
+        : profileColumns;
   return (
     <>
       <Table>
         <TableHeader>
           <TableRow>
-            {columns.map((column, index) => (
-              <TableHead key={index} className={column.className}>
-                {column.isCheckbox && (
+            {columns.map((column: AddonColumn, index) => (
+              <TableHead key={index} className={column?.className}>
+                {column?.isCheckbox && (
                   <Checkbox
                     id="filters"
                     checked={failureCheck}
@@ -136,7 +126,7 @@ export const AddonsTable = ({
                   />
                 )}
                 {column.isSrOnly ? (
-                  <span className="sr-only">{column.label}</span>
+                  <span className="sr-only">{column?.label}</span>
                 ) : (
                   column.label
                 )}
@@ -157,123 +147,141 @@ export const AddonsTable = ({
                       row.failureMessage ? "bg-slate-200 dark:bg-slate-700" : ""
                     }
                   >
-                    <TableCell
-                      content={row.failureMessage}
-                      className={"flex item-center w-120 h-120"}
-                    >
-                      {isProfile ? (
-                        <Avatar>
-                          <AvatarFallback
-                            className={`${row.failureMessage ? "bg-red-500" : "bg-green-600"} text-white`}
+                    {columns.map((column, colIndex) => (
+                      <>
+                        {column.keys == AddonTableTypes.ICON ? (
+                          <TableCell
+                            content={row.failureMessage}
+                            className={"flex item-center w-120 h-120"}
                           >
-                            {row.failureMessage ? (
-                              <ServerCrash className={"w-4 h-4"} />
+                            {isProfile ? (
+                              <Avatar>
+                                <AvatarFallback
+                                  className={`${row.failureMessage ? "bg-red-500" : "bg-green-600"} text-white`}
+                                >
+                                  {row.failureMessage ? (
+                                    <ServerCrash className={"w-4 h-4"} />
+                                  ) : (
+                                    <Check className={"w-4 h-4"} />
+                                  )}
+                                </AvatarFallback>
+                              </Avatar>
                             ) : (
-                              <Check className={"w-4 h-4"} />
+                              <Avatar>
+                                <AvatarImage
+                                  className="object-contain object-center"
+                                  src={row.icon}
+                                />
+                                <AvatarFallback>
+                                  <ImageOff className={"w-4 h-4"} />
+                                </AvatarFallback>
+                              </Avatar>
                             )}
-                          </AvatarFallback>
-                        </Avatar>
-                      ) : (
-                        <Avatar>
-                          <AvatarImage
-                            className="object-contain object-center"
-                            src={row.icon}
-                          />
-                          <AvatarFallback>
-                            <ImageOff className={"w-4 h-4"} />
-                          </AvatarFallback>
-                        </Avatar>
-                      )}
-                    </TableCell>
-
-                    <TableCell
-                      content={row.releaseName || row.name || row.featureID}
-                    >
-                      {row.releaseName || row.name || row.featureID}
-                    </TableCell>
-                    <TableCell
-                      content={row.profileName}
-                      className="hidden md:table-cell break-words whitespace-normal"
-                    >
-                      {row.profileType && (
-                        <div>
-                          <Badge variant={"outline"}>{row.profileType}</Badge>
-                        </div>
-                      )}
-
-                      {row.profileName
-                        ? row.profileName
-                        : row?.profileNames?.map((name: string) => (
-                            <div key={name}>{name}</div>
-                          ))}
-                    </TableCell>
-                    {!isProfile && (
-                      <TableCell content={row.namespace} className="py-4 ">
-                        <span> {row.namespace}</span>
-                      </TableCell>
-                    )}
-
-                    <TableCell className="hidden md:table-cell ">
-                      {row.chartVersion || row.version || (
-                        <Badge className={colorFromStatus(row.status)}>
-                          {row.status}
-                        </Badge>
-                      )}
-                    </TableCell>
-
-                    <TableCell
-                      content={row.failureMessage}
-                      colSpan={isProfile ? 2 : 1}
-                      className="hidden md:table-cell"
-                    >
-                      {row.failureMessage}
-                      {row.lastAppliedTime && (
-                        <>
-                          {" "}
-                          <div>
-                            {new Date(row.lastAppliedTime)?.toLocaleDateString(
+                          </TableCell>
+                        ) : column.keys == AddonTableTypes.TIME ? (
+                          <TableCell>
+                            {" "}
+                            <div>
+                              {new Date(
+                                row.lastAppliedTime,
+                              )?.toLocaleDateString("en-US")}
+                            </div>
+                            {new Date(row.lastAppliedTime)?.toLocaleTimeString(
                               "en-US",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              },
                             )}
-                          </div>
-                          {new Date(row.lastAppliedTime)?.toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            },
-                          )}
-                        </>
-                      )}
-                    </TableCell>
-
-                    <TableCell>
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            aria-haspopup="true"
-                            size="icon"
-                            variant="ghost"
-                          >
-                            <MoreHorizontal className="h-4 w-4" />
-                            <span className="sr-only">Toggle menu</span>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          {row.repoURL && (
-                            <DropdownMenuItem
-                              onSelect={() => navigateRepoURL(row.repoURL)}
+                          </TableCell>
+                        ) : column.keys == AddonTableTypes.STATUS ? (
+                          <TableCell>
+                            <Badge className={colorFromStatus(row.status)}>
+                              {row.status}
+                            </Badge>
+                          </TableCell>
+                        ) : column.keys == AddonTableTypes.PROFILE ? (
+                          <>
+                            {" "}
+                            <TableCell
+                              content={row.profileName}
+                              className="hidden md:table-cell break-words whitespace-normal"
                             >
-                              <ExternalLink className={"w-4 h-4 mx-1"} />{" "}
-                              repoURL
-                            </DropdownMenuItem>
-                          )}
+                              {row.profileType && (
+                                <div>
+                                  <Badge variant={"outline"}>
+                                    {row.profileType}
+                                  </Badge>
+                                </div>
+                              )}
 
-                          <DropdownMenuItem disabled>Edit</DropdownMenuItem>
-                          <DropdownMenuItem disabled>Delete</DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
+                              {row.profileName
+                                ? row.profileName
+                                    .split("/")
+                                    .map((name: string) => (
+                                      <Badge variant={"outline"} key={name}>
+                                        {name}
+                                      </Badge>
+                                    ))
+                                : row.profileNames?.map((profileName: string) =>
+                                    profileName
+                                      .split("/")
+                                      .map((name: string) => (
+                                        <Badge variant={"outline"} key={name}>
+                                          {name}
+                                        </Badge>
+                                      )),
+                                  )}
+                            </TableCell>
+                          </>
+                        ) : column.keys == AddonTableTypes.ACTION ? (
+                          <TableCell>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button
+                                  aria-haspopup="true"
+                                  size="icon"
+                                  variant="ghost"
+                                >
+                                  <MoreHorizontal className="h-4 w-4" />
+                                  <span className="sr-only">Toggle menu</span>
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                {row.repoURL && (
+                                  <DropdownMenuItem
+                                    onSelect={() =>
+                                      navigateRepoURL(row.repoURL)
+                                    }
+                                  >
+                                    <ExternalLink className={"w-4 h-4 mx-1"} />{" "}
+                                    repoURL
+                                  </DropdownMenuItem>
+                                )}
+
+                                <DropdownMenuItem disabled>
+                                  Edit
+                                </DropdownMenuItem>
+                                <DropdownMenuItem disabled>
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </TableCell>
+                        ) : (
+                          <TableCell
+                            key={colIndex}
+                            className={` ${column.className}`}
+                          >
+                            {column.keys
+                              .split("/")
+                              .map((key) => <div key={key}>{row[key]}</div>)
+                              .filter(Boolean)}
+                          </TableCell>
+                        )}
+                      </>
+                    ))}
                   </TableRow>
                 ))}
               </>
@@ -285,6 +293,7 @@ export const AddonsTable = ({
           </TableBody>
         )}
       </Table>
+
       <div className="px-1 mt-1">
         <PaginationUI />
       </div>

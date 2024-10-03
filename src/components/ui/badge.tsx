@@ -34,9 +34,8 @@ function Badge({ className, variant, ...props }: BadgeProps) {
 
   return (
     <div
-        className={` ${cn(badgeVariants({ variant }), className)} ${isLabelVariant ? 'max-w-[6rem] md:max-w-[10rem] lg:max-w-[30rem]' : ''}`}
-        {...props}
-
+      className={` ${cn(badgeVariants({ variant }), className)} ${isLabelVariant ? "max-w-[6rem] md:max-w-[10rem] lg:max-w-[30rem]" : ""}`}
+      {...props}
     />
   );
 }

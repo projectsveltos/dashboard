@@ -63,7 +63,11 @@ export const helmColumns = [
 export const resourceColumns = [
   { label: "", className: "", keys: AddonTableTypes.ICON },
   { label: "Group", className: "", keys: AddonTableTypes.GROUP },
-  { label: "Version", className: "hidden sm:table-cell", keys: "version" },
+  {
+    label: "Kind",
+    className: "hidden sm:table-cell",
+    keys: AddonTableTypes.KIND,
+  },
   {
     label: "Namespace",
     className: "py-4 break-words whitespace-normal",

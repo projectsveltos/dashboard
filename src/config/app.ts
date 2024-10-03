@@ -21,8 +21,8 @@ interface AppConfig {
 export const appConfig: AppConfig = {
   name: "Sveltos",
   github: {
-    title: "dashboard",
-    url: "https://github.com/projectsveltos/dashboard",
+    title: "Sveltos",
+    url: "https://github.com/projectsveltos/addon-controller",
   },
   defaultType: sveltosClusterValue,
   defaultPage: 1,

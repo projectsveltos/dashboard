@@ -26,8 +26,13 @@ const useClusters = (
   page: number,
   searchParams: any,
 ): UseQueryResult<ClusterListResponse, Error> => {
-  return useQuery(["clusters", type, page, searchParams], () =>
-    fetchClusters(type, page, searchParams),
+  return useQuery(
+    ["clusters", type, page, searchParams],
+    () => fetchClusters(type, page, searchParams),
+    {
+      keepPreviousData: false,
+      cacheTime: 0,
+    },
   );
 };
 

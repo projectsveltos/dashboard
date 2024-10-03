@@ -5,7 +5,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/projectsveltos/addon-controller"
+    "url": "https://github.com/projectsveltos/dashboard"
   },
   "description": "Sveltos User interface dashboard",
   "scripts": {

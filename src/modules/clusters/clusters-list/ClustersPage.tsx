@@ -1,7 +1,7 @@
 import { PageHeading } from "@/components/ui/PageHeading";
 import { appConfig } from "@/config/app";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ClusterType } from "@/types/cluster.types";
@@ -34,11 +34,11 @@ export default function ClustersPage() {
 
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
-    navigate(`/clusters/${value}/${currentPage}`);
+    navigate(`/sveltos/clusters/${value}/${currentPage}`);
   };
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
-    navigate(`/clusters/${currentTab}/${page}`);
+    navigate(`/sveltos/clusters/${currentTab}/${page}`);
   };
   const updateQueryParams = (
     searchTerms: Record<string, string | string[]>,

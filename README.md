@@ -48,6 +48,7 @@ default : `localhost`
 
 `set VITE_BACKEND_NAME= ui-backend`
 
+
 ### Configure the protocol
 
 to change the protocol to `https` set the following environment variable

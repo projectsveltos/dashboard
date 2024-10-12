@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { Logo } from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 

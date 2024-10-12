@@ -17,7 +17,7 @@ interface NavItemWithChildren extends NavItem {
 export const mainMenu: NavItemWithChildren[] = [
   {
     title: "Clusters",
-    to: "/clusters",
+    to: "/sveltos/clusters",
     icon: <Boxes className={"w-4 h-4"} />,
   },
   {

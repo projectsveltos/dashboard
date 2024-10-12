@@ -25,7 +25,7 @@ export const ClusterList: FC<ClusterListProps> = ({
   const { tab } = useParams();
 
   function handleNavigation(cluster: ClusterInfoType) {
-    navigate(`/cluster/${tab}/${cluster.namespace}/${cluster.name}`);
+    navigate(`/sveltos/cluster/${tab}/${cluster.namespace}/${cluster.name}`);
   }
 
   return (

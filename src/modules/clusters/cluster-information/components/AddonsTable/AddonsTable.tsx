@@ -16,6 +16,7 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Check,
+  Copy,
   ExternalLink,
   ImageOff,
   MoreHorizontal,
@@ -38,6 +39,11 @@ import {
   resourceColumns,
 } from "@/modules/clusters/cluster-information/components/AddonsTable/Columns";
 import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export const AddonsTable = ({
   data,
@@ -194,6 +200,34 @@ export const AddonsTable = ({
                               },
                             )}
                           </TableCell>
+                        ) : column.keys == AddonTableTypes.FAILURE_MESSAGE ? (
+                          <Tooltip>
+                            <TooltipTrigger>
+                              {row.failureMessage && (
+                                <TableCell>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    onClick={() =>
+                                      navigator.clipboard.writeText(
+                                        row.failureMessage,
+                                      )
+                                    }
+                                    className="ml-2"
+                                  >
+                                    <Copy className="h-4 w-4" />
+                                    <span className="sr-only">Copy</span>
+                                  </Button>
+                                  <span className=" break-words whitespace-normal">
+                                    {row.failureMessage}
+                                  </span>
+                                </TableCell>
+                              )}
+                              <TooltipContent>
+                                <p>{row.failureMessage}</p>
+                              </TooltipContent>
+                            </TooltipTrigger>
+                          </Tooltip>
                         ) : column.keys == AddonTableTypes.STATUS ? (
                           <TableCell>
                             <Badge className={colorFromStatus(row.status)}>

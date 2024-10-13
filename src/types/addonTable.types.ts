@@ -17,4 +17,5 @@ export interface AddonColumn {
   isCheckbox?: boolean;
   isSrOnly?: boolean;
   keys: string;
+  colSpan?: number;
 }

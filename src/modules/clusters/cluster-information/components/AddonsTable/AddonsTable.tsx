@@ -44,6 +44,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { toast } from "sonner";
 
 export const AddonsTable = ({
   data,
@@ -122,7 +124,11 @@ export const AddonsTable = ({
         <TableHeader>
           <TableRow>
             {columns.map((column: AddonColumn, index) => (
-              <TableHead key={index} className={column?.className}>
+              <TableHead
+                key={index}
+                colSpan={column?.colSpan}
+                className={column?.className}
+              >
                 {column?.isCheckbox && (
                   <Checkbox
                     id="filters"
@@ -158,10 +164,12 @@ export const AddonsTable = ({
                         {column.keys == AddonTableTypes.ICON ? (
                           <TableCell
                             content={row.failureMessage}
-                            className={"flex item-center w-120 h-120"}
+                            className={"flex item-center my-auto w-120 h-120"}
                           >
                             {isProfile ? (
-                              <Avatar>
+                              <Avatar
+                                className={`${row.failureMessage && "mt-5"}`}
+                              >
                                 <AvatarFallback
                                   className={`${row.failureMessage ? "bg-red-500" : "bg-green-600"} text-white`}
                                 >
@@ -201,33 +209,37 @@ export const AddonsTable = ({
                             )}
                           </TableCell>
                         ) : column.keys == AddonTableTypes.FAILURE_MESSAGE ? (
-                          <Tooltip>
-                            <TooltipTrigger>
-                              {row.failureMessage && (
-                                <TableCell>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() =>
-                                      navigator.clipboard.writeText(
-                                        row.failureMessage,
-                                      )
-                                    }
-                                    className="ml-2"
-                                  >
-                                    <Copy className="h-4 w-4" />
-                                    <span className="sr-only">Copy</span>
-                                  </Button>
-                                  <span className=" break-words whitespace-normal">
-                                    {row.failureMessage}
-                                  </span>
-                                </TableCell>
-                              )}
-                              <TooltipContent>
-                                <p>{row.failureMessage}</p>
-                              </TooltipContent>
-                            </TooltipTrigger>
-                          </Tooltip>
+                          <TableCell
+                            className={
+                              "break-words whitespace-normal text-sm  overflow-hidden"
+                            }
+                          >
+                            {row.failureMessage && (
+                              <Alert
+                                onClick={() => {
+                                  navigator.clipboard.writeText(
+                                    row.failureMessage,
+                                  );
+                                  toast.message("Copied to clipboard");
+                                }}
+                                className="flex items-center"
+                              >
+                                <Tooltip>
+                                  <TooltipTrigger>
+                                    <AlertDescription className="mr-2 line-clamp-3 text-start overflow-hidden ">
+                                      {row.failureMessage}
+                                    </AlertDescription>
+                                  </TooltipTrigger>
+                                  <TooltipContent>
+                                    <p>{row.failureMessage}</p>
+                                  </TooltipContent>
+                                </Tooltip>
+                                <div>
+                                  <Copy className="h-4 w-4" />
+                                </div>
+                              </Alert>
+                            )}
+                          </TableCell>
                         ) : column.keys == AddonTableTypes.STATUS ? (
                           <TableCell>
                             <Badge className={colorFromStatus(row.status)}>

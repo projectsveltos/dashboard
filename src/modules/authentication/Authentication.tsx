@@ -62,7 +62,7 @@ export const Authentication = () => {
           <CardTitle className="text-xl">Login</CardTitle>
 
           <CardDescription>
-            Use your authentication token to log in
+            Consult the documentation for token generation instructions.
           </CardDescription>
         </CardHeader>
         <CardContent>

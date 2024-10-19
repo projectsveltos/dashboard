@@ -12,58 +12,17 @@ This repo contains the source code for Sveltos Dashboard User Interface
 
 ![interface](./public/readme-img.png)
 
-## Getting Started Manual installation
+## Getting Started
 
-to get started with the project, you need to have the following installed on your machine:
+Run the following command to deploy the Sveltos dashboard using kubectl:
 
-- Node.js
-- npm
-- git
-  Next, you can clone the repository and install the dependencies by running the following commands:
-- `cd dashboard`
-- `npm install` to install project dependencies
-- `npm run dev` using Vite to start the development server
-- `npm run build` to build the project for production
+```
+$ kubectl apply -f https://raw.githubusercontent.com/projectsveltos/sveltos/main/manifest/dashboard-manifest.yaml
+```
 
-You should have the backend project up and running, please refer to the guide in the [backend repository](https://github.com/projectsveltos/ui-backend) to get started.
+To access the dashboard, you'll need to expose the dashboard service in the projectsveltos namespace. Currently, it's configured as a ClusterIP service, which limits access to within the cluster. To expose it externally, you can either change the service type to LoadBalancer or utilize an Ingress/Gateway API.
 
-### Configure the backend port
-
-`set VITE_BACKEND_PORT={port}` before running `npm run dev`
-the default backend port is `9000`
-
-##### Example :
-
-`set VITE_BACKEND_PORT=8000`
-
-### Configure the backend IP / NAME
-
-name could be the IP address or the cluster name
-
-`set VITE_BACKEND_NAME ` before running `npm run dev`
-
-default : `localhost`
-
-##### Example :
-
-`set VITE_BACKEND_NAME= ui-backend`
-
-
-### Configure the protocol
-
-to change the protocol to `https` set the following environment variable
-`set VITE_BACKEND_PROTOCOL= https`
-
-default : `http`
-
-### Configure the frontend port
-
-`npm run dev -- --port {port}` to run the project on a different port
-if the port is not available , it will automatically switch to the next available port.
-
-##### Example :
-
-`npm run dev -- --port 3000`
+Refer to the [documentation](https://projectsveltos.github.io/sveltos/getting_started/install/dashboard/) for more information.
 
 ## Contributing
 

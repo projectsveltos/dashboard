@@ -70,17 +70,6 @@ export const Authentication = () => {
             <div className="grid gap-2">
               <Label htmlFor="token" className={"flex gap-2 items-center"}>
                 Authorization Token
-                <Tooltip>
-                  <TooltipTrigger>
-                    <QuestionMarkCircledIcon />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>
-                      Please enter your JWT token, which typically starts with
-                      'ey'.
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
               </Label>
               <Input
                 id="token"
@@ -98,7 +87,10 @@ export const Authentication = () => {
           </form>
           <div className="mt-4 text-center text-sm">
             Need help obtaining your token?
-            <a href="#" className="underline mx-1">
+            <a
+              href="https://projectsveltos.github.io/sveltos/getting_started/install/dashboard/#authentication"
+              className="underline mx-1"
+            >
               Learn more
             </a>
           </div>

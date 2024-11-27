@@ -7,6 +7,7 @@ import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
 import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterInfoById";
 import { Authentication } from "@/modules/authentication/Authentication";
+import { ProfileList } from "@/modules/profiles/profiles-list/ProfileList";
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
 export const router = createBrowserRouter([
@@ -17,6 +18,10 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Authentication />,
+  },
+  {
+    path: "/profiles",
+    element: <ProfileList />,
   },
   {
     path: "/sveltos",

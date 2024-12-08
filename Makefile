@@ -15,7 +15,7 @@ IMAGE_NAME ?= dashboard
 ARCH ?= $(shell go env GOARCH)
 OS ?= $(shell uname -s | tr A-Z a-z)
 export CONTROLLER_IMG ?= $(REGISTRY)/$(IMAGE_NAME)
-TAG ?= v0.44.0
+TAG ?= main
 
 # Directories.
 TOOLS_DIR := hack/tools

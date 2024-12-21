@@ -34,7 +34,6 @@ export function CardsFacetedFilter<TData, TValue>({
   title,
   options,
 }: CardsFacetedFilterProps<TData, TValue>) {
-  // const facets = column?.getFacetedUniqueValues()
   const selectedValues = new Set<string>();
 
   return (

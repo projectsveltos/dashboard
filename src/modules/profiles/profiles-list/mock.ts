@@ -1,5 +1,6 @@
-export const mockProfileListResp = {
-  "100": {
+export const mockProfileListRespArray = [
+  {
+    id: "100",
     totalProfiles: 3,
     profiles: [
       {
@@ -29,10 +30,11 @@ export const mockProfileListResp = {
       },
     ],
   },
-  "200": {
+  {
+    id: "200",
     totalProfiles: 1,
     profiles: [
       { namespace: "", name: "external-dns", dependencies: [], dependents: [] },
     ],
   },
-};
+];

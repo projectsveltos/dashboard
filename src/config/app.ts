@@ -1,8 +1,4 @@
-import {
-  ClusterApiType,
-  ClusterType,
-  SveltosClusterType,
-} from "@/types/cluster.types";
+import { ClusterType } from "@/types/cluster.types";
 import { sveltosClusterValue } from "@/types/cluster.consts";
 
 interface AppConfig {

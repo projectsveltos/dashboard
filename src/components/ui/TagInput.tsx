@@ -100,7 +100,7 @@ const TagInput: React.FC<TagInputProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="flex items-center bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300 rounded-md px-2 py-1 mr-2 mb-2 cursor-pointer">
-                  <span>+{tags.length - 3} more</span>
+                  <span>+{tags.length - 3} label(s)</span>
                 </div>
               </TooltipTrigger>
               <TooltipContent>

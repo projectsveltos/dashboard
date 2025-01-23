@@ -6,7 +6,10 @@ export function Footer() {
       <div className="container mx-auto text-sm text-center">
         <p>
           Built by
-          <a href={appConfig.github.url}> {appConfig.name}</a>
+          <a href={appConfig.github.url} className={"underline"}>
+            {" "}
+            {appConfig.name} Community
+          </a>
         </p>
       </div>
     </footer>

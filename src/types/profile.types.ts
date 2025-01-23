@@ -1,22 +1,25 @@
-interface Dependency {
+export interface Tier {
+  id: string;
+  totalProfiles: number;
+  profiles: Profile[];
+}
+
+export interface Profile {
+  kind: string;
   namespace: string;
   name: string;
-  version?: string;
+  dependencies: Dependency[];
+  dependents: Dependency[];
+  matchingClusters: any;
+  spec: Spec;
 }
-interface Dependent {
+
+export interface Dependency {
   kind: string;
   name: string;
   apiVersion: string;
 }
 
-export interface Profile {
-  namespace: string;
-  name: string;
-  dependencies: Dependency[];
-  dependents: Dependent[];
-}
-export interface Tier {
-  id: string;
-  totalProfiles: number;
-  profiles: Profile[];
+export interface Spec {
+  clusterSelector: any;
 }

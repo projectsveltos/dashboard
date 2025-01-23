@@ -1,24 +1,29 @@
 export const mockProfileListRespArray = [
   {
     id: "100",
-    totalProfiles: 3,
+    totalProfiles: 2,
     profiles: [
       {
+        kind: "ClusterProfile",
         namespace: "",
-        name: "",
+        name: "deploy-kyverno",
         dependencies: [],
         dependents: [
           {
             kind: "ClusterProfile",
-            name: "prometheus-grafana",
+            name: "deploy-kyverno-resources",
             apiVersion: "config.projectsveltos.io/v1beta1",
           },
         ],
+        matchingClusters: null,
+        spec: {
+          clusterSelector: {},
+        },
       },
-      { namespace: "", name: "nginx", dependencies: [], dependents: [] },
       {
+        kind: "ClusterProfile",
         namespace: "",
-        name: "prometheus-grafana",
+        name: "deploy-kyverno-resources",
         dependencies: [
           {
             kind: "ClusterProfile",
@@ -27,14 +32,11 @@ export const mockProfileListRespArray = [
           },
         ],
         dependents: [],
+        matchingClusters: null,
+        spec: {
+          clusterSelector: {},
+        },
       },
-    ],
-  },
-  {
-    id: "200",
-    totalProfiles: 1,
-    profiles: [
-      { namespace: "", name: "external-dns", dependencies: [], dependents: [] },
     ],
   },
 ];

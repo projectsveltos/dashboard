@@ -28,7 +28,7 @@ export function TierCard({ tier }: { tier: Tier }) {
             {tier.totalProfiles} profile(s)
           </p>
           <div className={"flex-grow"}></div>
-          <Button variant={"ghost"} size={"xs"}>
+          <Button disabled variant={"ghost"} size={"xs"}>
             <EllipsisVertical />
           </Button>
         </CardHeader>

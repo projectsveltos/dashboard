@@ -12,6 +12,7 @@ import {
 import { AlignHorizontalSpaceAround, Box, Cable } from "lucide-react";
 import { Diagram } from "beautiful-react-diagrams";
 import { Badge } from "@/components/ui/badge";
+import MatchingClusterTable from "@/modules/profiles/profile-information/components/ClusterTable/MatchingClusterTable";
 
 export function ProfileInformation() {
   return (
@@ -24,11 +25,12 @@ export function ProfileInformation() {
       />
 
       <div className="grid grid-cols-12 gap-2 mt-2">
-        <div className="col-span-7">
+        <div className="col-span-6">
           <ProfileRelations profile={profileInfo} />
         </div>
-        <div className="col-span-4">
+        <div className="col-span-5">
           <ProfileSpecCard spec={profileInfo.spec} />
+          <MatchingClusterTable />
         </div>
       </div>
     </>

@@ -34,6 +34,7 @@ export function ProfileRelations({
 }: {
   profile: {
     name: string;
+    apiVersion?: string;
     dependencies: Dependency[];
     dependents: Dependency[];
     matchingClusters: { cluster: { name: string } }[];
@@ -49,7 +50,11 @@ export function ProfileRelations({
       {
         id: "profile",
         type: "custom",
-        data: { name: profile.name, kind: "Profile" },
+        data: {
+          name: profile.name,
+          kind: "Profile",
+          apiVersion: profile?.apiVersion,
+        },
         position: { x: 0, y: 0 },
       },
     ];
@@ -61,8 +66,6 @@ export function ProfileRelations({
       nodes.push({
         id: `depends-${index}`,
         type: "dependents",
-        targetPosition: "top",
-        sourcePosition: "bottom",
         data: { name: dep.name, kind: dep.kind, apiVersion: dep.apiVersion },
         position: {
           x:

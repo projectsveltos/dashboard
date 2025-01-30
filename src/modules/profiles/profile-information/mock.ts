@@ -67,6 +67,40 @@ export const profileInfo = {
         },
       ],
     },
+    {
+      cluster: {
+        kind: "Cluster",
+        namespace: "default",
+        name: "clusterapi-workload",
+        apiVersion: "cluster.x-k8s.io/v1beta1",
+      },
+      clusterFeatureSummaries: [
+        {
+          featureID: "Resources",
+          status: "Provisioned",
+        },
+        {
+          featureID: "Helm",
+          status: "FailedNonRetriable",
+          failureMessage:
+            "cannot manage chart kyverno/kyverno-latest. ClusterSummary deploy-kyverno-capi-clusterapi-workload managing it.\n",
+        },
+      ],
+    },
+    {
+      cluster: {
+        kind: "Cluster",
+        namespace: "default",
+        name: "clusterapi-workload",
+        apiVersion: "cluster.x-k8s.io/v1beta1",
+      },
+      clusterFeatureSummaries: [
+        {
+          featureID: "Resources",
+          status: "Provisioned",
+        },
+      ],
+    },
   ],
   spec: {
     clusterSelector: {

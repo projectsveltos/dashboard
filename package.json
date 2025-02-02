@@ -15,7 +15,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@projectstorm/react-diagrams": "^7.0.4",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -33,7 +32,6 @@
     "@radix-ui/react-tooltip": "^1.0.7",
     "@xyflow/react": "^12.4.2",
     "axios": "^1.6.8",
-    "beautiful-react-diagrams": "^0.5.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^1.0.0",

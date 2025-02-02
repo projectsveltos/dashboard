@@ -11,14 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { mainMenu } from "@/config/menu";
-import {
-  ChevronDownIcon,
-  DividerVerticalIcon,
-  HamburgerMenuIcon,
-} from "@radix-ui/react-icons";
+import { DividerVerticalIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
 import { Logo } from "../assets/logo/logo";
 import {
@@ -60,20 +55,6 @@ export function Header() {
             {mainMenu.map((menu, index) =>
               menu.items !== undefined ? (
                 <DropdownMenu key={index}>
-                  <DropdownMenuTrigger
-                    className={cn(
-                      "flex items-center py-1 focus:outline-none text-sm font-medium transition-colors hover:text-primary",
-                      menu.items
-                        .filter((subitem) => subitem.to !== undefined)
-                        .map((subitem) => subitem.to)
-                        .includes(location.pathname)
-                        ? "text-foreground"
-                        : "text-foreground/60",
-                    )}
-                  >
-                    {menu.title}
-                    <ChevronDownIcon className="ml-1 -mr-1 h-3 w-3 text-muted-foreground" />
-                  </DropdownMenuTrigger>
                   <DropdownMenuContent
                     className="w-48"
                     align="start"
@@ -101,7 +82,7 @@ export function Header() {
                   </DropdownMenuContent>
                 </DropdownMenu>
               ) : menu.disabled ? (
-                <Button variant="link" disabled>
+                <Button key={index} variant="link" disabled>
                   {menu.icon && menu.icon}
                   <span className="ml-1">{menu.title} </span>
                 </Button>
@@ -267,34 +248,6 @@ export function Header() {
               <LogOutIcon className={"h-4 w-4 mx-1"} />
               Logout
             </Button>
-
-            {/* Hide User menu
-
-                 <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="relativeh-8 w-8 rounded-full"
-                >
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>GL</AvatarFallback>
-                  </Avatar>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
-                <DropdownMenuLabel className="font-normal">
-                  <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">Gianluca</p>
-                    <p className="text-xs leading-none text-muted-foreground">
-                      m@example.com
-                    </p>
-                  </div>
-                </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>Log out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-            */}
           </nav>
         </div>
       </div>

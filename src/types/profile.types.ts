@@ -8,11 +8,24 @@ export interface Profile {
   kind: string;
   namespace: string;
   name: string;
-  dependencies: Dependency[];
-  dependents: Dependency[];
-  matchingClusters: any;
-  spec: Spec;
+  dependencies: Array<{ kind: string; name: string; apiVersion: string }>;
+  dependents: Array<{ kind: string; name: string; apiVersion: string }>;
+  matchingClusters: never[];
+  spec: { clusterSelector: object };
 }
+
+export interface ProfilesResponseObject {
+  [key: string]: {
+    totalProfiles: number;
+    profiles: Profile[];
+  };
+}
+
+export type TierData = {
+  id: string;
+  totalProfiles: number;
+  profiles: Profile[];
+};
 
 export interface Dependency {
   kind: string;
@@ -20,6 +33,47 @@ export interface Dependency {
   apiVersion: string;
 }
 
-export interface Spec {
-  clusterSelector: any;
+export interface MatchingCluster {
+  cluster: {
+    kind: string;
+    namespace: string;
+    name: string;
+    apiVersion: string;
+  };
+  clusterFeatureSummaries: {
+    failureMessage: (
+      value: { featureID: string; status: string },
+      index: number,
+      array: {
+        featureID: string;
+        status: string;
+      }[],
+    ) => unknown;
+    featureID: string;
+    status: string;
+  }[];
+}
+export interface ProfileInfo {
+  name: string;
+  namespace: string;
+  kind: string;
+  dependencies: Dependency[];
+  dependents: Dependency[];
+  matchingClusters: MatchingCluster[];
+  spec: {
+    clusterSelector: {
+      matchLabels: {
+        env: string;
+      };
+    };
+    tier: string;
+    syncMode: string;
+    stopMatchingBehavior: string;
+    policyRefs: {
+      namespace: string;
+      name: string;
+      kind: string;
+      deploymentType: string;
+    }[];
+  };
 }

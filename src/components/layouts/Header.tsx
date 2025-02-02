@@ -32,7 +32,7 @@ import { Badge } from "@/components/ui/badge";
 import { LogOutIcon } from "lucide-react";
 
 export function Header() {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const version = import.meta.env.VITE_APP_VERSION;
   const isPublicPreview = (version?.split(".")[0] ?? "") === "0" || true;

@@ -1,13 +1,11 @@
 import * as React from "react";
-
-import { cn } from "@/lib/utils";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useIsFetching, useQueryClient } from "react-query";
 
 import { RefreshCcw } from "lucide-react";
 
 const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  ({ className, ...props }, ref) => {
     const queryClient = useQueryClient();
     const isFetching = useIsFetching();
     const handleRefresh = () => {
@@ -15,6 +13,7 @@ const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
     };
     return (
       <Button
+        {...props}
         variant={"outline"}
         disabled={isFetching > 0}
         onClick={handleRefresh}

@@ -6,10 +6,11 @@ import { appConfig } from "@/config/app";
 
 import { pathFromType } from "@/api-client/util/GetPathFromType";
 import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
+import { SearchParams } from "@/types/params.types";
 const fetchClusters = async (
   type: ClusterType,
   page: number,
-  searchParams: any,
+  searchParams: SearchParams,
 ) => {
   const { data } = await client.get(pathFromType(type), {
     params: {
@@ -24,7 +25,7 @@ const fetchClusters = async (
 const useClusters = (
   type: ClusterType,
   page: number,
-  searchParams: any,
+  searchParams: SearchParams,
 ): UseQueryResult<ClusterListResponse, Error> => {
   return useQuery(
     ["clusters", type, page, searchParams],

@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { TableCellsMerge } from "lucide-react";
 import { Profile } from "@/types/profile.types";
-import { ClusterInfoType } from "@/types/cluster.types";
 import { useNavigate } from "react-router-dom";
 
 export function ProfileCard({ profile }: { profile: Profile }) {

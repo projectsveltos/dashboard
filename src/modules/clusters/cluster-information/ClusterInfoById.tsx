@@ -16,6 +16,7 @@ export function ClusterInfoById() {
     name as string,
     type as ClusterType,
   );
+
   const [resourcesQuery, profileQuery, helmChartQuery, InfoQuery] = queries.map(
     (query) => query,
   );
@@ -23,6 +24,7 @@ export function ClusterInfoById() {
   if (InfoQuery.isLoading) {
     return <LoadingAddons />;
   }
+
   if (queries.some((query) => query.isError)) {
     const firstErrorQuery = queries.find((query) => query.isError);
     return (

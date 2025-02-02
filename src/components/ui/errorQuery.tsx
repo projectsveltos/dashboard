@@ -11,7 +11,7 @@ type ErrorFetchingProps = {
   queryKey?: string;
 };
 
-export const ErrorQuery = ({ name, error, queryKey }: ErrorFetchingProps) => {
+export const ErrorQuery = ({ name, error }: ErrorFetchingProps) => {
   const reportError = () => {
     window.open(appConfig.github.url + "/issues/new", "_blank");
   };

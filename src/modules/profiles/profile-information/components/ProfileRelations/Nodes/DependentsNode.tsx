@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import React from "react";
 import { Handle, Position } from "@xyflow/react";
-import { ArchiveRestore, CircleHelp, Package } from "lucide-react";
+import { CircleHelp, Package } from "lucide-react";
 import { Dependency } from "@/types/profile.types";
 
 export function DependentsNode({ data }: { data: Dependency }) {

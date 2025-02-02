@@ -4,7 +4,7 @@ export const LoadingTableRow = ({ columns }: { columns: number }) => {
   return (
     <>
       {Array.from({ length: columns }).map((_, index) => (
-        <TableRow>
+        <TableRow key={index}>
           {" "}
           {Array.from({ length: columns }).map((_, index) => (
             <TableCell key={index}>

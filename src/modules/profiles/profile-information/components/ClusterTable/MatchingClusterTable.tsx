@@ -7,33 +7,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { profileInfo } from "@/modules/profiles/profile-information/mock";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  ChevronDown,
-  ChevronRight,
-  CircleEqual,
-  Copy,
-  EqualSquare,
-  FileSliders,
-  MoreHorizontal,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { toast } from "sonner";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { useState } from "react";
+import { ChevronDown, ChevronRight, CircleEqual } from "lucide-react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
-import React from "react";
 import {
   Card,
   CardContent,
@@ -42,8 +18,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { MatchingCluster } from "@/types/profile.types";
 
-export default function MatchingClusterTable() {
+export default function MatchingClusterTable({
+  data,
+}: {
+  data: MatchingCluster[];
+}) {
   const [openAccordions, setOpenAccordions] = useState<number[]>([]);
 
   const toggleAccordion = (accordionId: number) => {
@@ -76,7 +57,7 @@ export default function MatchingClusterTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {profileInfo.matchingClusters.map((cluster, index) => (
+              {data?.map((cluster, index) => (
                 <React.Fragment key={index}>
                   <TableRow
                     onClick={() => toggleAccordion(index)}
@@ -132,7 +113,7 @@ export default function MatchingClusterTable() {
                                     <TableCell>{feature.featureID}</TableCell>
                                     <TableCell>{feature.status}</TableCell>
                                     <TableCell>
-                                      {feature.failureMessage || "-"}
+                                      {String(feature.failureMessage) ?? "-"}
                                     </TableCell>
                                   </TableRow>
                                 ),

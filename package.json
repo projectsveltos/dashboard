@@ -1,7 +1,7 @@
 {
   "name": "sveltos-dashboard",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.2",
   "type": "module",
   "repository": {
     "type": "git",
@@ -9,8 +9,8 @@
   },
   "description": "Sveltos User interface dashboard",
   "scripts": {
-    "lint": "npx prettier . --write",
-    "dev": "tsc && npx prettier . --write && vite --logLevel info -d=debug --host 0.0.0.0",
+    "lint": "npx prettier . --write && eslint --fix .",
+    "dev": "tsc && eslint . && npx prettier . --write && vite --logLevel info -d=debug --host 0.0.0.0",
     "build": "tsc && vite build",
     "preview": "vite preview"
   },
@@ -67,6 +67,7 @@
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^15.0.0",
     "postcss": "^8.4.31",
     "prettier": "3.2.5",

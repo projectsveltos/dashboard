@@ -1,6 +1,6 @@
-import React, { memo } from "react";
+import React from "react";
 import { Handle, Position } from "@xyflow/react";
-import { ArchiveRestore, Boxes, CircleHelp } from "lucide-react";
+import { ArchiveRestore, CircleHelp } from "lucide-react";
 
 interface DependencyNodeProps {
   name: string;

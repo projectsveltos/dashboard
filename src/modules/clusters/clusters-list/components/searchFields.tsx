@@ -1,5 +1,5 @@
 import { Label } from "@/components/ui/label";
-import { ALargeSmall, Blocks, Eraser, Tags } from "lucide-react";
+import { Eraser } from "lucide-react";
 import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
 import { Button } from "@/components/ui/button";

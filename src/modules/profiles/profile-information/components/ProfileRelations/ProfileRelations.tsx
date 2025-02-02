@@ -4,8 +4,9 @@ import {
   useNodesState,
   useEdgesState,
   addEdge,
-  MiniMap,
   Controls,
+  Connection,
+  Edge,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/base.css";
@@ -16,7 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Cable, File, Fullscreen, PlusCircle } from "lucide-react";
+import { Cable, File, Fullscreen } from "lucide-react";
 import { DependencyNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/DependencyNode";
 import { DependentsNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/DependentsNode";
 import { ClusterNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/ClusterNode";
@@ -40,11 +41,28 @@ export function ProfileRelations({
     matchingClusters: { cluster: { name: string } }[];
   };
 }) {
-  if (!profile) {
-    alert("No profile found");
-    return null;
-  }
+  const initEdges = useMemo(() => {
+    const edges: Edge[] = [];
 
+    profile.dependencies.forEach((_, index) => {
+      edges.push({
+        id: `e-profile-dependencies-${index}`,
+        target: "profile",
+        source: `dependency-${index}`,
+      });
+    });
+
+    profile.dependents.forEach((_, index) => {
+      edges.push({
+        id: `e-profile-dep-${index}`,
+        source: "profile",
+        animated: true,
+        target: `depends-${index}`,
+      });
+    });
+
+    return edges;
+  }, [profile]);
   const initNodes = useMemo(() => {
     const nodes = [
       {
@@ -94,36 +112,18 @@ export function ProfileRelations({
     return nodes;
   }, [profile]);
 
-  const initEdges = useMemo(() => {
-    const edges: any[] = [];
-
-    profile.dependencies.forEach((_, index) => {
-      edges.push({
-        id: `e-profile-dependencies-${index}`,
-        target: "profile",
-        source: `dependency-${index}`,
-      });
-    });
-
-    profile.dependents.forEach((_, index) => {
-      edges.push({
-        id: `e-profile-dep-${index}`,
-        source: "profile",
-        animated: true,
-        target: `depends-${index}`,
-      });
-    });
-
-    return edges;
-  }, [profile]);
-
-  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
+  const [nodes, _setNodes, onNodesChange] = useNodesState(initNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
 
   const onConnect = useCallback(
-    (params: any) => setEdges((eds) => addEdge(params, eds)),
-    [],
+    (params: Connection) => setEdges((eds) => addEdge(params, eds)),
+    [setEdges],
   );
+
+  if (!profile) {
+    alert("No profile found");
+    return null;
+  }
 
   return (
     <div>
@@ -175,7 +175,6 @@ export function ProfileRelations({
               fitView
               className="bg-primary/5"
             >
-              <MiniMap />
               <Controls />
             </ReactFlow>
           </div>

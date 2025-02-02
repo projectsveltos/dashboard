@@ -6,8 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Divide, FileSliders } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { FileSliders } from "lucide-react";
 
 type ProfileSpecCardProps = {
   spec: {
@@ -18,7 +17,7 @@ type ProfileSpecCardProps = {
     };
     syncMode: string;
     stopMatchingBehavior: string;
-    policyRefs: {
+    policyRefs?: {
       namespace: string;
       name: string;
       kind: string;
@@ -49,18 +48,18 @@ export const ProfileSpecCard = ({ spec }: ProfileSpecCardProps) => {
             </dd>
             <dt className="text-sm text-muted-foreground">Sync Mode</dt>
             <dd className="text-sm font-medium">{spec.syncMode}</dd>
-
-            <dt className="text-sm text-muted-foreground">Policy References</dt>
-            <dd className="font-medium">
-              {spec.policyRefs.map((policy, index) => (
-                <div key={index} className="ml-2">
-                  <Badge variant={"secondary"} className="mr-1">
-                    {policy.kind}
-                  </Badge>
-                  <span>{policy.name}</span>
-                </div>
-              ))}
-            </dd>
+            {spec?.policyRefs && (
+              <>
+                <dt className="text-sm text-muted-foreground">Policy Refs</dt>
+                <dd>
+                  {spec.policyRefs.map((policy, index) => (
+                    <Badge key={index} variant={"outline"}>
+                      {policy.name}
+                    </Badge>
+                  ))}
+                </dd>
+              </>
+            )}
           </dl>
         </div>
       </CardContent>

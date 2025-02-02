@@ -1,7 +1,9 @@
 export const API_ENDPOINTS = {
-  Endresources: "/resources",
-  EndhelmChart: "/helmcharts",
-  EndprofileStatuses: "/getClusterStatus",
-  Endcapiclusters: "/capiclusters",
-  Endsveltosclusters: "/sveltosclusters",
+  RESOURCES: "/resources",
+  HELM_CHART: "/helmcharts",
+  PROFILE_STATUSES: "/getClusterStatus",
+  CAPI_CLUSTERS: "/capiclusters",
+  SVELTOS_CLUSTERS: "/sveltosclusters",
+  PROFILES: "/profiles",
+  PROFILE: "/profile",
 };

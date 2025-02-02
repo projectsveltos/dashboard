@@ -8,8 +8,8 @@ import { appConfig } from "@/config/app";
 import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterInfoById";
 import { Authentication } from "@/modules/authentication/Authentication";
 import { ProfileList } from "@/modules/profiles/profiles-list/ProfileList";
-import { ProfileCard } from "@/modules/profiles/profiles-list/components/profile/ProfileCard/ProfileCard";
 import { ProfileInformation } from "@/modules/profiles/profile-information/ProfileInformation";
+
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
 export const router = createBrowserRouter([

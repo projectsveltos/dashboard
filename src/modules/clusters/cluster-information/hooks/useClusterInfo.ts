@@ -9,9 +9,9 @@ import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
 import { appConfig } from "@/config/app";
 import { useState } from "react";
 import { AddonTypes } from "@/types/addon.types";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
-const { Endresources, EndhelmChart, EndprofileStatuses } = API_ENDPOINTS;
+const { RESOURCES, HELM_CHART, PROFILE_STATUSES } = API_ENDPOINTS;
 
 const getResources = async (
   namespace: string,
@@ -19,7 +19,7 @@ const getResources = async (
   clusterType: ClusterType,
   page: number,
 ) => {
-  const { data } = await client.get(Endresources, {
+  const { data } = await client.get(RESOURCES, {
     params: {
       namespace: namespace,
       name: clusterName,
@@ -37,7 +37,7 @@ const getClusterProfileStatuses = async (
   page: number,
   toggleFailFilter: boolean,
 ) => {
-  const { data } = await client.get(EndprofileStatuses, {
+  const { data } = await client.get(PROFILE_STATUSES, {
     params: {
       namespace: namespace,
       name: clusterName,
@@ -55,7 +55,7 @@ const getHelmCharts = async (
   clusterType: ClusterType,
   page: number,
 ) => {
-  const { data } = await client.get(EndhelmChart, {
+  const { data } = await client.get(HELM_CHART, {
     params: {
       namespace: namespace,
       name: clusterName,

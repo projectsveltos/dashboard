@@ -1,8 +1,8 @@
 import { TierCard } from "@/modules/profiles/profiles-list/components/tier/TierCard";
-import { PageHeading } from "@/components/ui/PageHeading";
+import { PageHeading } from "@/lib/components/ui/PageHeading";
 import useProfiles from "@/modules/profiles/profiles-list/hooks/useProfiles";
 import { TierData } from "@/types/profile.types";
-import { ErrorQuery } from "@/components/ui/errorQuery";
+import { ErrorQuery } from "@/lib/components/ui/errorQuery";
 import { LoadingTier } from "@/modules/profiles/profiles-list/components/tier/LoadingTier";
 
 export function ProfileList() {

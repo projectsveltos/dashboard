@@ -1,10 +1,10 @@
-import { Label } from "@/components/ui/label";
+import { Label } from "@/lib/components/ui/label";
 import { Eraser } from "lucide-react";
 import { useState } from "react";
 import useDebounce from "@/hooks/useDebounce";
-import { Button } from "@/components/ui/button";
-import { ClearableInput } from "@/components/ui/clearable-input";
-import TagInput from "@/components/ui/TagInput";
+import { Button } from "@/lib/components/ui/button";
+import { ClearableInput } from "@/lib/components/ui/clearable-input";
+import TagInput from "@/lib/components/ui/TagInput";
 export interface SearchField {
   icon: React.ElementType;
   label: string;

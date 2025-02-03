@@ -1,17 +1,17 @@
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Icons } from "@/components/icons";
+import { Sheet, SheetContent, SheetTrigger } from "@/lib/components/ui/sheet";
+import { Icons } from "@/lib/components/icons";
 import { appConfig } from "@/config/app";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/lib/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+} from "@/lib/components/ui/dropdown-menu";
 import { mainMenu } from "@/config/menu";
 import { DividerVerticalIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
@@ -21,9 +21,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { ModeToggle } from "@/components/mode-toggle";
-import { Badge } from "@/components/ui/badge";
+} from "@/lib/components/ui/accordion";
+import { ModeToggle } from "@/lib/components/mode-toggle";
+import { Badge } from "@/lib/components/ui/badge";
 import { LogOutIcon } from "lucide-react";
 
 export function Header() {

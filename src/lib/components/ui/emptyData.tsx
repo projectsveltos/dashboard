@@ -1,6 +1,6 @@
 import { CircleOff, FilterX } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { RefreshButton } from "@/components/ui/RefreshButton";
+import { Button } from "@/lib/components/ui/button";
+import { RefreshButton } from "@/lib/components/ui/RefreshButton";
 
 type EmptyDataProps = {
   name: string;

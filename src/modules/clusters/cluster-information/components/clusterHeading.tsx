@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import { ChevronLeft } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/lib/components/ui/badge";
 import { useNavigate } from "react-router-dom";
-import { Icons } from "@/components/icons";
-import { RefreshButton } from "@/components/ui/RefreshButton";
+import { Icons } from "@/lib/components/icons";
+import { RefreshButton } from "@/lib/components/ui/RefreshButton";
 
 type ClusterHeadingProps = {
   name: string;

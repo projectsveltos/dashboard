@@ -7,7 +7,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination";
+} from "@/lib/components/ui/pagination";
 import { appConfig } from "@/config/app";
 
 export const usePagination = (

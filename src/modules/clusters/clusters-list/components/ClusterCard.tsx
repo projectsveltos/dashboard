@@ -1,13 +1,13 @@
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { Card } from "@/lib/components/ui/card";
+import { Badge } from "@/lib/components/ui/badge";
 
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { ReadyFlag } from "@/components/ui/ready-flag";
-import { FailedFlag } from "@/components/ui/failed-flag";
+} from "@/lib/components/ui/tooltip";
+import { ReadyFlag } from "@/lib/components/ui/ready-flag";
+import { FailedFlag } from "@/lib/components/ui/failed-flag";
 import { Label } from "@/types/cluster.types";
 import { appConfig } from "@/config/app";
 import { Tags } from "lucide-react";

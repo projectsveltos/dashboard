@@ -5,15 +5,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/lib/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "@/lib/components/ui/dropdown-menu";
+import { Button } from "@/lib/components/ui/button";
 import {
   Check,
   Copy,
@@ -22,16 +22,20 @@ import {
   MoreHorizontal,
   ServerCrash,
 } from "lucide-react";
-import { EmptyData } from "@/components/ui/emptyData";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { EmptyData } from "@/lib/components/ui/emptyData";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/lib/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { appConfig } from "@/config/app";
 import { usePagination } from "@/hooks/usePagination";
 import { AddonData, AddonTypes } from "@/types/addon.types";
-import { LoadingTableRow } from "@/components/ui/loadingTableRow";
-import { Badge } from "@/components/ui/badge";
+import { LoadingTableRow } from "@/lib/components/ui/loadingTableRow";
+import { Badge } from "@/lib/components/ui/badge";
 import { colorFromStatus } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/lib/components/ui/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   helmColumns,
@@ -43,8 +47,8 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+} from "@/lib/components/ui/tooltip";
+import { Alert, AlertDescription } from "@/lib/components/ui/alert";
 import { toast } from "sonner";
 
 interface AddonsTableProps {

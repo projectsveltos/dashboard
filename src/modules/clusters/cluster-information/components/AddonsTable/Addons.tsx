@@ -1,15 +1,20 @@
 import { Blocks, File, PlusCircle } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/lib/components/ui/card";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/lib/components/ui/tabs";
 
 import { AddonsTable } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTable";
 import { useState } from "react";

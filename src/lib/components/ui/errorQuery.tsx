@@ -1,9 +1,9 @@
 import { ExclamationTriangleIcon } from "@radix-ui/react-icons";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
+import { Alert, AlertDescription, AlertTitle } from "@/lib/components/ui/alert";
+import { Button } from "@/lib/components/ui/button";
 import { AlertTriangleIcon } from "lucide-react";
 import { appConfig } from "@/config/app";
-import { RefreshButton } from "@/components/ui/RefreshButton";
+import { RefreshButton } from "@/lib/components/ui/RefreshButton";
 
 type ErrorFetchingProps = {
   name: string;

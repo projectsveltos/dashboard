@@ -1,9 +1,9 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/lib/components/ui/card";
 import { EllipsisVertical } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/lib/components/ui/button";
+import { Badge } from "@/lib/components/ui/badge";
 import { ProfileCard } from "@/modules/profiles/profiles-list/components/profile/ProfileCard/ProfileCard";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea } from "@/lib/components/ui/scroll-area";
 import { Tier } from "@/types/profile.types";
 
 export function TierCard({ tier }: { tier: Tier }) {

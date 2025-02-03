@@ -4,8 +4,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+} from "@/lib/components/ui/card";
+import { Badge } from "@/lib/components/ui/badge";
 import { FileSliders } from "lucide-react";
 
 type ProfileSpecCardProps = {

@@ -1,14 +1,14 @@
-import { Icons } from "@/components/icons";
+import { Icons } from "@/lib/components/icons";
 import {
   AvatarRectangle,
   AvatarRectFallback,
-} from "@/components/ui/avatar-rectangle";
+} from "@/lib/components/ui/avatar-rectangle";
 import { ServerCrash } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from "@/lib/components/ui/tooltip";
 
 export const FailedFlag = ({ msg }: { msg?: string | undefined | null }) => {
   return (

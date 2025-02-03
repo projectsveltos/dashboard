@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import { useState } from "react";
-import { RefreshButton } from "@/components/ui/RefreshButton";
+import { RefreshButton } from "@/lib/components/ui/RefreshButton";
 
 export const CardsFilterToolbar = () => {
   const [isFiltered, _setIsFiltered] = useState(false);

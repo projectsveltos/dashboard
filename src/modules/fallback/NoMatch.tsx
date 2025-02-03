@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import { ChevronLeft } from "lucide-react";
 
 export default function NoMatch() {

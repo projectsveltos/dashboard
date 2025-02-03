@@ -1,7 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { router } from "./Router";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { TooltipProvider } from "@/lib/components/ui/tooltip";
 import { toast, Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { isAxiosError } from "axios";

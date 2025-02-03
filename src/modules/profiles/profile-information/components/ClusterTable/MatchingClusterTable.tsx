@@ -5,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
+} from "@/lib/components/ui/table";
+import { Badge } from "@/lib/components/ui/badge";
 import { ChevronDown, ChevronRight, CircleEqual } from "lucide-react";
 import React, { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -16,8 +16,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from "@/lib/components/ui/card";
+import { ScrollArea } from "@/lib/components/ui/scroll-area";
 import { MatchingCluster } from "@/types/profile.types";
 
 export default function MatchingClusterTable({
@@ -78,7 +78,7 @@ export default function MatchingClusterTable({
                       ) ? (
                         <Badge variant={"destructive"}>Failed</Badge>
                       ) : (
-                        <Badge variant={"default"}> Provisioned</Badge>
+                        <Badge variant={"success"}> Provisioned</Badge>
                       )}
                     </TableCell>
                   </TableRow>
@@ -109,10 +109,21 @@ export default function MatchingClusterTable({
                             <TableBody>
                               {cluster.clusterFeatureSummaries.map(
                                 (feature, featureIndex) => (
-                                  <TableRow key={featureIndex}>
+                                  <TableRow
+                                    className={
+                                      !feature.failureMessage
+                                        ? "bg-red-200 dark:bg-red-500"
+                                        : ""
+                                    }
+                                    key={featureIndex}
+                                  >
                                     <TableCell>{feature.featureID}</TableCell>
                                     <TableCell>{feature.status}</TableCell>
-                                    <TableCell>
+                                    <TableCell
+                                      className={
+                                        "break-words whitespace-normal"
+                                      }
+                                    >
                                       {String(feature.failureMessage) ?? "-"}
                                     </TableCell>
                                   </TableRow>

@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 import { ClusterType } from "@/types/cluster.types";
 import { LoadingAddons } from "@/modules/clusters/cluster-information/components/AddonsTable/LoadingAddons";
 import { AddonTypes } from "@/types/addon.types";
-import { ErrorQuery } from "@/components/ui/errorQuery";
+import { ErrorQuery } from "@/lib/components/ui/errorQuery";
 import { useClusterInfo } from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
 
 export function ClusterInfoById() {

@@ -5,7 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const colorFromStatus = (status: string) => {
+export const colorFromStatus = (status: string | undefined) => {
   switch (status) {
     case "Provisioned":
       return "bg-green-500";

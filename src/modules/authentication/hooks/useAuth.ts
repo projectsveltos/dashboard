@@ -8,7 +8,12 @@ const useAuth = () => {
     navigate("/sveltos");
   };
 
-  return { authenticate };
+  const logout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/login");
+  };
+
+  return { authenticate, logout };
 };
 
 export default useAuth;

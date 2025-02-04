@@ -5,33 +5,36 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
+} from "@/lib/components/ui/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+} from "@/lib/components/ui/dropdown-menu";
+import { Button } from "@/lib/components/ui/button";
 import {
   Check,
-  Copy,
   ExternalLink,
   ImageOff,
   MoreHorizontal,
   ServerCrash,
 } from "lucide-react";
-import { EmptyData } from "@/components/ui/emptyData";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { EmptyData } from "@/lib/components/ui/emptyData";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/lib/components/ui/avatar";
 import { useEffect, useState } from "react";
 import { appConfig } from "@/config/app";
 import { usePagination } from "@/hooks/usePagination";
-import { AddonTypes } from "@/types/addon.types";
-import { LoadingTableRow } from "@/components/ui/loadingTableRow";
-import { Badge } from "@/components/ui/badge";
+import { AddonData, AddonTypes } from "@/types/addon.types";
+import { LoadingTableRow } from "@/lib/components/ui/loadingTableRow";
+import { Badge } from "@/lib/components/ui/badge";
 import { colorFromStatus } from "@/lib/utils";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Checkbox } from "@/lib/components/ui/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   helmColumns,
@@ -39,54 +42,59 @@ import {
   resourceColumns,
 } from "@/modules/clusters/cluster-information/components/AddonsTable/Columns";
 import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { toast } from "sonner";
+
+import { FailureMessage } from "@/lib/components/ui/failureMessage";
+
+interface AddonsTableProps {
+  data: {
+    helmReleases?: AddonData[];
+    totalHelmReleases?: number;
+    resources?: AddonData[];
+    totalResources?: number;
+    profiles?: AddonData[];
+  };
+  type: AddonTypes;
+  setPage: (page: number, type: AddonTypes) => void;
+  loading: boolean;
+}
 
 export const AddonsTable = ({
   data,
   type,
   setPage,
   loading,
-}: {
-  data: any;
-  type: AddonTypes;
-  setPage: (page: number, type: AddonTypes) => void;
-  loading: boolean;
-}) => {
-  const navigateRepoURL = (url: string) => {
-    window.open(url, "_blank");
+}: AddonsTableProps) => {
+  const navigateRepoURL = (url: string | undefined) => {
+    if (url) {
+      window.open(url, "_blank");
+    }
   };
 
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [total, setTotal] = useState<number>(0);
   const [page, setUIPage] = useState<number>(appConfig.defaultPage);
-  const [rows, setRows] = useState<any>([]);
+  const [rows, setRows] = useState<AddonData[]>([]);
   const isProfile = type == AddonTypes.PROFILE;
   const failedOnly = searchParams.get("failure") === "true";
 
   useEffect(() => {
     switch (type) {
       case AddonTypes.HELM:
-        setRows(data.helmReleases);
-        setTotal(data.totalHelmReleases);
+        setRows(data.helmReleases || []);
+        setTotal(data.totalHelmReleases || 0);
         break;
       case AddonTypes.RESOURCE:
-        setRows(data.resources);
-        setTotal(data.totalResources);
+        setRows(data.resources || []);
+        setTotal(data.totalResources || 0);
         break;
       case AddonTypes.PROFILE:
-        setRows(data.profiles);
-        setTotal(data.totalResources);
+        setRows(data.profiles || []);
+        setTotal(data.totalResources || 0);
         break;
       default:
     }
-  }, [data]);
+  }, [data, type]);
   useEffect(() => {
     setFailureCheck(failedOnly);
   }, [failedOnly]);
@@ -152,7 +160,7 @@ export const AddonsTable = ({
           <TableBody>
             {rows && rows.length > 0 ? (
               <>
-                {rows.map((row: any, index: number) => (
+                {rows.map((row: AddonData, index: number) => (
                   <TableRow
                     key={index}
                     className={
@@ -196,17 +204,19 @@ export const AddonsTable = ({
                           <TableCell>
                             {" "}
                             <div>
-                              {new Date(
-                                row.lastAppliedTime,
-                              )?.toLocaleDateString("en-US")}
+                              {row.lastAppliedTime &&
+                                new Date(
+                                  row.lastAppliedTime,
+                                )?.toLocaleDateString("en-US")}
                             </div>
-                            {new Date(row.lastAppliedTime)?.toLocaleTimeString(
-                              "en-US",
-                              {
-                                hour: "2-digit",
-                                minute: "2-digit",
-                              },
-                            )}
+                            {row.lastAppliedTime &&
+                              new Date(row.lastAppliedTime)?.toLocaleTimeString(
+                                "en-US",
+                                {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                },
+                              )}
                           </TableCell>
                         ) : column.keys == AddonTableTypes.FAILURE_MESSAGE ? (
                           <TableCell
@@ -215,29 +225,7 @@ export const AddonsTable = ({
                             }
                           >
                             {row.failureMessage && (
-                              <Alert
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    row.failureMessage,
-                                  );
-                                  toast.message("Copied to clipboard");
-                                }}
-                                className="flex items-center"
-                              >
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <AlertDescription className="mr-2 line-clamp-3 text-start overflow-hidden ">
-                                      {row.failureMessage}
-                                    </AlertDescription>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>{row.failureMessage}</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                                <div>
-                                  <Copy className="h-4 w-4" />
-                                </div>
-                              </Alert>
+                              <FailureMessage msg={row.failureMessage} />
                             )}
                           </TableCell>
                         ) : column.keys == AddonTableTypes.STATUS ? (
@@ -322,7 +310,11 @@ export const AddonsTable = ({
                           >
                             {column.keys
                               .split("/")
-                              .map((key) => <div key={key}>{row[key]}</div>)
+                              .map((key) => (
+                                <div key={key}>
+                                  {row[key as keyof AddonData]}
+                                </div>
+                              ))
                               .filter(Boolean)}
                           </TableCell>
                         )}

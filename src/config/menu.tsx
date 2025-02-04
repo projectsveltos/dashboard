@@ -22,9 +22,8 @@ export const mainMenu: NavItemWithChildren[] = [
   },
   {
     title: "Profiles",
-    to: "cluster-profiles",
+    to: "/sveltos/profiles",
     icon: <Users className={"w-4 h-4"} />,
-    disabled: true,
   },
   {
     title: "Labels",

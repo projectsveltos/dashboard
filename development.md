@@ -34,7 +34,6 @@ default : `localhost`
 
 `set VITE_BACKEND_NAME= ui-backend`
 
-
 ### Configure the protocol
 
 to change the protocol to `https` set the following environment variable
@@ -50,4 +49,3 @@ if the port is not available , it will automatically switch to the next availabl
 ##### Example :
 
 `npm run dev -- --port 3000`
-

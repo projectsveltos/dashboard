@@ -56,3 +56,6 @@
     @apply bg-background text-foreground;
   }
 }
+.react-flow__attribution {
+  visibility: hidden;
+}

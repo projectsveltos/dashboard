@@ -1,5 +1,3 @@
-import { Label } from "@/types/cluster.types";
-
 export interface HelmReleaseType {
   repoURL: string;
   releaseName: string;

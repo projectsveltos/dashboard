@@ -1,26 +1,20 @@
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Logo } from "@/components/assets/logo/logo";
+} from "@/lib/components/ui/card";
+import { Input } from "@/lib/components/ui/input";
+import { Label } from "@/lib/components/ui/label";
+import { Logo } from "@/lib/components/assets/logo/logo";
 import useAuth from "@/modules/authentication/hooks/useAuth";
 import { FormEvent, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Alert, AlertDescription, AlertTitle } from "@/lib/components/ui/alert";
 import { AlertCircle } from "lucide-react";
-import { ModeToggle } from "@/components/mode-toggle";
-import { QuestionMarkCircledIcon } from "@radix-ui/react-icons";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { ModeToggle } from "@/lib/components/mode-toggle";
 
 export const Authentication = () => {
   const { authenticate } = useAuth();

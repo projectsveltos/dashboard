@@ -1,31 +1,36 @@
 import { Blocks, File, PlusCircle } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/lib/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/lib/components/ui/card";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/lib/components/ui/tabs";
 
 import { AddonsTable } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTable";
 import { useState } from "react";
 
-import { addonTypes, AddonTypes } from "@/types/addon.types";
+import { AddonTableData, addonTypes, AddonTypes } from "@/types/addon.types";
 import { appConfig } from "@/config/app";
 
 interface ResourceTableProps {
-  addonsData: any;
+  addonsData: Record<AddonTypes, AddonTableData>;
   loading: boolean;
 
   setPage: (page: number, type: AddonTypes) => void;
 }
 
 export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
-  /* Bydefault we show helm charts , this will be hardcoded for now */
+  /* By default, we show helm charts , this will be hardcoded for now */
   const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
 
   const handleChangeTab = (tab: AddonTypes) => {
@@ -68,7 +73,7 @@ export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
 
             <CardContent>
               <TabsList>
-                {addonTypes.map((tab: any) => (
+                {addonTypes.map((tab: AddonTypes) => (
                   <TabsTrigger
                     key={tab}
                     value={tab}

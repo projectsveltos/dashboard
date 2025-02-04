@@ -41,14 +41,7 @@ export interface MatchingCluster {
     apiVersion: string;
   };
   clusterFeatureSummaries: {
-    failureMessage: (
-      value: { featureID: string; status: string },
-      index: number,
-      array: {
-        featureID: string;
-        status: string;
-      }[],
-    ) => unknown;
+    failureMessage: string;
     featureID: string;
     status: string;
   }[];

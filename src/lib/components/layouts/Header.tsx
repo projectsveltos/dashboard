@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Sheet, SheetContent, SheetTrigger } from "@/lib/components/ui/sheet";
 import { Icons } from "@/lib/components/icons";
@@ -25,17 +25,15 @@ import {
 import { ModeToggle } from "@/lib/components/mode-toggle";
 import { Badge } from "@/lib/components/ui/badge";
 import { LogOutIcon } from "lucide-react";
+import useAuth from "@/modules/authentication/hooks/useAuth";
 
 export function Header() {
   const [open, setOpen] = useState<boolean>(false);
   const location = useLocation();
   const version = import.meta.env.VITE_APP_VERSION;
   const isPublicPreview = (version?.split(".")[0] ?? "") === "0" || true;
-  const navigate = useNavigate();
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
-  };
+
+  const { logout } = useAuth();
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur">
       <div className="container px-4 md:px-8 flex h-14 items-center">
@@ -244,7 +242,7 @@ export function Header() {
             </a>
             <DividerVerticalIcon />
 
-            <Button variant={"outline"} onClick={handleLogout} size={"sm"}>
+            <Button variant={"outline"} onClick={logout} size={"sm"}>
               <LogOutIcon className={"h-4 w-4 mx-1"} />
               Logout
             </Button>

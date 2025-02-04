@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { Navigate, RouteObject } from "react-router-dom";
 
 import { Applayout } from "@/lib/components/layouts/AppLayout";
 
@@ -9,10 +9,12 @@ import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterI
 import { Authentication } from "@/modules/authentication/Authentication";
 import { ProfileList } from "@/modules/profiles/profiles-list/ProfileList";
 import { ProfileInformation } from "@/modules/profiles/profile-information/ProfileInformation";
+import { Logout } from "@/modules/authentication/Logout";
 
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
-export const router = createBrowserRouter([
+
+export const routes: RouteObject[] = [
   {
     path: "/",
     element: <Navigate to={"/login"} />,
@@ -20,6 +22,10 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <Authentication />,
+  },
+  {
+    path: "/logout",
+    element: <Logout />,
   },
 
   {
@@ -64,4 +70,4 @@ export const router = createBrowserRouter([
     path: "*",
     element: <NoMatch />,
   },
-]);
+];

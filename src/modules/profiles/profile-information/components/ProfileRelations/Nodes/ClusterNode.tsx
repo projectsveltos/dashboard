@@ -11,6 +11,7 @@ export function ClusterNode({ data }: { data: DependencyNodeProps }) {
   return (
     <div className=" bg-card flex text-primary  border-primary items-center space-x-4 rounded-md border p-4">
       <Boxes />
+
       <div className="flex-1 space-y-1">
         <p className="text-sm font-medium leading-none text-primary">
           {data?.name}

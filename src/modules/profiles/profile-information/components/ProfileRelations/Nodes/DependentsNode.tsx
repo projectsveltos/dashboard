@@ -2,10 +2,19 @@ import React from "react";
 import { Handle, Position } from "@xyflow/react";
 import { CircleHelp, Package } from "lucide-react";
 import { Dependency } from "@/types/profile.types";
+import { useNavigate } from "react-router-dom";
 
 export function DependentsNode({ data }: { data: Dependency }) {
+  const navigate = useNavigate();
+  function handleNavigation() {
+    navigate(`/sveltos/profile/${data.name}/${data.kind}`);
+  }
+
   return (
-    <div className=" bg-card flex items-center text-slate-600 space-x-4 rounded-md border p-4">
+    <div
+      onClick={handleNavigation}
+      className=" bg-card hover:bg-slate-200 hover:dark:bg-slate-800 flex cursor-pointer items-center text-slate-600 space-x-4 rounded-md border p-4"
+    >
       <Package />
       <div className="flex-1 space-y-1">
         <p className="text-sm font-medium leading-none text-slate-600">

@@ -16,7 +16,6 @@ import {
 import { Button } from "@/lib/components/ui/button";
 import {
   Check,
-  Copy,
   ExternalLink,
   ImageOff,
   MoreHorizontal,
@@ -43,13 +42,8 @@ import {
   resourceColumns,
 } from "@/modules/clusters/cluster-information/components/AddonsTable/Columns";
 import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/lib/components/ui/tooltip";
-import { Alert, AlertDescription } from "@/lib/components/ui/alert";
-import { toast } from "sonner";
+
+import { FailureMessage } from "@/lib/components/ui/failureMessage";
 
 interface AddonsTableProps {
   data: {
@@ -231,29 +225,7 @@ export const AddonsTable = ({
                             }
                           >
                             {row.failureMessage && (
-                              <Alert
-                                onClick={() => {
-                                  navigator.clipboard.writeText(
-                                    row.failureMessage as string,
-                                  );
-                                  toast.message("Copied to clipboard");
-                                }}
-                                className="flex items-center"
-                              >
-                                <Tooltip>
-                                  <TooltipTrigger>
-                                    <AlertDescription className="mr-2 line-clamp-3 text-start overflow-hidden ">
-                                      {row.failureMessage}
-                                    </AlertDescription>
-                                  </TooltipTrigger>
-                                  <TooltipContent>
-                                    <p>{row.failureMessage}</p>
-                                  </TooltipContent>
-                                </Tooltip>
-                                <div>
-                                  <Copy className="h-4 w-4" />
-                                </div>
-                              </Alert>
+                              <FailureMessage msg={row.failureMessage} />
                             )}
                           </TableCell>
                         ) : column.keys == AddonTableTypes.STATUS ? (

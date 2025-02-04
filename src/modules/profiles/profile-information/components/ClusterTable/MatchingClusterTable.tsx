@@ -19,6 +19,7 @@ import {
 } from "@/lib/components/ui/card";
 import { ScrollArea } from "@/lib/components/ui/scroll-area";
 import { MatchingCluster } from "@/types/profile.types";
+import { FailureMessage } from "@/lib/components/ui/failureMessage";
 
 export default function MatchingClusterTable({
   data,
@@ -46,7 +47,7 @@ export default function MatchingClusterTable({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className="h-[400] rounded-md border p-4">
+        <ScrollArea className=" h-96 rounded-md border p-4">
           <Table>
             <TableHeader>
               <TableRow>
@@ -71,7 +72,11 @@ export default function MatchingClusterTable({
                       )}
                     </TableCell>
                     <TableCell>{cluster.cluster.name}</TableCell>
-                    <TableCell>{cluster.cluster.namespace}</TableCell>
+                    <TableCell>
+                      <Badge variant={"outline"}>
+                        {cluster.cluster.namespace}
+                      </Badge>
+                    </TableCell>
                     <TableCell>
                       {cluster.clusterFeatureSummaries.some(
                         (feature) => feature.failureMessage,
@@ -111,20 +116,28 @@ export default function MatchingClusterTable({
                                 (feature, featureIndex) => (
                                   <TableRow
                                     className={
-                                      !feature.failureMessage
+                                      feature.failureMessage != null
                                         ? "bg-red-200 dark:bg-red-500"
                                         : ""
                                     }
                                     key={featureIndex}
                                   >
                                     <TableCell>{feature.featureID}</TableCell>
-                                    <TableCell>{feature.status}</TableCell>
                                     <TableCell
                                       className={
                                         "break-words whitespace-normal"
                                       }
                                     >
-                                      {String(feature.failureMessage) ?? "-"}
+                                      {feature.status}
+                                    </TableCell>
+                                    <TableCell
+                                      className={
+                                        "break-words whitespace-normal"
+                                      }
+                                    >
+                                      <FailureMessage
+                                        msg={feature.failureMessage}
+                                      />
                                     </TableCell>
                                   </TableRow>
                                 ),

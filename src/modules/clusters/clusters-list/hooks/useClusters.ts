@@ -32,7 +32,6 @@ const useClusters = (
     () => fetchClusters(type, page, searchParams),
     {
       keepPreviousData: false,
-      cacheTime: 0,
     },
   );
 };

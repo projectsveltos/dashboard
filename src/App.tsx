@@ -14,6 +14,7 @@ export default function App() {
   queryClient.setDefaultOptions({
     queries: {
       retry: 2,
+      staleTime: 30 * 1000,
       onError: (error: unknown) => {
         if (error instanceof Error) {
           if (
@@ -38,7 +39,7 @@ export default function App() {
     if (token) {
       authenticate(token);
     }
-  }, [window.location.search]);
+  }, [authenticate]);
 
   return (
     <ThemeProvider>

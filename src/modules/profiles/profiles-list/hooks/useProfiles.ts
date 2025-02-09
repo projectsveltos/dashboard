@@ -18,7 +18,6 @@ const fetchProfiles = async (): Promise<Array<TierData>> => {
 const useProfiles = (): UseQueryResult<Array<TierData>, Error> => {
   return useQuery(["profiles"], () => fetchProfiles(), {
     keepPreviousData: false,
-    cacheTime: 0,
   });
 };
 

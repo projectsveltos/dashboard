@@ -13,7 +13,7 @@ export function ProfileList() {
       <PageHeading
         title={"Profiles"}
         description={
-          "You can view all tiers , profiles and visualize dependants and dependencies "
+          "You can view all tiers , profiles and visualize dependents and dependencies "
         }
       />
       {(isLoading || isPreviousData) && <LoadingTier />}

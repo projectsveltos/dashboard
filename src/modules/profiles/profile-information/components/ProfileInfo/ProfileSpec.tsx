@@ -15,6 +15,10 @@ type ProfileSpecCardProps = {
         env: string;
       };
     };
+    helmCharts?: {
+      chartName: string;
+      chartVersion: string;
+    }[];
     syncMode: string;
     stopMatchingBehavior: string;
     policyRefs?: {
@@ -31,7 +35,7 @@ export const ProfileSpecCard = ({ spec }: ProfileSpecCardProps) => {
     <Card className="overflow-hidden">
       <CardHeader>
         <CardTitle className={"flex items-center"}>
-          <FileSliders className={"w-4 h-4 mx-0.5"} /> Specs
+          <FileSliders className={"w-4 h-4 mx-0.5"} /> Spec
         </CardTitle>
         <CardDescription>
           Profile specifications for the selected profile
@@ -43,11 +47,13 @@ export const ProfileSpecCard = ({ spec }: ProfileSpecCardProps) => {
             <dt className="text-sm text-muted-foreground">Cluster Selector</dt>
             <dd className="font-medium">
               <Badge variant={"outline"}>
-                {spec.clusterSelector.matchLabels.env}
+                {Object.entries(spec.clusterSelector.matchLabels).map(
+                  ([key, value]) => `${key}: ${value}`,
+                )}
               </Badge>
             </dd>
             <dt className="text-sm text-muted-foreground">Sync Mode</dt>
-            <dd className="text-sm font-medium">{spec.syncMode}</dd>
+            <Badge className="text-sm font-medium">{spec.syncMode}</Badge>
             {spec?.policyRefs && (
               <>
                 <dt className="text-sm text-muted-foreground">Policy Refs</dt>
@@ -55,6 +61,18 @@ export const ProfileSpecCard = ({ spec }: ProfileSpecCardProps) => {
                   {spec.policyRefs.map((policy, index) => (
                     <Badge key={index} variant={"outline"}>
                       {policy.name}
+                    </Badge>
+                  ))}
+                </dd>
+              </>
+            )}
+            {spec?.helmCharts && (
+              <>
+                <dt className="text-sm text-muted-foreground">Helm Charts</dt>
+                <dd>
+                  {spec.helmCharts.map((chart, index) => (
+                    <Badge key={index} variant={"outline"}>
+                      {chart.chartName} ({chart.chartVersion})
                     </Badge>
                   ))}
                 </dd>

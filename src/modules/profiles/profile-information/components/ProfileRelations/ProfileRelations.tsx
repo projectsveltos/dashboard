@@ -23,6 +23,7 @@ import { DependentsNode } from "@/modules/profiles/profile-information/component
 import { ClusterNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/ClusterNode";
 import { Button } from "@/lib/components/ui/button";
 import { Dependency } from "@/types/profile.types";
+import { Badge } from "@/lib/components/ui/badge";
 
 const nodeTypes = {
   custom: ClusterNode,
@@ -76,7 +77,7 @@ export function ProfileRelations({
         position: { x: 0, y: 0 },
       },
     ];
-    // TODO if more than 4 clusters , should add it on bottom
+
     const horizontalSpacing = 200;
     const verticalSpacing = 120;
 
@@ -131,11 +132,20 @@ export function ProfileRelations({
         <CardHeader>
           <CardTitle className={"flex items-center"}>
             <Cable className={"w-4 h-4 mx-0.5"} /> Profile
+            <div className=" flex ml-auto gap-2 ">
+              <Badge variant={"label"} className={" "}>
+                Total dependents: {profile.dependents.length}
+              </Badge>
+              <Badge variant={"label"}>
+                Total dependencies: {profile.dependencies.length}
+              </Badge>
+            </div>
           </CardTitle>
           <CardDescription>
-            Profile specifications for the selected profile
-            <div className="flex items-center">
-              <div className="ml-auto flex items-center gap-2">
+            Profile associations with linked dependents and dependencies within
+            the cluster.
+            <div className="flex items-center my-2">
+              <span className={"ml-auto flex items-center gap-2"}>
                 <Button size="sm" variant="outline" className="h-7 gap-1">
                   <File className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -153,7 +163,7 @@ export function ProfileRelations({
                     Drag And Drop
                   </span>
                 </Button>
-              </div>
+              </span>
             </div>
           </CardDescription>
         </CardHeader>

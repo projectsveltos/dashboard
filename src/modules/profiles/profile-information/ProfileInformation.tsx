@@ -27,7 +27,7 @@ export function ProfileInformation() {
             </div>
             <div className="col-span-6">
               <ProfileSpecCard spec={data.spec} />
-              <MatchingClusterTable data={data.matchingClusters} />
+              <MatchingClusterTable data={data?.matchingClusters??[]} />
             </div>
           </div>
         </div>

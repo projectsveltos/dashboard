@@ -1,5 +1,5 @@
 import { Button } from "@/lib/components/ui/button";
-import { ChevronLeft } from "lucide-react";
+import { Check, ChevronLeft } from "lucide-react";
 import { Badge } from "@/lib/components/ui/badge";
 import { useNavigate } from "react-router-dom";
 import { Icons } from "@/lib/components/icons";
@@ -8,17 +8,19 @@ import { RefreshButton } from "@/lib/components/ui/RefreshButton";
 type ClusterHeadingProps = {
   name: string;
   version?: string;
-  status?: boolean;
+  ready?: boolean;
   namespace?: string;
   hideDetails?: boolean;
+  failureMsg?: string | null;
 };
 
 export const ClusterHeading = ({
   name,
   version,
-  status,
+  ready,
   hideDetails,
   namespace,
+  failureMsg
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
   return (
@@ -53,10 +55,21 @@ export const ClusterHeading = ({
         {!hideDetails && (
           <Badge
             variant="outline"
-            className={`ml-auto sm:ml-0 ${status ? "bg-main-500" : "bg-red-500"}  flex items-center text-white`}
+            className={`ml-auto sm:ml-0 ${failureMsg ?"bg-red-500": "bg-main-500" }  flex items-center text-white`}
           >
             <Icons.k8s className="w-4 h-4 mr-1" />
-            {status ? "Healthy" : "Failed"}
+            {failureMsg ?"Unhealthy": "Healthy" }
+          </Badge>
+
+
+        )}
+        {!hideDetails && (
+          <Badge
+            variant="outline"
+            className={`ml-auto sm:ml-0 ${ready ? "bg-green-500" : "bg-yellow-400"}  flex items-center text-white`}
+          >
+            <Check className="w-4 h-4 mr-1" />
+            {ready ? "Ready" : "Unready"}
           </Badge>
         )}
 

@@ -10,7 +10,7 @@ import { FileSliders } from "lucide-react";
 
 type ProfileSpecCardProps = {
   spec: {
-    clusterSelector: {
+    clusterSelector?: {
       matchLabels: {
         env: string;
       };
@@ -47,7 +47,7 @@ export const ProfileSpecCard = ({ spec }: ProfileSpecCardProps) => {
             <dt className="text-sm text-muted-foreground">Cluster Selector</dt>
             <dd className="font-medium">
               <Badge variant={"outline"}>
-                {Object.entries(spec.clusterSelector.matchLabels).map(
+                {Object.entries(spec.clusterSelector?.matchLabels ?? {}).map(
                   ([key, value]) => `${key}: ${value}`,
                 )}
               </Badge>

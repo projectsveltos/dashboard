@@ -32,9 +32,9 @@ export function TierCard({ tier }: { tier: Tier }) {
             <EllipsisVertical />
           </Button>
         </CardHeader>
-        <CardContent className={"h-[500px] "}>
+        <CardContent className={"h-[400px] "}>
           <ScrollArea
-            className={"grid grid-cols-1 gap-4 h-[500px]  overflow-auto"}
+            className={"grid grid-cols-1 gap-4 h-[400px]  overflow-auto"}
           >
             {tier?.profiles.map((profile, index) => (
               <div key={index} className={"flex items-center my-2"}>

@@ -43,7 +43,8 @@ export function ClusterInfoById() {
         {InfoQuery.isSuccess && InfoQuery.data?.managedClusters && (
           <ClusterHeading
             name={InfoQuery.data.managedClusters[0].name}
-            status={InfoQuery.data.managedClusters[0]?.clusterInfo.ready}
+            ready={InfoQuery.data.managedClusters[0]?.clusterInfo.ready}
+            failureMsg={InfoQuery.data.managedClusters[0]?.clusterInfo.failureMessage}
             namespace={InfoQuery.data.managedClusters[0].namespace}
             version={InfoQuery.data.managedClusters[0]?.clusterInfo.version}
           />

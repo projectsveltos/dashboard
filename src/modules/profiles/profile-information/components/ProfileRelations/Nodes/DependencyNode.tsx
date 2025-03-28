@@ -5,6 +5,7 @@ import { DividerVerticalIcon } from "@radix-ui/react-icons";
 import { useNavigate } from "react-router-dom";
 
 interface DependencyNodeProps {
+  namespace: string;
   name: string;
   kind: string;
   apiVersion: string;
@@ -13,7 +14,11 @@ export function DependencyNode({ data }: { data: DependencyNodeProps }) {
   const navigate = useNavigate();
 
   function handleNavigation() {
-    navigate(`/sveltos/profile/${data.name}/${data.kind}`);
+    if (data.namespace) {
+      navigate(`/sveltos/profile/${data.namespace}/${data.name}/${data.kind}`);
+    } else {
+      navigate(`/sveltos/profile/${data.name}/${data.kind}`);
+    }
   }
 
   return (

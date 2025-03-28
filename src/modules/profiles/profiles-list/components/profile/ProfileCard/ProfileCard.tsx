@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 export function ProfileCard({ profile }: { profile: Profile }) {
   const navigate = useNavigate();
   function handleNavigation() {
-    navigate(`/sveltos/profile/${profile.name}/${profile.kind}`);
+    if (profile.namespace) {
+      navigate(`/sveltos/profile/${profile.namespace}/${profile.name}/${profile.kind}`);
+    } else {
+      navigate(`/sveltos/profile/${profile.name}/${profile.kind}`);
+    }
   }
   return (
     <Card

@@ -43,6 +43,10 @@ export const routes: RouteObject[] = [
         element: <ProfileList />,
       },
       {
+        path: "/sveltos/profile/:namespace/:name/:kind",
+        element: <ProfileInformation />,
+      },
+      {
         path: "/sveltos/profile/:name/:kind",
         element: <ProfileInformation />,
       },

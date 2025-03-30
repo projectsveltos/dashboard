@@ -10,7 +10,7 @@ Please refere to sveltos [documentation](https://projectsveltos.github.io/svelto
 
 This repo contains the source code for Sveltos Dashboard User Interface
 
-![interface](./public/readme-img.png)
+[![Sveltos Dashboard](https://img.youtube.com/vi/FjFtvrG8LWQ/0.jpg)](https://www.youtube.com/watch?v=FjFtvrG8LWQ)
 
 ## Getting Started
 
@@ -22,7 +22,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/projectsveltos/sveltos/main
 
 To access the dashboard, you'll need to expose the dashboard service in the projectsveltos namespace. Currently, it's configured as a ClusterIP service, which limits access to within the cluster. To expose it externally, you can either change the service type to LoadBalancer or utilize an Ingress/Gateway API.
 
-Refer to the [documentation](https://projectsveltos.github.io/sveltos/getting_started/install/dashboard/) for more information.
+Refer to the [documentation](https://projectsveltos.github.io/sveltos/getting_started/optional/dashboard/) for more information.
 
 ## Contributing
 

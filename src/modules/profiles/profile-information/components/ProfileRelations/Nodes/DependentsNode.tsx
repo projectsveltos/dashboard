@@ -7,7 +7,11 @@ import { useNavigate } from "react-router-dom";
 export function DependentsNode({ data }: { data: Dependency }) {
   const navigate = useNavigate();
   function handleNavigation() {
-    navigate(`/sveltos/profile/${data.name}/${data.kind}`);
+    if (data.namespace) {
+      navigate(`/sveltos/profile/${data.namespace}/${data.name}/${data.kind}`);
+    } else {
+      navigate(`/sveltos/profile/${data.name}/${data.kind}`);
+    }
   }
 
   return (

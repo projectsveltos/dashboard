@@ -7,9 +7,9 @@ import { useParams } from "react-router-dom";
 import { LoadingProfile } from "@/modules/profiles/profile-information/components/ProfileInfo/LoadingProfile";
 
 export function ProfileInformation() {
-  const { name = "", kind = "" } = useParams();
+  const { namespace= "", name = "", kind = "" } = useParams();
 
-  const { data, isLoading, isSuccess } = useProfileInfo(name, kind);
+  const { data, isLoading, isSuccess } = useProfileInfo(namespace, name, kind);
   return (
     <>
       {isLoading && <LoadingProfile />}

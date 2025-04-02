@@ -29,6 +29,7 @@ export type TierData = {
 
 export interface Dependency {
   kind: string;
+  namespace: string;
   name: string;
   apiVersion: string;
 }

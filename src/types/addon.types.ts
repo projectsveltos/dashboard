@@ -3,7 +3,7 @@ import { AddonTableTypes } from "@/types/addonTable.types";
 export enum AddonTypes {
   HELM = "Helm Charts",
   RESOURCE = "Resources",
-  PROFILE = "Cluster profiles",
+  PROFILE = "Profiles",
 }
 export type AddonTableData = {
   helmReleases?: AddonData[];

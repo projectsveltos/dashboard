@@ -1,4 +1,4 @@
-import { Navigate, RouteObject } from "react-router-dom";
+import { RouteObject } from "react-router-dom";
 
 import { Applayout } from "@/lib/components/layouts/AppLayout";
 
@@ -10,6 +10,7 @@ import { Authentication } from "@/modules/authentication/Authentication";
 import { ProfileList } from "@/modules/profiles/profiles-list/ProfileList";
 import { ProfileInformation } from "@/modules/profiles/profile-information/ProfileInformation";
 import { Logout } from "@/modules/authentication/Logout";
+import PreserveSearchNavigate from "@/hooks/NavigateWithParams";
 
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
@@ -17,7 +18,7 @@ const defaultPage = appConfig.defaultPage;
 export const routes: RouteObject[] = [
   {
     path: "/",
-    element: <Navigate to={"/login"} />,
+    element: <PreserveSearchNavigate to={"/login"} />,
   },
   {
     path: "/login",
@@ -35,7 +36,7 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos",
         element: (
-          <Navigate to={`/sveltos/clusters/${defaultTab}/${defaultPage}`} />
+          <PreserveSearchNavigate to={`/sveltos/clusters/${defaultTab}/${defaultPage}`} />
         ),
       },
       {
@@ -53,7 +54,7 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos/clusters",
         element: (
-          <Navigate to={`/sveltos/clusters/${defaultTab}/${defaultPage}`} />
+          <PreserveSearchNavigate to={`/sveltos/clusters/${defaultTab}/${defaultPage}`} />
         ),
       },
       {

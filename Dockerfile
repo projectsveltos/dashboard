@@ -1,26 +1,32 @@
-### staged builds
-
-# 1: get the dependencies to copy in the shipping layer.
-FROM node:14-alpine AS builder
+# 1: Build stage
+FROM node:18-alpine AS builder
 WORKDIR /build
 COPY package*.json ./
-RUN npm install --only=dev
-RUN npm install -D typescript
-RUN npm prune
+RUN npm install
 
-# 2: final layer to ship.
-FROM alpine AS runner
+# 2: Runtime stage
+FROM node:18-alpine AS runner
 WORKDIR /app
-# copy dependencies from ealier stage.
-# TODO: check if the following copy can be further specialized.
-COPY . .
-COPY --from=builder /build/node_modules/typescript/bin/tsc /usr/bin/tsc
+
+# Set higher ulimit
+RUN ulimit -n 65535
+
+# Only copy necessary files, not node_modules
 COPY --from=builder /build/node_modules /app/node_modules
-RUN  apk add --update nodejs npm
-# VITE arguments
+COPY package*.json ./
+COPY vite.config.ts ./
+COPY public ./public
+COPY src ./src
+COPY index.html ./
+
+# Environment variables
 ARG VITE_BACKEND_PORT
 ARG VITE_BACKEND_NAME
 ENV VITE_BACKEND_PORT=${VITE_BACKEND_PORT}
 ENV VITE_BACKEND_NAME=${VITE_BACKEND_NAME}
+
+# Add Vite configuration for file watching
+RUN echo 'export default { server: { watch: { usePolling: true, interval: 1000, ignored: ["**/node_modules/**", "**/dist/**"] } } }' > /app/vite.config.js
+
 EXPOSE 5173
-CMD ["npm", "run", "dev"]
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]

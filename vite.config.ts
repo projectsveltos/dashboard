@@ -27,9 +27,19 @@ export default defineConfig(({}) => {
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
       },
+      // Add these watch settings to fix the "too many files open" error
+      watch: {
+        usePolling: true,
+        interval: 1000,
+        ignored: ["**/node_modules/**", "**/dist/**", "**/.git/**", "**/public/**"]
+      },
+      host: true // This enables listening on all addresses
     },
     define: {
       "import.meta.env.VITE_BACKEND_PORT": process.env.VITE_BACKEND_PORT,
+    },
+    build: {
+      sourcemap: true,
     },
   };
 });

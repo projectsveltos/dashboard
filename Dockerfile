@@ -1,21 +1,21 @@
 ### Multi-stage builds
 
 # 1: Build the application
-FROM node:14-alpine AS builder
+FROM node:18-alpine AS builder
 
 # Set working directory
 WORKDIR /build
 
 # Copy package.json and lock file, and install both production and dev dependencies
 COPY package*.json ./
-RUN npm install --only=dev
+RUN npm install
 
 # Copy application files and build
 COPY . .
 RUN npm run build
 
 # 2: Prepare the runtime environment (only with production dependencies)
-FROM alpine AS runner
+FROM node:18-alpine AS runner
 
 # Set working directory
 WORKDIR /app

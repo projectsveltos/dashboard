@@ -8,19 +8,21 @@ RUN npm install --only=dev
 RUN npm install -D typescript
 RUN npm prune
 
+# Build the application
+COPY . .
+RUN npm run build
+
 # 2: final layer to ship.
 FROM alpine AS runner
 WORKDIR /app
-# copy dependencies from ealier stage.
-# TODO: check if the following copy can be further specialized.
-COPY . .
-COPY --from=builder /build/node_modules/typescript/bin/tsc /usr/bin/tsc
+# copy dependencies from earlier stage.
+COPY --from=builder /build/dist /app/dist
 COPY --from=builder /build/node_modules /app/node_modules
-RUN  apk add --update nodejs npm
+RUN apk add --update nodejs npm
 # VITE arguments
 ARG VITE_BACKEND_PORT
 ARG VITE_BACKEND_NAME
 ENV VITE_BACKEND_PORT=${VITE_BACKEND_PORT}
 ENV VITE_BACKEND_NAME=${VITE_BACKEND_NAME}
 EXPOSE 5173
-CMD ["npm", "run", "dev"]
+CMD ["npx", "vite", "preview"]

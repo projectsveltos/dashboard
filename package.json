@@ -12,7 +12,7 @@
     "lint": "npx prettier . --write && eslint --fix .",
     "dev": "tsc && eslint . && npx prettier . --write && vite --logLevel info -d=debug --host 0.0.0.0",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview --logLevel info -d=debug --host 0.0.0.0"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.1.2",

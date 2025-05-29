@@ -7,7 +7,9 @@ export function ProfileCard({ profile }: { profile: Profile }) {
   const navigate = useNavigate();
   function handleNavigation() {
     if (profile.namespace) {
-      navigate(`/sveltos/profile/${profile.namespace}/${profile.name}/${profile.kind}`);
+      navigate(
+        `/sveltos/profile/${profile.namespace}/${profile.name}/${profile.kind}`,
+      );
     } else {
       navigate(`/sveltos/profile/${profile.name}/${profile.kind}`);
     }

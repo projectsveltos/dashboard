@@ -22,8 +22,8 @@ import { MatchingCluster } from "@/types/profile.types";
 import { FailureMessage } from "@/lib/components/ui/failureMessage";
 
 export default function MatchingClusterTable({
-                                               data,
-                                             }: {
+  data,
+}: {
   data: MatchingCluster[];
 }) {
   const [openAccordions, setOpenAccordions] = useState<number[]>([]);
@@ -47,14 +47,21 @@ export default function MatchingClusterTable({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ScrollArea className={data.length === 0?"":" h-96"+"rounded-md border p-4"}>
+        <ScrollArea
+          className={data.length === 0 ? "" : " h-96" + "rounded-md border p-4"}
+        >
           {data.length === 0 ? (
-            <span className={"flex flex-col items-center justify-center h-full mt-4"}>
+            <span
+              className={
+                "flex flex-col items-center justify-center h-full mt-4"
+              }
+            >
               <Archive className="h-12 w-12 text-muted-foreground" />
-            <div className="flex justify-center items-center h-full">
-
-              <p className="text-muted-foreground mt-2">No matching clusters found.</p>
-            </div>
+              <div className="flex justify-center items-center h-full">
+                <p className="text-muted-foreground mt-2">
+                  No matching clusters found.
+                </p>
+              </div>
             </span>
           ) : (
             <Table>

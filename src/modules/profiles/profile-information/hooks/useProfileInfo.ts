@@ -4,7 +4,11 @@ import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ProfileInfo } from "@/types/profile.types";
 import { useMemo } from "react";
 
-const fetchProfileInfo = async (namespace: string, name: string, kind: string) => {
+const fetchProfileInfo = async (
+  namespace: string,
+  name: string,
+  kind: string,
+) => {
   const { data } = await client.get(API_ENDPOINTS.PROFILE, {
     params: {
       namespace,
@@ -20,7 +24,10 @@ const useProfileInfo = (
   name: string,
   kind: string,
 ): UseQueryResult<ProfileInfo, Error> => {
-  const queryKey = useMemo(() => ["profile-info", namespace, name, kind], [namespace, name, kind]);
+  const queryKey = useMemo(
+    () => ["profile-info", namespace, name, kind],
+    [namespace, name, kind],
+  );
   return useQuery(queryKey, () => fetchProfileInfo(namespace, name, kind), {
     keepPreviousData: false,
   });

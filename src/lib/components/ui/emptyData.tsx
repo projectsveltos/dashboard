@@ -24,12 +24,14 @@ export const EmptyData = ({
             <h2 className="text-center  text-base font-semibold leading-relaxed pb-1">
               There’s no {name} found.
             </h2>
-            <p className="text-base  text-xs font-normal leading-snug pb-4">
+            <div className="text-base font-normal leading-snug pb-4">
               <ul>
+                {isFiltered && (
                 <li>Try changing the filter criteria or clear the filter</li>
+                  )}
                 <li>Try refreshing the page or check back later</li>
               </ul>
-            </p>
+            </div>
             <div className="flex gap-3">
               {isFiltered && (
                 <Button onClick={clearFilter}>

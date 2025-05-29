@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import { LoadingProfile } from "@/modules/profiles/profile-information/components/ProfileInfo/LoadingProfile";
 
 export function ProfileInformation() {
-  const { namespace= "", name = "", kind = "" } = useParams();
+  const { namespace = "", name = "", kind = "" } = useParams();
 
   const { data, isLoading, isSuccess } = useProfileInfo(namespace, name, kind);
   return (
@@ -27,7 +27,7 @@ export function ProfileInformation() {
             </div>
             <div className="col-span-6">
               <ProfileSpecCard spec={data.spec} />
-              <MatchingClusterTable data={data?.matchingClusters??[]} />
+              <MatchingClusterTable data={data?.matchingClusters ?? []} />
             </div>
           </div>
         </div>

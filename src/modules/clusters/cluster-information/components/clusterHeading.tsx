@@ -20,7 +20,7 @@ export const ClusterHeading = ({
   ready,
   hideDetails,
   namespace,
-  failureMsg
+  failureMsg,
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
   return (
@@ -55,13 +55,11 @@ export const ClusterHeading = ({
         {!hideDetails && (
           <Badge
             variant="outline"
-            className={`ml-auto sm:ml-0 ${failureMsg ?"bg-red-500": "bg-main-500" }  flex items-center text-white`}
+            className={`ml-auto sm:ml-0 ${failureMsg ? "bg-red-500" : "bg-main-500"}  flex items-center text-white`}
           >
             <Icons.k8s className="w-4 h-4 mr-1" />
-            {failureMsg ?"Unhealthy": "Healthy" }
+            {failureMsg ? "Unhealthy" : "Healthy"}
           </Badge>
-
-
         )}
         {!hideDetails && (
           <Badge

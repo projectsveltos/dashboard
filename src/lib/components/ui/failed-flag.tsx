@@ -10,8 +10,7 @@ import {
   TooltipTrigger,
 } from "@/lib/components/ui/tooltip";
 
-
-export const FailedFlag = ({ msg }: { msg?: string | undefined | null}) => {
+export const FailedFlag = ({ msg }: { msg?: string | undefined | null }) => {
   return (
     <>
       <Tooltip>
@@ -21,7 +20,6 @@ export const FailedFlag = ({ msg }: { msg?: string | undefined | null}) => {
               <Icons.k8s className={"h-6 w-6 animate-pulse"} />
             </AvatarRectFallback>
           </AvatarRectangle>
-
         </TooltipTrigger>
         <TooltipContent>
           <div className={"inline-flex items-baseline"}>

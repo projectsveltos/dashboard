@@ -35,8 +35,8 @@ export function ProfileRelations({
   profile,
 }: {
   profile: {
-    kind: string,
-    namespace: string,
+    kind: string;
+    namespace: string;
     name: string;
     apiVersion?: string;
     dependencies: Dependency[];

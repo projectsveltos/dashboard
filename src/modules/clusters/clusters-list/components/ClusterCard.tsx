@@ -29,7 +29,6 @@ export const ClusterCard = ({
   labels,
   onClick,
   failureMsg,
-
 }: ClusterCardProps) => {
   const labelEntries = Object.entries(labels || {});
   const displayEntries = labelEntries.slice(0, appConfig.maxBadges);
@@ -43,7 +42,7 @@ export const ClusterCard = ({
         onClick={onClick}
       >
         <div className=" flex items-center space-x-4 rounded-md  p-4">
-          {failureMsg ?<FailedFlag msg={failureMsg} />: <ReadyFlag />  }
+          {failureMsg ? <FailedFlag msg={failureMsg} /> : <ReadyFlag />}
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">
               {name}

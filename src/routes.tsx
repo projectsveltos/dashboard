@@ -7,13 +7,14 @@ import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
 import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterInfoById";
 import { Authentication } from "@/modules/authentication/Authentication";
-import { ProfileList } from "@/modules/profiles/profiles-list/ProfileList";
 import { ProfileInformation } from "@/modules/profiles/profile-information/ProfileInformation";
 import { Logout } from "@/modules/authentication/Logout";
 import PreserveSearchNavigate from "@/hooks/NavigateWithParams";
+import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
 
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
+
 
 export const routes: RouteObject[] = [
   {
@@ -36,12 +37,14 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos",
         element: (
-          <PreserveSearchNavigate to={`/sveltos/clusters/${defaultTab}/${defaultPage}`} />
+          <PreserveSearchNavigate
+            to={`/sveltos/clusters/${defaultTab}/${defaultPage}`}
+          />
         ),
       },
       {
         path: "/sveltos/profiles",
-        element: <ProfileList />,
+        element: <ProfilePage />,
       },
       {
         path: "/sveltos/profile/:namespace/:name/:kind",
@@ -54,7 +57,9 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos/clusters",
         element: (
-          <PreserveSearchNavigate to={`/sveltos/clusters/${defaultTab}/${defaultPage}`} />
+          <PreserveSearchNavigate
+            to={`/sveltos/clusters/${defaultTab}/${defaultPage}`}
+          />
         ),
       },
       {

@@ -44,7 +44,9 @@ export function ClusterInfoById() {
           <ClusterHeading
             name={InfoQuery.data.managedClusters[0].name}
             ready={InfoQuery.data.managedClusters[0]?.clusterInfo.ready}
-            failureMsg={InfoQuery.data.managedClusters[0]?.clusterInfo.failureMessage}
+            failureMsg={
+              InfoQuery.data.managedClusters[0]?.clusterInfo.failureMessage
+            }
             namespace={InfoQuery.data.managedClusters[0].namespace}
             version={InfoQuery.data.managedClusters[0]?.clusterInfo.version}
           />

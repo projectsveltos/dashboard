@@ -9,6 +9,6 @@ export const ProfilePage = () => {
         "You can view all tiers , profiles and visualize dependents and dependencies "
       }
     />
-    <ProfileList/>ß
+    <ProfileList/>
   </>;
 };

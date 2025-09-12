@@ -27,12 +27,8 @@ export const ClusterHeading = ({
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
   function triggerMcpDebugQuery() {
-    console.log("Triggering MCP Debug Query...");
     if (mcpDebugQuery) {
-      console.log("Refetching...");
       mcpDebugQuery.refetch();
-    } else {
-      console.error("mcpDebugQuery is undefined");
     }
   }
   return (

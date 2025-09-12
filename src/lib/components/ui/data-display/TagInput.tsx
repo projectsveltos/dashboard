@@ -5,7 +5,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/lib/components/ui/tooltip";
+} from "@/lib/components/ui/data-display/tooltip";
 
 interface TagInputProps {
   tags: string[];

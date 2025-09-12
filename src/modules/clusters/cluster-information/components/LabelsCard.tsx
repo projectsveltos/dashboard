@@ -1,7 +1,7 @@
-import { Card, CardTitle } from "@/lib/components/ui/card";
+import { Card, CardTitle } from "@/lib/components/ui/data-display/card";
 import { Tags } from "lucide-react";
 import { Label } from "@/types/cluster.types";
-import { Badge } from "@/lib/components/ui/badge";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 
 type LabelsCardProps = {
   labels: Label[] | [];

@@ -16,14 +16,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/lib/components/ui/card";
+} from "@/lib/components/ui/data-display/card";
 import { Cable, File, Fullscreen } from "lucide-react";
 import { DependencyNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/DependencyNode";
 import { DependentsNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/DependentsNode";
 import { ClusterNode } from "@/modules/profiles/profile-information/components/ProfileRelations/Nodes/ClusterNode";
-import { Button } from "@/lib/components/ui/button";
+import { Button } from "@/lib/components/ui/inputs/button";
 import { Dependency } from "@/types/profile.types";
-import { Badge } from "@/lib/components/ui/badge";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 
 const nodeTypes = {
   custom: ClusterNode,

@@ -1,4 +1,4 @@
-import { Card } from "@/lib/components/ui/card";
+import { Card } from "@/lib/components/ui/data-display/card";
 import { TableCellsMerge } from "lucide-react";
 import { Profile } from "@/types/profile.types";
 import { useNavigate } from "react-router-dom";

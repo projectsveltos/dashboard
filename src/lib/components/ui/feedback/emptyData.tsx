@@ -1,6 +1,6 @@
 import { CircleOff, FilterX } from "lucide-react";
-import { Button } from "@/lib/components/ui/button";
-import { RefreshButton } from "@/lib/components/ui/RefreshButton";
+import { Button } from "@/lib/components/ui/inputs/button";
+import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
 
 type EmptyDataProps = {
   name: string;
@@ -27,8 +27,8 @@ export const EmptyData = ({
             <div className="text-base font-normal leading-snug pb-4">
               <ul>
                 {isFiltered && (
-                <li>Try changing the filter criteria or clear the filter</li>
-                  )}
+                  <li>Try changing the filter criteria or clear the filter</li>
+                )}
                 <li>Try refreshing the page or check back later</li>
               </ul>
             </div>

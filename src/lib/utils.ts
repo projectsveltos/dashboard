@@ -22,3 +22,7 @@ export const colorFromStatus = (status: string | undefined) => {
       return "bg-gray-500";
   }
 };
+
+export const isNotProvisioned = (status: string | undefined) => {
+  return status !== "Provisioned";
+};

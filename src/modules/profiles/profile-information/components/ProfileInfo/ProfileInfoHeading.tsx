@@ -1,8 +1,8 @@
-import { Button } from "@/lib/components/ui/button";
+import { Button } from "@/lib/components/ui/inputs/button";
 import { ChevronLeft } from "lucide-react";
-import { Badge } from "@/lib/components/ui/badge";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 import { useNavigate } from "react-router-dom";
-import { RefreshButton } from "@/lib/components/ui/RefreshButton";
+import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
 
 type ProfileInfoHeading = {
   name: string;

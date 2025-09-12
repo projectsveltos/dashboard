@@ -1,14 +1,14 @@
 import {
   AvatarRectangle,
   AvatarRectFallback,
-} from "@/lib/components/ui/avatar-rectangle";
+} from "@/lib/components/ui/data-display/avatar-rectangle";
 import { Icons } from "@/lib/components/icons";
 import { SquareCheck } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/lib/components/ui/tooltip";
+} from "@/lib/components/ui/data-display/tooltip";
 
 export const ReadyFlag = () => {
   return (

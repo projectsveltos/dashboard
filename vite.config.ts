@@ -1,9 +1,8 @@
 import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 export default defineConfig(({}) => {
-
   const { VITE_BACKEND_PORT, VITE_BACKEND_NAME, VITE_BACKEND_PROTOCOL } =
     process.env;
   const protocol =

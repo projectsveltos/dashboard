@@ -1,5 +1,5 @@
 import { ThemeProvider } from "./contexts/ThemeContext";
-import { TooltipProvider } from "@/lib/components/ui/tooltip";
+import { TooltipProvider } from "@/lib/components/ui/data-display/tooltip";
 import { toast, Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { isAxiosError } from "axios";

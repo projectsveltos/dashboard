@@ -5,8 +5,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table";
-import { Badge } from "@/lib/components/ui/badge";
+} from "@/lib/components/ui/data-display/table";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 import { Archive, ChevronDown, ChevronRight, CircleEqual } from "lucide-react";
 import React, { Fragment, useState } from "react";
 import { cn } from "@/lib/utils";
@@ -16,10 +16,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/lib/components/ui/card";
-import { ScrollArea } from "@/lib/components/ui/scroll-area";
+} from "@/lib/components/ui/data-display/card";
+import { ScrollArea } from "@/lib/components/ui/layout/scroll-area";
 import { MatchingCluster } from "@/types/profile.types";
-import { FailureMessage } from "@/lib/components/ui/failureMessage";
+import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
 
 export default function MatchingClusterTable({
   data,

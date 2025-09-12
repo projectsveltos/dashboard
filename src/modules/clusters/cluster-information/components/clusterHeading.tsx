@@ -1,9 +1,10 @@
-import { Button } from "@/lib/components/ui/button";
+import { Button } from "@/lib/components/ui/inputs/button";
 import { Check, ChevronLeft } from "lucide-react";
-import { Badge } from "@/lib/components/ui/badge";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 import { useNavigate } from "react-router-dom";
 import { Icons } from "@/lib/components/icons";
-import { RefreshButton } from "@/lib/components/ui/RefreshButton";
+import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
+import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 
 type ClusterHeadingProps = {
   name: string;
@@ -12,6 +13,7 @@ type ClusterHeadingProps = {
   namespace?: string;
   hideDetails?: boolean;
   failureMsg?: string | null;
+  mcpDebugQuery?: { refetch: () => void; isFetching: boolean; data?: string };
 };
 
 export const ClusterHeading = ({
@@ -21,8 +23,18 @@ export const ClusterHeading = ({
   hideDetails,
   namespace,
   failureMsg,
+  mcpDebugQuery,
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
+  function triggerMcpDebugQuery() {
+    console.log("Triggering MCP Debug Query...");
+    if (mcpDebugQuery) {
+      console.log("Refetching...");
+      mcpDebugQuery.refetch();
+    } else {
+      console.error("mcpDebugQuery is undefined");
+    }
+  }
   return (
     <>
       <div className="flex my-4 items-center gap-4">
@@ -72,6 +84,13 @@ export const ClusterHeading = ({
         )}
 
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
+          <McpButton
+            onClick={triggerMcpDebugQuery}
+            isLoading={mcpDebugQuery?.isFetching}
+            popupText={mcpDebugQuery?.data || ""}
+          >
+            Debug
+          </McpButton>
           <RefreshButton />
         </div>
       </div>

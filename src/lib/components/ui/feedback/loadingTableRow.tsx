@@ -1,4 +1,4 @@
-import { TableCell, TableRow } from "@/lib/components/ui/table";
+import { TableCell, TableRow } from "@/lib/components/ui/data-display/table";
 
 export const LoadingTableRow = ({ columns }: { columns: number }) => {
   return (

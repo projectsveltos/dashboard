@@ -7,7 +7,7 @@ import {
   sveltosClusterValue,
 } from "@/types/cluster.consts";
 
-export const getClusterInfoType = (type: ClusterType): clusterInfoTypes => {
+export const getClusterInfoType = (type?: ClusterType): clusterInfoTypes => {
   if (type == sveltosClusterValue) {
     return clusterInfoSveltosType;
   } else if (type == clusterAPIValue) {

@@ -1,22 +1,22 @@
 import { Blocks, File, PlusCircle } from "lucide-react";
 
-import { Button } from "@/lib/components/ui/button";
+import { Button } from "@/lib/components/ui/inputs/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/lib/components/ui/card";
+} from "@/lib/components/ui/data-display/card";
 
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/lib/components/ui/tabs";
+} from "@/lib/components/ui/navigation/tabs";
 
-import { AddonsTable } from "@/modules/clusters/cluster-information/components/AddonsTable/AddonsTable";
+import { AddonsTable } from "@/modules/clusters/cluster-information/components/addonsTable/AddonsTable";
 import { useState } from "react";
 
 import { AddonTableData, addonTypes, AddonTypes } from "@/types/addon.types";

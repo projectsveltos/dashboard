@@ -1,31 +1,36 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { Sheet, SheetContent, SheetTrigger } from "@/lib/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/lib/components/ui/layout/sheet";
 import { Icons } from "@/lib/components/icons";
 import { appConfig } from "@/config/app";
-import { Button, buttonVariants } from "@/lib/components/ui/button";
+import { Button, buttonVariants } from "@/lib/components/ui/inputs/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from "@/lib/components/ui/dropdown-menu";
+} from "@/lib/components/ui/inputs/dropdown-menu";
 import { mainMenu } from "@/config/menu";
 import { DividerVerticalIcon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import { Logo } from "../assets/logo/logo";
+import { Logo } from "../../assets/logo/logo";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/lib/components/ui/accordion";
-import { ModeToggle } from "@/lib/components/mode-toggle";
-import { Badge } from "@/lib/components/ui/badge";
+} from "@/lib/components/ui/navigation/accordion";
+import { ModeToggle } from "@/lib/components/ui/inputs/mode-toggle";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 import { LogOutIcon } from "lucide-react";
 import useAuth from "@/modules/authentication/hooks/useAuth";
+import { VerifyInstallation } from "@/modules/common/components/actions/VerifyInstallation";
 
 export function Header() {
   const [open, setOpen] = useState<boolean>(false);
@@ -221,6 +226,7 @@ export function Header() {
           <div className="hidden md:block">
             <ModeToggle />
           </div>
+
           <nav className="flex items-center space-x-2">
             <a
               href={appConfig.github.url}
@@ -240,6 +246,7 @@ export function Header() {
                 <span className="sr-only">GitHub</span>
               </div>
             </a>
+            <VerifyInstallation />
             <DividerVerticalIcon />
 
             <Button variant={"outline"} onClick={logout} size={"sm"}>

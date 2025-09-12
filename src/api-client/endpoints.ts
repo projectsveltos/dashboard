@@ -6,4 +6,7 @@ export const API_ENDPOINTS = {
   SVELTOS_CLUSTERS: "/sveltosclusters",
   PROFILES: "/profiles",
   PROFILE: "/profile",
+  MCP_INSTALLATION: "/installation",
+  MCP_CLUSTER_DEBUG: "/debugCluster",
+  MCP_PROFILE_CLUSTER_DEBUG: "/debugProfileCluster",
 };

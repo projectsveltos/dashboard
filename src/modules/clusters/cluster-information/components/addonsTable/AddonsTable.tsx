@@ -5,15 +5,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/lib/components/ui/table";
+} from "@/lib/components/ui/data-display/table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
-} from "@/lib/components/ui/dropdown-menu";
-import { Button } from "@/lib/components/ui/button";
+} from "@/lib/components/ui/inputs/dropdown-menu";
+import { Button } from "@/lib/components/ui/inputs/button";
 import {
   Check,
   ExternalLink,
@@ -21,29 +21,29 @@ import {
   MoreHorizontal,
   ServerCrash,
 } from "lucide-react";
-import { EmptyData } from "@/lib/components/ui/emptyData";
+import { EmptyData } from "@/lib/components/ui/feedback/emptyData";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/lib/components/ui/avatar";
+} from "@/lib/components/ui/data-display/avatar";
 import { useEffect, useState } from "react";
 import { appConfig } from "@/config/app";
 import { usePagination } from "@/hooks/usePagination";
 import { AddonData, AddonTypes } from "@/types/addon.types";
-import { LoadingTableRow } from "@/lib/components/ui/loadingTableRow";
-import { Badge } from "@/lib/components/ui/badge";
+import { LoadingTableRow } from "@/lib/components/ui/feedback/loadingTableRow";
+import { Badge } from "@/lib/components/ui/data-display/badge";
 import { colorFromStatus } from "@/lib/utils";
-import { Checkbox } from "@/lib/components/ui/checkbox";
+import { Checkbox } from "@/lib/components/ui/inputs/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   helmColumns,
   profileColumns,
   resourceColumns,
-} from "@/modules/clusters/cluster-information/components/AddonsTable/Columns";
+} from "@/modules/clusters/cluster-information/components/addonsTable/Columns";
 import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
 
-import { FailureMessage } from "@/lib/components/ui/failureMessage";
+import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
 
 interface AddonsTableProps {
   data: {
@@ -225,7 +225,9 @@ export const AddonsTable = ({
                             }
                           >
                             {row.failureMessage && (
-                              <FailureMessage msg={row.failureMessage} />
+                              <div>
+                                <FailureMessage msg={row.failureMessage} />
+                              </div>
                             )}
                           </TableCell>
                         ) : column.keys == AddonTableTypes.STATUS ? (

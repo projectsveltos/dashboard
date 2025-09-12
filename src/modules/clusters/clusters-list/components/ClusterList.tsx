@@ -2,7 +2,7 @@ import { ClusterCard } from "@/modules/clusters/clusters-list/components/Cluster
 
 import { useNavigate, useParams } from "react-router-dom";
 import { ClusterInfoType, ClusterListResponse } from "@/types/cluster.types";
-import { EmptyData } from "@/lib/components/ui/emptyData";
+import { EmptyData } from "@/lib/components/ui/feedback/emptyData";
 import { usePagination } from "@/hooks/usePagination";
 import { FC } from "react";
 

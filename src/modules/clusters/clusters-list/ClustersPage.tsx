@@ -1,14 +1,18 @@
-import { PageHeading } from "@/lib/components/ui/PageHeading";
+import { PageHeading } from "@/lib/components/ui/layout/PageHeading";
 import { appConfig } from "@/config/app";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 
-import { Tabs, TabsList, TabsTrigger } from "@/lib/components/ui/tabs";
+import {
+  Tabs,
+  TabsList,
+  TabsTrigger,
+} from "@/lib/components/ui/navigation/tabs";
 import { ClusterType } from "@/types/cluster.types";
 import useClusters from "@/modules/clusters/clusters-list/hooks/useClusters";
 import { clusterTypes } from "@/types/cluster.consts";
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
-import { ErrorQuery } from "@/lib/components/ui/errorQuery";
+import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
 import { SearchFields } from "@/modules/clusters/clusters-list/components/searchFields";
 

@@ -6,11 +6,20 @@ import { useParams } from "react-router-dom";
 import { ClusterType } from "@/types/cluster.types";
 import { LoadingAddons } from "@/modules/clusters/cluster-information/components/AddonsTable/LoadingAddons";
 import { AddonTypes } from "@/types/addon.types";
-import { ErrorQuery } from "@/lib/components/ui/errorQuery";
+import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { useClusterInfo } from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
+import { useMcp } from "@/hooks/useMcp";
+import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
 
 export function ClusterInfoById() {
   const { tab: type, name, namespace } = useParams();
+  const { debugClusterQuery } = useMcp(
+    namespace ?? "",
+    name ?? "",
+    getClusterInfoType(type as ClusterType),
+    "",
+    "",
+  );
   const { queries, setPage } = useClusterInfo(
     namespace as string,
     name as string,
@@ -47,6 +56,7 @@ export function ClusterInfoById() {
             failureMsg={
               InfoQuery.data.managedClusters[0]?.clusterInfo.failureMessage
             }
+            mcpDebugQuery={debugClusterQuery}
             namespace={InfoQuery.data.managedClusters[0].namespace}
             version={InfoQuery.data.managedClusters[0]?.clusterInfo.version}
           />

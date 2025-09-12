@@ -1,8 +1,8 @@
 import { RouteObject } from "react-router-dom";
 
-import { Applayout } from "@/lib/components/layouts/AppLayout";
+import { Applayout } from "@/lib/components/ui/layout/AppLayout";
 
-import NoMatch from "./modules/fallback/NoMatch";
+import NoMatch from "./modules/common/components/feedback/NoMatch";
 import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
 import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterInfoById";
@@ -14,7 +14,6 @@ import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
 
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
-
 
 export const routes: RouteObject[] = [
   {

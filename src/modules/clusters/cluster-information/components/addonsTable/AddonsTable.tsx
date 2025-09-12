@@ -6,34 +6,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/lib/components/ui/data-display/table";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/lib/components/ui/inputs/dropdown-menu";
-import { Button } from "@/lib/components/ui/inputs/button";
-import {
-  Check,
-  ExternalLink,
-  ImageOff,
-  MoreHorizontal,
-  ServerCrash,
-} from "lucide-react";
+
 import { EmptyData } from "@/lib/components/ui/feedback/emptyData";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/lib/components/ui/data-display/avatar";
+
 import { useEffect, useState } from "react";
 import { appConfig } from "@/config/app";
 import { usePagination } from "@/hooks/usePagination";
 import { AddonData, AddonTypes } from "@/types/addon.types";
 import { LoadingTableRow } from "@/lib/components/ui/feedback/loadingTableRow";
-import { Badge } from "@/lib/components/ui/data-display/badge";
-import { colorFromStatus } from "@/lib/utils";
+
 import { Checkbox } from "@/lib/components/ui/inputs/checkbox";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
@@ -41,9 +22,10 @@ import {
   profileColumns,
   resourceColumns,
 } from "@/modules/clusters/cluster-information/components/addonsTable/Columns";
-import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
-
-import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
+import { AddonColumn } from "@/types/addonTable.types";
+import { ProfileRow } from "@/modules/clusters/cluster-information/components/addonsTable/rows/ProfileRow";
+import { HelmRow } from "@/modules/clusters/cluster-information/components/addonsTable/rows/HelmRow";
+import { ResourceRow } from "@/modules/clusters/cluster-information/components/addonsTable/rows/ResourceRow";
 
 interface AddonsTableProps {
   data: {
@@ -75,7 +57,7 @@ export const AddonsTable = ({
   const [total, setTotal] = useState<number>(0);
   const [page, setUIPage] = useState<number>(appConfig.defaultPage);
   const [rows, setRows] = useState<AddonData[]>([]);
-  const isProfile = type == AddonTypes.PROFILE;
+
   const failedOnly = searchParams.get("failure") === "true";
 
   useEffect(() => {
@@ -161,168 +143,32 @@ export const AddonsTable = ({
             {rows && rows.length > 0 ? (
               <>
                 {rows.map((row: AddonData, index: number) => (
-                  <TableRow
-                    key={index}
-                    className={
-                      row.failureMessage ? "bg-slate-200 dark:bg-slate-700" : ""
-                    }
-                  >
-                    {columns.map((column, colIndex) => (
-                      <>
-                        {column.keys == AddonTableTypes.ICON ? (
-                          <TableCell
-                            content={row.failureMessage}
-                            className={"flex item-center my-auto w-120 h-120"}
-                          >
-                            {isProfile ? (
-                              <Avatar
-                                className={`${row.failureMessage && "mt-5"}`}
-                              >
-                                <AvatarFallback
-                                  className={`${row.failureMessage ? "bg-red-500" : "bg-green-600"} text-white`}
-                                >
-                                  {row.failureMessage ? (
-                                    <ServerCrash className={"w-4 h-4"} />
-                                  ) : (
-                                    <Check className={"w-4 h-4"} />
-                                  )}
-                                </AvatarFallback>
-                              </Avatar>
-                            ) : (
-                              <Avatar>
-                                <AvatarImage
-                                  className="object-contain object-center"
-                                  src={row.icon}
-                                />
-                                <AvatarFallback>
-                                  <ImageOff className={"w-4 h-4"} />
-                                </AvatarFallback>
-                              </Avatar>
-                            )}
-                          </TableCell>
-                        ) : column.keys == AddonTableTypes.TIME ? (
-                          <TableCell>
-                            {" "}
-                            <div>
-                              {row.lastAppliedTime &&
-                                new Date(
-                                  row.lastAppliedTime,
-                                )?.toLocaleDateString("en-US")}
-                            </div>
-                            {row.lastAppliedTime &&
-                              new Date(row.lastAppliedTime)?.toLocaleTimeString(
-                                "en-US",
-                                {
-                                  hour: "2-digit",
-                                  minute: "2-digit",
-                                },
-                              )}
-                          </TableCell>
-                        ) : column.keys == AddonTableTypes.FAILURE_MESSAGE ? (
-                          <TableCell
-                            className={
-                              "break-words whitespace-normal text-sm  overflow-hidden"
-                            }
-                          >
-                            {row.failureMessage && (
-                              <div>
-                                <FailureMessage msg={row.failureMessage} />
-                              </div>
-                            )}
-                          </TableCell>
-                        ) : column.keys == AddonTableTypes.STATUS ? (
-                          <TableCell>
-                            <Badge className={colorFromStatus(row.status)}>
-                              {row.status}
-                            </Badge>
-                          </TableCell>
-                        ) : column.keys == AddonTableTypes.PROFILE ? (
-                          <>
-                            {" "}
-                            <TableCell
-                              content={row.profileName}
-                              className="hidden md:table-cell break-words whitespace-normal"
-                            >
-                              {row.profileType && (
-                                <div>
-                                  <Badge variant={"outline"}>
-                                    {row.profileType}
-                                  </Badge>
-                                </div>
-                              )}
-
-                              {row.profileName
-                                ? row.profileName
-                                    .split("/")
-                                    .map((name: string) => (
-                                      <Badge variant={"outline"} key={name}>
-                                        {name}
-                                      </Badge>
-                                    ))
-                                : row.profileNames?.map((profileName: string) =>
-                                    profileName
-                                      .split("/")
-                                      .map((name: string) => (
-                                        <Badge variant={"outline"} key={name}>
-                                          {name}
-                                        </Badge>
-                                      )),
-                                  )}
-                            </TableCell>
-                          </>
-                        ) : column.keys == AddonTableTypes.ACTION ? (
-                          <TableCell>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button
-                                  aria-haspopup="true"
-                                  size="icon"
-                                  variant="ghost"
-                                >
-                                  <MoreHorizontal className="h-4 w-4" />
-                                  <span className="sr-only">Toggle menu</span>
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                {row.repoURL && (
-                                  <DropdownMenuItem
-                                    onSelect={() =>
-                                      navigateRepoURL(row.repoURL)
-                                    }
-                                  >
-                                    <ExternalLink className={"w-4 h-4 mx-1"} />{" "}
-                                    repoURL
-                                  </DropdownMenuItem>
-                                )}
-
-                                <DropdownMenuItem disabled>
-                                  Edit
-                                </DropdownMenuItem>
-                                <DropdownMenuItem disabled>
-                                  Delete
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </TableCell>
-                        ) : (
-                          <TableCell
-                            key={colIndex}
-                            className={` ${column.className}`}
-                          >
-                            {column.keys
-                              .split("/")
-                              .map((key) => (
-                                <div key={key}>
-                                  {row[key as keyof AddonData]}
-                                </div>
-                              ))
-                              .filter(Boolean)}
-                          </TableCell>
-                        )}
-                      </>
-                    ))}
-                  </TableRow>
+                  <>
+                    {type === AddonTypes.PROFILE && (
+                      <ProfileRow
+                        key={index}
+                        row={row}
+                        columns={columns}
+                        onOpenRepo={navigateRepoURL}
+                      />
+                    )}
+                    {type === AddonTypes.HELM && (
+                      <HelmRow
+                        key={index}
+                        row={row}
+                        columns={columns}
+                        onOpenRepo={navigateRepoURL}
+                      />
+                    )}
+                    {type === AddonTypes.RESOURCE && (
+                      <ResourceRow
+                        key={index}
+                        row={row}
+                        columns={columns}
+                        onOpenRepo={navigateRepoURL}
+                      />
+                    )}
+                  </>
                 ))}
               </>
             ) : (

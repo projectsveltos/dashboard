@@ -2,7 +2,7 @@ import { useMcp } from "@/hooks/useMcp";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 
 export function VerifyInstallation() {
-  const { installationQuery } = useMcp(null, null, null, null, null);
+  const { installationQuery } = useMcp("", "", "", "", "");
 
   function triggerQuery() {
     installationQuery?.refetch();

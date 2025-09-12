@@ -32,14 +32,12 @@ export function FailureMessage({ msg }: { msg?: string | undefined | null }) {
               "border border-gray-300 bg-white shadow-md rounded-lg  cursor-pointer hover:shadow-lg transition-shadow"
             }
           >
-            <Card className="mr-2 line-clamp-2 text-start overflow-hidden underline">
-              <CardContent className={"p-4"}>
-                <p className="text-sm text-red-600 dark:text-red-500 font-medium">
-                  {msg.length > 20 ? msg.substring(0, 30) + "..." : msg}
+            <Card className="mr-2  ">
+              <CardContent className={"p-4 "}>
+                <p className="text-sm text-red-600 underline dark:text-red-500 font-medium line-clamp-2  break-words">
+                  {msg}
                 </p>
               </CardContent>
-
-              {msg}
             </Card>
           </PopoverTrigger>
           <PopoverContent className="w-96 p-4">

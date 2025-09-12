@@ -8,12 +8,13 @@ import { EmptyData } from "@/lib/components/ui/feedback/emptyData";
 export function ProfileList() {
   const { data, isSuccess, isLoading, isError, error, isPreviousData } =
     useProfiles();
-  if (!data || data?.length <= 0) {
-    return <EmptyData name={"profiles"} isFiltered={false} />;
-  }
+
   return (
     <>
       {(isLoading || isPreviousData) && <LoadingTier />}
+      {(!data || data?.length <= 0) && (
+        <EmptyData name={"profiles"} isFiltered={false} />
+      )}
       {isError && <ErrorQuery name={"profiles"} error={error} />}
       {isSuccess && data && (
         <div

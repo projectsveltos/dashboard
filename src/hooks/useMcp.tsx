@@ -66,12 +66,7 @@ function useMcp(
         profileKind,
       ),
     {
-      enabled:
-        !!namespace &&
-        !!clusterName &&
-        !!clusterType &&
-        !!profileName &&
-        !!profileKind,
+      enabled: false,
       placeholderData: "",
     },
   );

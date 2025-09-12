@@ -1,10 +1,10 @@
 import { ClusterHeading } from "@/modules/clusters/cluster-information/components/clusterHeading";
 import { LabelsCard } from "@/modules/clusters/cluster-information/components/LabelsCard";
-import { Addons } from "@/modules/clusters/cluster-information/components/AddonsTable/Addons";
+import { Addons } from "@/modules/clusters/cluster-information/components/addonsTable/Addons";
 
 import { useParams } from "react-router-dom";
 import { ClusterType } from "@/types/cluster.types";
-import { LoadingAddons } from "@/modules/clusters/cluster-information/components/AddonsTable/LoadingAddons";
+import { LoadingAddons } from "@/modules/clusters/cluster-information/components/addonsTable/LoadingAddons";
 import { AddonTypes } from "@/types/addon.types";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { useClusterInfo } from "@/modules/clusters/cluster-information/hooks/useClusterInfo";

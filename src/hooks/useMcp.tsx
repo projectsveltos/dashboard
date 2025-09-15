@@ -1,7 +1,35 @@
 import { useQuery } from "react-query";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
+import { FailedProfile } from "@/types/profile.types";
+interface InstallationMcpResponse {
+  details: string[];
+  is_correctly_installed: boolean;
+}
 
+const processMcpProfiles = (
+  profiles: FailedProfile[] | FailedProfile,
+): string | string[] => {
+  if (Array.isArray(profiles)) {
+    return profiles
+      .flatMap((profile: FailedProfile) => {
+        if (profile.isSuccessful) {
+          return `${profile.profileName}: Correctly installed.`;
+        }
+        return profile.causes.map(
+          (cause: string) => `${profile.profileName}: ${cause.trim()}`,
+        );
+      })
+      .filter((line: string) => line.length > 0);
+  } else {
+    if (profiles.isSuccessful) {
+      return `${profiles.profileName}: Correctly installed.`;
+    }
+    return profiles.causes
+      .map((cause: string) => `${profiles.profileName}: ${cause.trim()}`)
+      .join("\n");
+  }
+};
 const getDebugProfileCluster = async (
   namespace: string,
   clusterName: string,
@@ -18,14 +46,19 @@ const getDebugProfileCluster = async (
       profileKind,
     },
   });
-  return data;
+
+  return processMcpProfiles(data) as string;
 };
+export interface DebugClusterResponse {
+  rawData: string;
+  formattedData: string[];
+}
 
 const getDebugCluster = async (
   namespace: string,
   name: string,
   type: string,
-): Promise<string> => {
+): Promise<DebugClusterResponse> => {
   const { data } = await client.get(API_ENDPOINTS.MCP_CLUSTER_DEBUG, {
     params: {
       namespace,
@@ -33,10 +66,11 @@ const getDebugCluster = async (
       type,
     },
   });
-  return data;
+  const formattedData = processMcpProfiles(data?.failedProfiles || []);
+  return { rawData: data, formattedData: formattedData as string[] };
 };
 
-const getInstallation = async (): Promise<string> => {
+const getInstallation = async (): Promise<InstallationMcpResponse> => {
   const { data } = await client.get(API_ENDPOINTS.MCP_INSTALLATION);
   return data;
 };
@@ -76,8 +110,9 @@ function useMcp(
     () => getDebugCluster(namespace, clusterName, clusterType),
     {
       enabled: false,
-      placeholderData: "",
+
       cacheTime: 0,
+      staleTime: 0,
     },
   );
 
@@ -85,8 +120,8 @@ function useMcp(
     ["installation"],
     () => getInstallation(),
     {
-      placeholderData: "",
       enabled: false,
+      placeholderData: { details: [], is_correctly_installed: false },
       cacheTime: 0,
     },
   );

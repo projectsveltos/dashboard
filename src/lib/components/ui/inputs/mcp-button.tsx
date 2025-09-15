@@ -105,8 +105,6 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
                         <span className="text-red-500 my-2 font-bold text-md">
                           Error:{errorMatch[2]}
                         </span>
-
-                        {/* Separator */}
                       </>
                     ) : (
                       text.split(".").slice(1).join(".").trim()

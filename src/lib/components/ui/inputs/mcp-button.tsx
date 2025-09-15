@@ -41,7 +41,7 @@ export interface McpButtonProps
   asChild?: boolean;
   isLoading?: boolean;
   mcpResponse?: string | string[];
-  icon?: LucideIcon | JSX.Element;
+  icon?: React.ReactNode;
 }
 
 const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(

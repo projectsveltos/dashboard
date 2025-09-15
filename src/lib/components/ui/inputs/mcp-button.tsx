@@ -2,12 +2,13 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { Sparkles } from "lucide-react";
+import { LucideIcon, Sparkles } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/lib/components/ui/feedback/popover";
+import { JSX } from "react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -39,7 +40,8 @@ export interface McpButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   isLoading?: boolean;
-  popupText?: string;
+  mcpResponse?: string | string[];
+  icon?: React.ReactNode;
 }
 
 const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
@@ -50,7 +52,8 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
       size,
       asChild = false,
       isLoading = false,
-      popupText,
+      icon,
+      mcpResponse,
       ...props
     },
     ref,
@@ -69,27 +72,59 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
             disabled={isLoading}
             {...props}
           >
-            {isLoading ? (
-              <Sparkles className="mr-2 h-4 w-4 mx-auto animate-spin text-yellow-500" />
-            ) : (
-              <Sparkles className="mr-2 h-4 w-4 mx-auto text-yellow-500" />
-            )}
-            {props.children}
+            <>
+              {isLoading ? (
+                <Sparkles className="mr-2 h-4 w-4 mx-auto animate-spin text-yellow-500" />
+              ) : (
+                <>
+                  {icon ?? (
+                    <Sparkles className="mr-2 h-4 w-4 mx-auto text-yellow-500" />
+                  )}
+                </>
+              )}
+              {props.children}
+            </>
           </Comp>
         </PopoverTrigger>
-        {popupText && (
-          <PopoverContent className="w-72 text-l rounded-md p-4 flex flex-col space-y-2">
+        {mcpResponse && !isLoading && Array.isArray(mcpResponse) && (
+          <PopoverContent className="w-96 text-l rounded-md p-4 flex flex-col space-y-2">
+            {mcpResponse.map((text, index) => {
+              const errorMatch = text.match(/(Error:)(.*)/); // Match "Error:" and the text after it
+              return (
+                <div key={index} className="flex flex-col space-y-1">
+                  <h4 className="text-lg font-semibold">
+                    <span className="relative pl-6">
+                      <Sparkles className="absolute left-0 top-0 h-5 w-5 text-yellow-500" />
+                      {text.split(".")[0] + "."}
+                    </span>
+                  </h4>
+                  <span className="text-left">
+                    {errorMatch ? (
+                      <>
+                        {text.split("Error:")[0]}
+                        <span className="text-red-500 my-2 font-bold text-md">
+                          Error:{errorMatch[2]}
+                        </span>
+
+                        {/* Separator */}
+                      </>
+                    ) : (
+                      text.split(".").slice(1).join(".").trim()
+                    )}
+                  </span>
+                </div>
+              );
+            })}
+          </PopoverContent>
+        )}
+        {mcpResponse && !isLoading && !Array.isArray(mcpResponse) && (
+          <PopoverContent className="w-72 text-l rounded-md p-4">
             <h4 className="text-lg font-semibold">
               <span className="relative pl-6">
                 <Sparkles className="absolute left-0 top-0 h-5 w-5 text-yellow-500" />
-                {popupText.split(".")[0] + "."}
+                {mcpResponse}
               </span>
             </h4>
-            <div className="flex space-x-2">
-              <span className="text-left">
-                {popupText.split(".").slice(1).join(".").trim()}
-              </span>
-            </div>
           </PopoverContent>
         )}
       </Popover>

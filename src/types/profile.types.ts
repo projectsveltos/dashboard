@@ -71,3 +71,8 @@ export interface ProfileInfo {
     }[];
   };
 }
+export interface FailedProfile {
+  profileName: string;
+  isSuccessful: boolean;
+  causes: string[];
+}

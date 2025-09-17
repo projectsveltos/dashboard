@@ -65,7 +65,11 @@ export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
                   <McpButton
                     onClick={triggerMcp}
                     isLoading={debugProfileClusterQuery?.isFetching}
-                    popupText={debugProfileClusterQuery?.data}
+                    mcpResponse={
+                      debugProfileClusterQuery?.data
+                        ? debugProfileClusterQuery.data
+                        : "No debug data available."
+                    }
                     variant={"highlight"}
                   >
                     Debug

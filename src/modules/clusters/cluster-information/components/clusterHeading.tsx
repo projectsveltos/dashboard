@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { Icons } from "@/lib/components/icons";
 import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
+import { DebugClusterResponse } from "@/hooks/useMcp";
+import { useQueryClient } from "react-query";
 
 type ClusterHeadingProps = {
   name: string;
@@ -13,7 +15,11 @@ type ClusterHeadingProps = {
   namespace?: string;
   hideDetails?: boolean;
   failureMsg?: string | null;
-  mcpDebugQuery?: { refetch: () => void; isFetching: boolean; data?: string };
+  mcpDebugQuery?: {
+    refetch: () => void;
+    isFetching: boolean;
+    data?: DebugClusterResponse;
+  };
 };
 
 export const ClusterHeading = ({
@@ -26,10 +32,9 @@ export const ClusterHeading = ({
   mcpDebugQuery,
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   function triggerMcpDebugQuery() {
-    if (mcpDebugQuery) {
-      mcpDebugQuery.refetch();
-    }
+    mcpDebugQuery?.refetch();
   }
   return (
     <>
@@ -83,7 +88,11 @@ export const ClusterHeading = ({
           <McpButton
             onClick={triggerMcpDebugQuery}
             isLoading={mcpDebugQuery?.isFetching}
-            popupText={mcpDebugQuery?.data || ""}
+            mcpResponse={
+              mcpDebugQuery?.data?.formattedData?.length
+                ? mcpDebugQuery.data.formattedData
+                : "Relax, nothing to debug here!"
+            }
           >
             Debug
           </McpButton>

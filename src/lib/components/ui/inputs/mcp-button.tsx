@@ -2,13 +2,12 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
-import { LucideIcon, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/lib/components/ui/feedback/popover";
-import { JSX } from "react";
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -62,11 +61,11 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
 
     return (
       <Popover>
-        <PopoverTrigger asChild>
+        <PopoverTrigger className={"text-xs"} asChild>
           <Comp
             className={cn(
               buttonVariants({ variant, size, className }),
-              isLoading && "opacity-70 cursor-not-allowed",
+              isLoading && "opacity-70  cursor-not-allowed",
             )}
             ref={ref}
             disabled={isLoading}
@@ -87,12 +86,12 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
           </Comp>
         </PopoverTrigger>
         {mcpResponse && !isLoading && Array.isArray(mcpResponse) && (
-          <PopoverContent className="w-96 text-l rounded-md p-4 flex flex-col space-y-2">
+          <PopoverContent className="w-96 text-xs rounded-md p-4 flex flex-col space-y-2">
             {mcpResponse.map((text, index) => {
               const errorMatch = text.match(/(Error:)(.*)/); // Match "Error:" and the text after it
               return (
                 <div key={index} className="flex flex-col space-y-1">
-                  <h4 className="text-lg font-semibold">
+                  <h4 className="text-sm font-semibold">
                     <span className="relative pl-6">
                       <Sparkles className="absolute left-0 top-0 h-5 w-5 text-yellow-500" />
                       {text.split(".")[0] + "."}
@@ -116,7 +115,7 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
           </PopoverContent>
         )}
         {mcpResponse && !isLoading && !Array.isArray(mcpResponse) && (
-          <PopoverContent className="w-72 text-l rounded-md p-4">
+          <PopoverContent className="w-72 text-sm rounded-md p-4">
             <h4 className="text-lg font-semibold">
               <span className="relative pl-6">
                 <Sparkles className="absolute left-0 top-0 h-5 w-5 text-yellow-500" />

@@ -5,6 +5,7 @@ import useDebounce from "@/hooks/useDebounce";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { ClearableInput } from "@/lib/components/ui/inputs/clearable-input";
 import TagInput from "@/lib/components/ui/data-display/TagInput";
+import { appConfig } from "@/config/app";
 export interface SearchField {
   icon: React.ElementType;
   label: string;
@@ -13,7 +14,7 @@ export interface SearchField {
   isTag?: boolean;
 }
 
-export const SearchFields = ({
+export const SearchFieldTags = ({
   updateQueryParams,
   searchFieldsData,
 }: {
@@ -43,7 +44,7 @@ export const SearchFields = ({
       updateQueryParams(updatedSearchTerms);
     },
     [searchTerms],
-    1000,
+    appConfig.debounceDelay,
   );
 
   function handleChange(key: string, value: string | string[]) {

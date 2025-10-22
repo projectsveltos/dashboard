@@ -2,6 +2,8 @@ import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dotenv from "dotenv";
+
+dotenv.config();
 export default defineConfig(({}) => {
   const { VITE_BACKEND_PORT, VITE_BACKEND_NAME, VITE_BACKEND_PROTOCOL } =
     process.env;
@@ -10,7 +12,6 @@ export default defineConfig(({}) => {
       ? VITE_BACKEND_PROTOCOL
       : "http";
   const VITE_BACKEND_URL = `${protocol}://${VITE_BACKEND_NAME}:${VITE_BACKEND_PORT}`;
-  dotenv.config();
 
   return {
     plugins: [react()],

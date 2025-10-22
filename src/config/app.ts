@@ -1,6 +1,9 @@
 import { ClusterType } from "@/types/cluster.types";
 import { sveltosClusterValue } from "@/types/cluster.consts";
 
+interface QueryParams {
+  failure: string;
+}
 interface AppConfig {
   name: string;
   github: {
@@ -11,6 +14,8 @@ interface AppConfig {
   defaultPage: number;
   defaultSize: number;
   maxBadges: number;
+  queryParams: QueryParams;
+  debounceDelay: number;
   defaultTableSize: number;
 }
 
@@ -25,4 +30,8 @@ export const appConfig: AppConfig = {
   defaultSize: 8,
   defaultTableSize: 5,
   maxBadges: 2,
+  queryParams: {
+    failure: "failure",
+  },
+  debounceDelay: 600,
 };

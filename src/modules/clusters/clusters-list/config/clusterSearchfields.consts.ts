@@ -1,5 +1,5 @@
 import { ALargeSmall, Blocks, Tags } from "lucide-react";
-import { SearchField } from "@/modules/clusters/clusters-list/components/searchFields";
+import { SearchField } from "@/modules/clusters/clusters-list/components/searchFieldTags";
 
 export const clusterSearchfields: SearchField[] = [
   {

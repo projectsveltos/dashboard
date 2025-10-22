@@ -23,6 +23,7 @@ import { AddonTableData, addonTypes, AddonTypes } from "@/types/addon.types";
 import { appConfig } from "@/config/app";
 import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryParamInput";
 import { typeConfig } from "@/modules/clusters/cluster-information/components/addonsTable/config/typeConfig";
+import { hasSearchConfig } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
 
 interface ResourceTableProps {
   addonsData: Record<AddonTypes, AddonTableData>;
@@ -85,8 +86,17 @@ export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
                   </TabsTrigger>
                 ))}
               </TabsList>
+
               <SearchQueryParamInput
-                searchConfig={typeConfig[activeTab]?.searchConfig || []}
+                searchConfig={
+                  hasSearchConfig(typeConfig[activeTab])
+                    ? (
+                        typeConfig[activeTab] as {
+                          searchConfig: { key: string; placeholder: string }[];
+                        }
+                      ).searchConfig
+                    : []
+                }
               />
               {addonTypes.map((type: AddonTypes) => (
                 <TabsContent key={type} value={type}>

@@ -16,16 +16,31 @@ export const getRowsAndTotal = (data: AddonTableData, type: AddonTypes) => {
       return { rows: [], total: 0 };
   }
 };
+
+export function hasSearchConfig(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  obj: any,
+): obj is { searchConfig: { key: string; placeholder: string }[] } {
+  return (
+    typeof obj === "object" &&
+    obj !== null &&
+    "searchConfig" in obj &&
+    Array.isArray((obj as { searchConfig: unknown }).searchConfig)
+  );
+}
 export const getSearchParams = (
   type: AddonTypes,
   searchParams: URLSearchParams,
-) => {
-  const config = typeConfig[type]?.searchConfig || [];
+): Record<string, string> => {
+  const typeConfigEntry = typeConfig[type];
+  const config = hasSearchConfig(typeConfigEntry)
+    ? typeConfigEntry.searchConfig
+    : [];
   const params: Record<string, string> = {};
-  config.forEach(({ key }) => {
-    const value = searchParams.get(key);
+  config.forEach((item: { key: string }) => {
+    const value = searchParams.get(item.key);
     if (value) {
-      params[key] = value;
+      params[item.key] = value;
     }
   });
   return params;

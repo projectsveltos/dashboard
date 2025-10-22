@@ -32,5 +32,15 @@ export const typeConfig = {
   [AddonTypes.PROFILE]: {
     columns: profileColumns,
     RowComponent: ProfileRow,
+    searchConfig: [
+      {
+        key: "profile_name",
+        placeholder: "Search by Profile Name",
+      },
+      {
+        key: "profile_kind",
+        placeholder: "Search by Profile Kind",
+      },
+    ],
   },
 };

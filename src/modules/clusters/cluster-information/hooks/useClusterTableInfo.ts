@@ -2,7 +2,6 @@ import { useQueries } from "react-query";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { AddonTypes } from "@/types/addon.types";
-import { typeConfig } from "@/modules/clusters/cluster-information/components/addonsTable/config/typeConfig";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ClusterType } from "@/types/cluster.types";
@@ -10,6 +9,7 @@ import { pathFromType } from "@/api-client/util/GetPathFromType";
 import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
 import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
 import { appConfig } from "@/config/app";
+import { getSearchParams } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
 
 const { RESOURCES, HELM_CHART, PROFILE_STATUSES } = API_ENDPOINTS;
 
@@ -87,18 +87,6 @@ const getClusterInfo = async (
     },
   });
   return data;
-};
-
-const getSearchParams = (type: AddonTypes, searchParams: URLSearchParams) => {
-  const config = typeConfig[type]?.searchConfig || [];
-  const params: Record<string, string> = {};
-  config.forEach(({ key }) => {
-    const value = searchParams.get(key);
-    if (value) {
-      params[key] = value;
-    }
-  });
-  return params;
 };
 
 function useClusterTableInfo(

@@ -16,6 +16,7 @@ interface ClusterCardProps {
   name: string;
   version?: string;
   namespace?: string;
+  paused: boolean,
   status: boolean;
   labels?: Label[];
   onClick: () => void;
@@ -26,6 +27,7 @@ export const ClusterCard = ({
   name,
   version,
   namespace,
+  paused,
   labels,
   onClick,
   failureMsg,
@@ -46,9 +48,12 @@ export const ClusterCard = ({
           <div className="flex-1 space-y-1">
             <p className="text-sm font-medium leading-none">
               {name}
+            </p>
+            <p className="text-sm text-muted-foreground  py-1">
+              Version:
               <span className={"text-muted-foreground mx-1"}>
                 <Tooltip>
-                  <TooltipTrigger>{version}</TooltipTrigger>
+                  <TooltipTrigger> {version}</TooltipTrigger>
                   <TooltipContent>
                     <p>Kubernetes version : {version}</p>
                   </TooltipContent>
@@ -58,6 +63,11 @@ export const ClusterCard = ({
             <p className="text-sm text-muted-foreground  py-1">
               Namespace: <span className="text-main-500 ">{namespace}</span>
             </p>
+            {(paused === true || paused === "true") && (
+              <p className="text-sm text-muted-foreground  py-1">
+                <span className="text-red-500 font-semibold ">{"Paused"}</span>
+              </p>
+            )}
           </div>
           <Tooltip>
             <TooltipTrigger>

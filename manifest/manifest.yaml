@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: docker.io/projectsveltos/dashboard:v1.0.1
+          image: docker.io/projectsveltos/dashboard:main
           ports:
             - containerPort: 5173
 ---

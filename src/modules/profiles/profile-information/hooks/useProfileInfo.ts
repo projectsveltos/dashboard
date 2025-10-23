@@ -5,30 +5,30 @@ import { ProfileInfo } from "@/types/profile.types";
 import { useMemo } from "react";
 
 const fetchProfileInfo = async (
-  namespace: string,
-  name: string,
-  kind: string,
+  profile_namespace: string,
+  profile_name: string,
+  profile_kind: string,
 ) => {
   const { data } = await client.get(API_ENDPOINTS.PROFILE, {
     params: {
-      namespace,
-      name,
-      kind,
+      profile_namespace,
+      profile_name,
+      profile_kind,
     },
   });
   return data;
 };
 
 const useProfileInfo = (
-  namespace: string,
-  name: string,
-  kind: string,
+  profile_namespace: string,
+  profile_name: string,
+  profile_kind: string,
 ): UseQueryResult<ProfileInfo, Error> => {
   const queryKey = useMemo(
-    () => ["profile-info", namespace, name, kind],
-    [namespace, name, kind],
+    () => ["profile-info", profile_namespace, profile_name, profile_kind],
+    [profile_namespace, profile_name, profile_kind],
   );
-  return useQuery(queryKey, () => fetchProfileInfo(namespace, name, kind), {
+  return useQuery(queryKey, () => fetchProfileInfo(profile_namespace, profile_name, profile_kind), {
     keepPreviousData: false,
   });
 };

@@ -8,11 +8,11 @@ import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryPar
 
 const searchConfig = [
   {
-    key: "namespace",
+    key: "profile_namespace",
     placeholder: "Search by Namespace",
   },
   {
-    key: "name",
+    key: "profile_name",
     placeholder: "Search by Name",
   },
 ];

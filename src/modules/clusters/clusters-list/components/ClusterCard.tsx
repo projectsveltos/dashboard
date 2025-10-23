@@ -11,12 +11,13 @@ import { FailedFlag } from "@/lib/components/ui/data-display/failed-flag";
 import { Label } from "@/types/cluster.types";
 import { appConfig } from "@/config/app";
 import { Tags } from "lucide-react";
+import { PauseIcon } from "@radix-ui/react-icons";
 
 interface ClusterCardProps {
   name: string;
   version?: string;
   namespace?: string;
-  paused: boolean,
+  paused: boolean | string;
   status: boolean;
   labels?: Label[];
   onClick: () => void;
@@ -46,9 +47,7 @@ export const ClusterCard = ({
         <div className=" flex items-center space-x-4 rounded-md  p-4">
           {failureMsg ? <FailedFlag msg={failureMsg} /> : <ReadyFlag />}
           <div className="flex-1 space-y-1">
-            <p className="text-sm font-medium leading-none">
-              {name}
-            </p>
+            <p className="text-sm font-medium leading-none">{name}</p>
             <p className="text-sm text-muted-foreground  py-1">
               Version:
               <span className={"text-muted-foreground mx-1"}>
@@ -63,10 +62,18 @@ export const ClusterCard = ({
             <p className="text-sm text-muted-foreground  py-1">
               Namespace: <span className="text-main-500 ">{namespace}</span>
             </p>
-            {(paused === true || paused === "true") && (
-              <p className="text-sm text-muted-foreground  py-1">
-                <span className="text-red-500 font-semibold ">{"Paused"}</span>
-              </p>
+            {(paused==true || paused == "true") && (
+              <div className="flex items-center space-x-2 py-1">
+                <p className="text-sm text-muted-foreground">
+                  <span className="text-red-500 font-semibold">{"Paused"}</span>
+                </p>
+                <Badge
+                  className="bg-yellow-500 dark:bg-yellow-200 dark:text-slate-950 text-white flex items-center space-x-1"
+                  variant="label"
+                >
+                  <PauseIcon className={"h-4 w-4"} /> Paused
+                </Badge>
+              </div>
             )}
           </div>
           <Tooltip>

@@ -12,7 +12,7 @@ export const typeConfig = {
     searchConfig: [
       {
         key: "release_namespace",
-        placeholder: "Search by Resource Namespace",
+        placeholder: "Search by Release Namespace",
       },
       { key: "release_name", placeholder: "Search by Release name" },
     ],

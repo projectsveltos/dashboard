@@ -86,7 +86,7 @@ export const Authentication = () => {
           <div className="mt-4 text-center text-sm">
             Need help obtaining your token?
             <a
-              href="https://projectsveltos.github.io/sveltos/getting_started/install/dashboard/#authentication"
+              href="https://projectsveltos.github.io/sveltos/main/getting_started/optional/dashboard/#authentication"
               className="underline mx-1"
             >
               Learn more

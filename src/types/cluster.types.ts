@@ -13,6 +13,7 @@ export interface ClusterInfoType {
     labels: Label[];
     version: string;
     ready: boolean;
+    paused: boolean;
     failureMessage?: string | null;
   };
 }

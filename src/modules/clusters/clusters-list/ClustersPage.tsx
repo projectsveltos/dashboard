@@ -14,7 +14,7 @@ import { clusterTypes } from "@/types/cluster.consts";
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
-import { SearchFields } from "@/modules/clusters/clusters-list/components/searchFields";
+import { SearchFieldTags } from "@/modules/clusters/clusters-list/components/searchFieldTags";
 
 import { clusterSearchfields } from "@/modules/clusters/clusters-list/config/clusterSearchfields.consts";
 
@@ -76,7 +76,7 @@ export default function ClustersPage() {
           ))}
         </TabsList>
       </Tabs>
-      <SearchFields
+      <SearchFieldTags
         searchFieldsData={clusterSearchfields}
         updateQueryParams={updateQueryParams}
       />

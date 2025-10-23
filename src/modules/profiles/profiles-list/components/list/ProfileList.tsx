@@ -4,13 +4,26 @@ import { TierData } from "@/types/profile.types";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { LoadingTier } from "@/modules/profiles/profiles-list/components/tier/LoadingTier";
 import { EmptyData } from "@/lib/components/ui/feedback/emptyData";
+import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryParamInput";
+
+const searchConfig = [
+  {
+    key: "namespace",
+    placeholder: "Search by Namespace",
+  },
+  {
+    key: "name",
+    placeholder: "Search by Name",
+  },
+];
 
 export function ProfileList() {
   const { data, isSuccess, isLoading, isError, error, isPreviousData } =
-    useProfiles();
+    useProfiles(searchConfig);
 
   return (
     <>
+      <SearchQueryParamInput searchConfig={searchConfig} />
       {(isLoading || isPreviousData) && <LoadingTier />}
       {(!data || data?.length <= 0) && (
         <EmptyData name={"profiles"} isFiltered={false} />

@@ -1,6 +1,13 @@
 import { AddonTableTypes } from "@/types/addonTable.types";
-
-export const profileColumns = [
+interface Column {
+  label: string;
+  className: string;
+  keys: string;
+  colSpan?: number;
+  isCheckbox?: boolean;
+  isSrOnly?: boolean;
+}
+export const profileColumns: Column[] = [
   {
     label: "Failed only",
     className: "",
@@ -30,7 +37,7 @@ export const profileColumns = [
   },
 ];
 
-export const helmColumns = [
+export const helmColumns: Column[] = [
   { label: "", className: "", keys: AddonTableTypes.ICON },
   {
     label: "Namespace",
@@ -60,7 +67,7 @@ export const helmColumns = [
   },
 ];
 
-export const resourceColumns = [
+export const resourceColumns: Column[] = [
   { label: "", className: "", keys: AddonTableTypes.ICON },
   { label: "Group", className: "", keys: AddonTableTypes.GROUP },
   {

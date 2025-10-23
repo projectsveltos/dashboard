@@ -1,15 +1,15 @@
 import { useQueries } from "react-query";
+import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
+import { AddonTypes } from "@/types/addon.types";
 import client from "@/api-client/apiClient";
-
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ClusterType } from "@/types/cluster.types";
 import { pathFromType } from "@/api-client/util/GetPathFromType";
 import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
 import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
 import { appConfig } from "@/config/app";
-import { useState } from "react";
-import { AddonTypes } from "@/types/addon.types";
-import { useSearchParams } from "react-router-dom";
+import { getSearchParams } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
 
 const { RESOURCES, HELM_CHART, PROFILE_STATUSES } = API_ENDPOINTS;
 
@@ -18,50 +18,58 @@ const getResources = async (
   clusterName: string,
   clusterType: ClusterType,
   page: number,
+  params: Record<string, string>,
 ) => {
   const { data } = await client.get(RESOURCES, {
     params: {
-      namespace: namespace,
+      namespace,
       name: clusterName,
       type: getClusterInfoType(clusterType),
       skip: getItemsToSkip(page, appConfig.defaultTableSize),
       limit: appConfig.defaultTableSize,
+      ...params,
     },
   });
   return data;
 };
+
 const getClusterProfileStatuses = async (
   namespace: string,
   clusterName: string,
   clusterType: ClusterType,
   page: number,
   toggleFailFilter: boolean,
+  params: Record<string, string>,
 ) => {
   const { data } = await client.get(PROFILE_STATUSES, {
     params: {
-      namespace: namespace,
+      namespace,
       name: clusterName,
       type: getClusterInfoType(clusterType),
       skip: getItemsToSkip(page, appConfig.defaultTableSize),
       limit: appConfig.defaultTableSize,
       failed: toggleFailFilter,
+      ...params,
     },
   });
   return data;
 };
+
 const getHelmCharts = async (
   namespace: string,
   clusterName: string,
   clusterType: ClusterType,
   page: number,
+  params: Record<string, string>,
 ) => {
   const { data } = await client.get(HELM_CHART, {
     params: {
-      namespace: namespace,
+      namespace,
       name: clusterName,
       type: getClusterInfoType(clusterType),
       skip: getItemsToSkip(page, appConfig.defaultTableSize),
       limit: appConfig.defaultTableSize,
+      ...params,
     },
   });
   return data;
@@ -74,19 +82,20 @@ const getClusterInfo = async (
 ) => {
   const { data } = await client.get(pathFromType(clusterType), {
     params: {
-      namespace: namespace,
+      namespace,
       name: clusterName,
     },
   });
   return data;
 };
-function useClusterInfo(
+
+function useClusterTableInfo(
   namespace: string,
   clusterName: string,
   clusterType: ClusterType,
 ) {
   const [searchParams] = useSearchParams();
-  const failedOnly = searchParams.get("failure") === "true";
+  const failedOnly = searchParams.get(appConfig.queryParams.failure) === "true";
   const [helmPage, setHelmPage] = useState(appConfig.defaultPage);
   const [resourcePage, setResourcePage] = useState(appConfig.defaultPage);
   const [profilePage, setProfilePage] = useState(appConfig.defaultPage);
@@ -106,6 +115,7 @@ function useClusterInfo(
         throw new Error("Invalid AddonType provided.");
     }
   };
+
   const queries = useQueries([
     {
       queryKey: [
@@ -114,9 +124,16 @@ function useClusterInfo(
         clusterName,
         clusterType,
         resourcePage,
+        getSearchParams(AddonTypes.RESOURCE, searchParams),
       ],
       queryFn: () =>
-        getResources(namespace, clusterName, clusterType, resourcePage),
+        getResources(
+          namespace,
+          clusterName,
+          clusterType,
+          resourcePage,
+          getSearchParams(AddonTypes.RESOURCE, searchParams),
+        ),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
     },
@@ -128,6 +145,7 @@ function useClusterInfo(
         clusterName,
         clusterType,
         profilePage,
+        getSearchParams(AddonTypes.PROFILE, searchParams),
       ],
       queryFn: () =>
         getClusterProfileStatuses(
@@ -136,14 +154,28 @@ function useClusterInfo(
           clusterType,
           profilePage,
           failedOnly,
+          getSearchParams(AddonTypes.PROFILE, searchParams),
         ),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
     },
     {
-      queryKey: ["helmChart", namespace, clusterName, clusterType, helmPage],
+      queryKey: [
+        "helmChart",
+        namespace,
+        clusterName,
+        clusterType,
+        helmPage,
+        getSearchParams(AddonTypes.HELM, searchParams),
+      ],
       queryFn: () =>
-        getHelmCharts(namespace, clusterName, clusterType, helmPage),
+        getHelmCharts(
+          namespace,
+          clusterName,
+          clusterType,
+          helmPage,
+          getSearchParams(AddonTypes.HELM, searchParams),
+        ),
       enabled: !!namespace && !!clusterName && !!clusterType,
       placeholderData: { data: [], isLoading: true, error: null },
     },
@@ -154,7 +186,8 @@ function useClusterInfo(
       placeholderData: { data: {}, isLoading: true, error: null },
     },
   ]);
+
   return { queries, setPage };
 }
 
-export { useClusterInfo };
+export { useClusterTableInfo };

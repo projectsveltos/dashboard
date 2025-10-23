@@ -17,7 +17,7 @@ const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
         variant={"outline"}
         disabled={isFetching > 0}
         onClick={handleRefresh}
-        className={className}
+        className={`${className} text-xs`}
         ref={ref}
       >
         <>

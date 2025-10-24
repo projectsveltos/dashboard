@@ -65,7 +65,7 @@ export const ClusterCard = ({
             {(paused==true || paused == "true") && (
               <div className="flex items-center space-x-2 py-1">
                 <p className="text-sm text-muted-foreground">
-                  <span className="text-red-500 font-semibold">{"Paused"}</span>
+                  <span className="text-red-500 font-semibold">{""}</span>
                 </p>
                 <Badge
                   className="bg-yellow-500 dark:bg-yellow-200 dark:text-slate-950 text-white flex items-center space-x-1"

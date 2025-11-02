@@ -6,7 +6,6 @@ import { Icons } from "@/lib/components/icons";
 import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 import { DebugClusterResponse } from "@/hooks/useMcp";
-import { useQueryClient } from "react-query";
 
 type ClusterHeadingProps = {
   name: string;
@@ -32,7 +31,6 @@ export const ClusterHeading = ({
   mcpDebugQuery,
 }: ClusterHeadingProps) => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   function triggerMcpDebugQuery() {
     mcpDebugQuery?.refetch();
   }

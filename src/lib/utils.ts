@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-
+import { URLSearchParams } from "url";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -25,4 +25,20 @@ export const colorFromStatus = (status: string | undefined) => {
 
 export const isNotProvisioned = (status: string | undefined) => {
   return status !== "Provisioned";
+};
+
+export const extractFiltersFromSearchParams = (
+  searchParams: URLSearchParams,
+  searchConfig: { key: string; placeholder: string }[],
+): Record<string, string> => {
+  return searchConfig.reduce(
+    (acc, { key }) => {
+      const value = searchParams.get(key);
+      if (value) {
+        acc[key] = value;
+      }
+      return acc;
+    },
+    {} as Record<string, string>,
+  );
 };

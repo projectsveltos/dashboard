@@ -7,7 +7,7 @@ import { ClusterType } from "@/types/cluster.types";
 import { LoadingAddons } from "@/modules/clusters/cluster-information/components/addonsTable/LoadingAddons";
 import { AddonTypes } from "@/types/addon.types";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
-import { useClusterInfo } from "@/modules/clusters/cluster-information/hooks/useClusterInfo";
+import { useClusterTableInfo } from "@/modules/clusters/cluster-information/hooks/useClusterTableInfo";
 import { useMcp } from "@/hooks/useMcp";
 import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
 
@@ -20,7 +20,7 @@ export function ClusterInfoById() {
     "",
     "",
   );
-  const { queries, setPage } = useClusterInfo(
+  const { queries, setPage } = useClusterTableInfo(
     namespace as string,
     name as string,
     type as ClusterType,

@@ -13,7 +13,7 @@ import useClusters from "@/modules/clusters/clusters-list/hooks/useClusters";
 import { clusterTypes } from "@/types/cluster.consts";
 import { ClusterList } from "@/modules/clusters/clusters-list/components/ClusterList";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
-import { LoadingCards } from "@/modules/clusters/clusters-list/components/LoadingCards";
+import { LoadingCards } from "@/lib/components/ui/feedback/LoadingCards";
 import { SearchFieldTags } from "@/modules/clusters/clusters-list/components/searchFieldTags";
 
 import { clusterSearchfields } from "@/modules/clusters/clusters-list/config/clusterSearchfields.consts";

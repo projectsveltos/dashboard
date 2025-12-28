@@ -16,7 +16,7 @@ interface SearchConfig {
 
 interface SearchInputProps {
   searchConfig: SearchConfig[];
-  onSearch?: (key: string, value: string) => void;
+  onSearch?: (values: Record<string, string>) => void;
 }
 
 export const SearchQueryParamInput: FC<SearchInputProps> = memo(
@@ -60,9 +60,7 @@ export const SearchQueryParamInput: FC<SearchInputProps> = memo(
         prevValuesRef.current = values; // Update the ref
 
         if (onSearch) {
-          Object.entries(values).forEach(([key, value]) => {
-            onSearch(key, value);
-          });
+          onSearch(values);
         }
       },
       [values],

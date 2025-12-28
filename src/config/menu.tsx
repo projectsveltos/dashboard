@@ -1,4 +1,5 @@
-import { Boxes, Tags, Users } from "lucide-react";
+import { Boxes, RouteIcon } from "lucide-react";
+import { CardStackIcon } from "@radix-ui/react-icons";
 
 interface NavItem {
   title: string;
@@ -23,13 +24,13 @@ export const mainMenu: NavItemWithChildren[] = [
   {
     title: "Profiles",
     to: "/sveltos/profiles",
-    icon: <Users className={"w-4 h-4"} />,
+    icon: <CardStackIcon className={"w-4 h-4"} />,
   },
   {
-    title: "Labels",
-    to: "labels",
-    disabled: true,
-    icon: <Tags className={"w-4 h-4"} />,
+    title: "Events",
+    to: "/sveltos/events",
+
+    icon: <RouteIcon className={"w-4 h-4"} />,
   },
 ];
 

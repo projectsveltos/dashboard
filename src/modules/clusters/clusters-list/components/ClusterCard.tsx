@@ -36,6 +36,7 @@ export const ClusterCard = ({
   const labelEntries = Object.entries(labels || {});
   const displayEntries = labelEntries.slice(0, appConfig.maxBadges);
   const remainingCount = labelEntries.length - appConfig.maxBadges;
+  const isPaused = paused == true || paused == "true";
   return (
     <>
       <Card
@@ -47,7 +48,12 @@ export const ClusterCard = ({
         <div className=" flex items-center space-x-4 rounded-md  p-4">
           {failureMsg ? <FailedFlag msg={failureMsg} /> : <ReadyFlag />}
           <div className="flex-1 space-y-1">
-            <p className="text-sm font-medium leading-none">{name}</p>
+            <p className="text-sm font-medium leading-none">
+              <span
+                className={`inline-block h-2.5 w-2.5 rounded-full mr-2 ${isPaused ? "bg-yellow-400" : "bg-green-400"}`}
+              />
+              {name}
+            </p>
             <p className="text-sm text-muted-foreground  py-1">
               Version:
               <span className={"text-muted-foreground mx-1"}>
@@ -62,7 +68,7 @@ export const ClusterCard = ({
             <p className="text-sm text-muted-foreground  py-1">
               Namespace: <span className="text-main-500 ">{namespace}</span>
             </p>
-            {(paused==true || paused == "true") && (
+            {isPaused && (
               <div className="flex items-center space-x-2 py-1">
                 <p className="text-sm text-muted-foreground">
                   <span className="text-red-500 font-semibold">{""}</span>

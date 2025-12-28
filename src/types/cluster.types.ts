@@ -9,6 +9,7 @@ export interface Label {
 export interface ClusterInfoType {
   namespace: string;
   name: string;
+  kind?: string;
   clusterInfo: {
     labels: Label[];
     version: string;

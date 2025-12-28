@@ -4,7 +4,7 @@ import { ProfileRelations } from "@/modules/profiles/profile-information/compone
 import MatchingClusterTable from "@/modules/profiles/profile-information/components/ClusterTable/MatchingClusterTable";
 import useProfileInfo from "@/modules/profiles/profile-information/hooks/useProfileInfo";
 import { useParams } from "react-router-dom";
-import { LoadingProfile } from "@/modules/profiles/profile-information/components/ProfileInfo/LoadingProfile";
+import { LoadingPage } from "@/lib/components/ui/feedback/LoadingPage";
 
 export function ProfileInformation() {
   const { namespace = "", name = "", kind = "" } = useParams();
@@ -12,7 +12,7 @@ export function ProfileInformation() {
   const { data, isLoading, isSuccess } = useProfileInfo(namespace, name, kind);
   return (
     <>
-      {isLoading && <LoadingProfile />}
+      {isLoading && <LoadingPage />}
       {isSuccess && data && (
         <div>
           <ProfileInfoHeading

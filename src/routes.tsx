@@ -12,6 +12,9 @@ import { Logout } from "@/modules/authentication/Logout";
 import PreserveSearchNavigate from "@/hooks/NavigateWithParams";
 import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
 
+import { EventsPage } from "@/modules/events/events-list/EventsPage";
+import EventDetails from "@/modules/events/event-details/EventDetails";
+
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
 
@@ -20,6 +23,7 @@ export const routes: RouteObject[] = [
     path: "/",
     element: <PreserveSearchNavigate to={"/login"} />,
   },
+
   {
     path: "/login",
     element: <Authentication />,
@@ -40,6 +44,20 @@ export const routes: RouteObject[] = [
             to={`/sveltos/clusters/${defaultTab}/${defaultPage}`}
           />
         ),
+      },
+      {
+        path: "/sveltos/events",
+        element: (
+          <PreserveSearchNavigate to={`/sveltos/events/${defaultPage}`} />
+        ),
+      },
+      {
+        path: "/sveltos/events/:pageNumber",
+        element: <EventsPage />,
+      },
+      {
+        path: "/sveltos/event/:name",
+        element: <EventDetails />,
       },
       {
         path: "/sveltos/profiles",

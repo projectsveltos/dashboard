@@ -29,8 +29,19 @@ export const isNotProvisioned = (status: string | undefined) => {
 
 export const extractFiltersFromSearchParams = (
   searchParams: URLSearchParams,
-  searchConfig: { key: string; placeholder: string }[],
+  searchConfig: { key: string; placeholder: string }[] | unknown,
 ): Record<string, string> => {
+  if (!Array.isArray(searchConfig)) {
+    // Defensive: if the caller passed the wrong type (e.g. URLSearchParams) avoid crashing.
+    // Return empty filters so callers request unfiltered data instead of throwing.
+    // eslint-disable-next-line no-console
+    console.warn(
+      "extractFiltersFromSearchParams: expected searchConfig array, got",
+      searchConfig,
+    );
+    return {};
+  }
+
   return searchConfig.reduce(
     (acc, { key }) => {
       const value = searchParams.get(key);

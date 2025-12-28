@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -19,6 +19,11 @@ export const usePagination = (
 ): [FC] => {
   const totalPages = Math.ceil(totalElements / itemsPerPage);
   const [currentPage, setCurrentPage] = useState(page);
+
+  useEffect(() => {
+    setCurrentPage(page);
+  }, [page]);
+
   const setPage = (page: number) => {
     setCurrentPage(page);
     onChangePage(page);

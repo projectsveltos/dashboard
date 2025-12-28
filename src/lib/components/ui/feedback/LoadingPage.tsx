@@ -1,4 +1,4 @@
-export const LoadingProfile = () => {
+export const LoadingPage = () => {
   return (
     <>
       <div className="grid mt-4 auto-rows-max animate-pulse items-start gap-4 lg:col-span-2 lg:gap-8">

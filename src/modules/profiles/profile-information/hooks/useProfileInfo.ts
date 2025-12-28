@@ -28,9 +28,13 @@ const useProfileInfo = (
     () => ["profile-info", profile_namespace, profile_name, profile_kind],
     [profile_namespace, profile_name, profile_kind],
   );
-  return useQuery(queryKey, () => fetchProfileInfo(profile_namespace, profile_name, profile_kind), {
-    keepPreviousData: false,
-  });
+  return useQuery(
+    queryKey,
+    () => fetchProfileInfo(profile_namespace, profile_name, profile_kind),
+    {
+      keepPreviousData: false,
+    },
+  );
 };
 
 export default useProfileInfo;

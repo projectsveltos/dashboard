@@ -12,7 +12,7 @@ import {
 import { Button } from "@/lib/components/ui/inputs/button";
 import { EventPageHeading } from "@/modules/events/event-details/components/EventPageHeading";
 import { ClusterMatchCard } from "./components/ClusterMatchCard";
-import { generateEventYaml } from "./utils/eventYamlGenerator";
+import { generateEventYaml } from "@/utils/eventYamlGenerator";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   vscDarkPlus,
@@ -22,8 +22,10 @@ import { useTheme } from "@/hooks/useTheme";
 import { LoadingPage } from "@/lib/components/ui/feedback/LoadingPage";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { Badge } from "@/lib/components/ui/data-display/badge";
+import { useTranslation } from "react-i18next";
 
 const EventDetails = () => {
+  const { t } = useTranslation();
   const { name } = useParams();
   const { data, isLoading, isError } = useEventDetails(
     name as string | undefined,
@@ -65,7 +67,7 @@ const EventDetails = () => {
               <Card className="bg-card/40 border-border/40 shadow-sm">
                 <CardHeader className="py-3 px-4 border-b border-border/40 flex flex-row items-center justify-between space-y-0">
                   <CardTitle className="text-[10px] font-bold  text-muted-foreground flex items-center gap-2">
-                    <Globe className="h-3 w-3" /> Target Scope
+                    <Globe className="h-3 w-3" /> {t("common.target_scope")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="p-4">
@@ -91,16 +93,22 @@ const EventDetails = () => {
             <div className="space-y-4 pt-2">
               <div className="flex items-center justify-between border-b border-border/40 pb-2">
                 <h2 className="text-[10px] font-bold t text-muted-foreground flex items-center gap-2">
-                  <Activity className="h-3 w-3 text-primary" /> Matched Clusters
+                  <Activity className="h-3 w-3 text-primary" />{" "}
+                  {t("common.matching_clusters")}
                 </h2>
                 <span className="text-[10px] font-mono text-muted-foreground">
-                  {data.clusterEventMatches?.length ?? 0} clusters linked
+                  {data.clusterEventMatches?.length ?? 0}{" "}
+                  {t("common.clusters_linked")}
                 </span>
               </div>
               <div className="overflow-y-auto max-h-[48rem] pr-2">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                   {data.clusterEventMatches?.map((cluster, idx) => (
-                    <ClusterMatchCard key={idx} cluster={cluster} />
+                    <ClusterMatchCard
+                      key={idx}
+                      cluster={cluster}
+                      eventName={data.eventTriggerName}
+                    />
                   ))}
                 </div>
               </div>
@@ -112,7 +120,7 @@ const EventDetails = () => {
             <Card className="bg-card/40 border-border/40 h-full flex flex-col sticky top-20 shadow-sm">
               <CardHeader className="py-3 px-4 border-b border-border/40 flex flex-row items-center justify-between space-y-0 bg-muted/20">
                 <CardTitle className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
-                  <Terminal className="h-3 w-3" /> YAML Definition
+                  <Terminal className="h-3 w-3" /> {t("common.yaml_definition")}
                 </CardTitle>
                 <Button
                   variant="ghost"

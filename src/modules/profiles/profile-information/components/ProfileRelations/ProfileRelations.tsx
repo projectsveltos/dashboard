@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   ReactFlow,
   useNodesState,
@@ -44,6 +45,7 @@ export function ProfileRelations({
     matchingClusters: { cluster: { name: string } }[];
   };
 }) {
+  const { t } = useTranslation();
   const initEdges = useMemo(() => {
     const edges: Edge[] = [];
 
@@ -136,22 +138,22 @@ export function ProfileRelations({
             <Cable className={"w-4 h-4 mx-0.5"} /> Profile
             <div className=" flex ml-auto gap-2 ">
               <Badge variant={"label"} className={" "}>
-                Total dependents: {profile.dependents.length}
+                {t("common.total_dependents")}: {profile.dependents.length}
               </Badge>
               <Badge variant={"label"}>
-                Total dependencies: {profile.dependencies.length}
+                {t("common.total_dependencies")}: {profile.dependencies.length}
               </Badge>
             </div>
           </CardTitle>
           <CardDescription>
-            Profile associations with linked dependents and dependencies within
-            the cluster.
+            {t("common.profile_associations")}
+
             <div className="flex items-center my-2">
               <span className={"ml-auto flex items-center gap-2"}>
                 <Button size="sm" variant="outline" className="h-7 gap-1">
                   <File className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Export
+                    {t("common.export")}
                   </span>
                 </Button>
                 <Button
@@ -162,7 +164,7 @@ export function ProfileRelations({
                 >
                   <Fullscreen className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                    Drag And Drop
+                    {t("common.drag_and_drop")}
                   </span>
                 </Button>
               </span>

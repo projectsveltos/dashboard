@@ -13,6 +13,7 @@ import { usePagination } from "@/hooks/usePagination";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { appConfig } from "@/config/app";
+import { useTranslation } from "react-i18next";
 
 import { FC, useState } from "react";
 import { getRowsAndTotal } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
@@ -32,6 +33,7 @@ export const AddonsTable: FC<AddonsTableProps> = ({
   setPage,
   loading,
 }) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const failedOnly = searchParams.get(appConfig.queryParams.failure) === "true";
@@ -78,9 +80,13 @@ export const AddonsTable: FC<AddonsTableProps> = ({
                   />
                 )}
                 {column.isSrOnly ? (
-                  <span className="sr-only">{column?.label}</span>
+                  <span className="sr-only">
+                    {column?.label ? t(column.label) : ""}
+                  </span>
+                ) : column?.label ? (
+                  t(column.label)
                 ) : (
-                  column.label
+                  ""
                 )}
               </TableHead>
             ))}

@@ -6,6 +6,7 @@ import {
 import { Card } from "@/lib/components/ui/data-display/card";
 
 import { RouteIcon } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export const EventCard = ({
   event,
@@ -14,6 +15,7 @@ export const EventCard = ({
   event: EventTriggerSummary;
   onClick?: () => void;
 }) => {
+  const { t } = useTranslation();
   return (
     <Card
       className={
@@ -39,12 +41,14 @@ export const EventCard = ({
             {event.name}
           </p>
           <div className="text-xs text-muted-foreground py-1 truncate">
-            Event Trigger
+            {t("common.event_trigger")}
           </div>
         </div>
 
         <div className="text-right flex flex-col justify-center">
-          <div className="text-xs text-muted-foreground">Matching Clusters</div>
+          <div className="text-xs text-muted-foreground">
+            {t("common.matching_clusters")}
+          </div>
           <div className="text-lg font-bold">{event.matchingClusters}</div>
         </div>
       </div>

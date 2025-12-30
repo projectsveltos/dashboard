@@ -19,8 +19,11 @@ interface SearchInputProps {
   onSearch?: (values: Record<string, string>) => void;
 }
 
+import { useTranslation } from "react-i18next";
+
 export const SearchQueryParamInput: FC<SearchInputProps> = memo(
   ({ searchConfig, onSearch }) => {
+    const { t } = useTranslation();
     const [searchParams, setSearchParams] = useSearchParams();
 
     // Memoize initial values to avoid recalculating on every render
@@ -86,7 +89,7 @@ export const SearchQueryParamInput: FC<SearchInputProps> = memo(
         {searchConfig.map(({ key, placeholder }) => (
           <InputGroup key={key} className="max-w-sm my-2">
             <InputGroupInput
-              placeholder={placeholder}
+              placeholder={t(placeholder)}
               value={values[key]}
               onChange={(e) => handleChange(key, e.target.value)}
             />

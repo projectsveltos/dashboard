@@ -14,6 +14,8 @@ export interface SearchField {
   isTag?: boolean;
 }
 
+import { useTranslation } from "react-i18next";
+
 export const SearchFieldTags = ({
   updateQueryParams,
   searchFieldsData,
@@ -21,6 +23,7 @@ export const SearchFieldTags = ({
   updateQueryParams: (searchTerms: Record<string, string | string[]>) => void;
   searchFieldsData: SearchField[];
 }) => {
+  const { t } = useTranslation();
   const [searchTerms, setSearchTerms] = useState<
     Record<string, string | string[]>
   >(() => {
@@ -81,11 +84,11 @@ export const SearchFieldTags = ({
               className={"flex items-center text-sm"}
               htmlFor={field.label.toLowerCase()}
             >
-              <field.icon className={"mx-1 w-4 h-4"} /> {field.label}
+              <field.icon className={"mx-1 w-4 h-4"} /> {t(field.label)}
             </Label>
             {field.isTag ? (
               <TagInput
-                placeholder={field.placeholder}
+                placeholder={t(field.placeholder)}
                 className="h-8 w-[150px] lg:w-[250px]"
                 tags={
                   Array.isArray(searchTerms[field.termKey])
@@ -96,7 +99,7 @@ export const SearchFieldTags = ({
               />
             ) : (
               <ClearableInput
-                placeholder={field.placeholder}
+                placeholder={t(field.placeholder)}
                 className="h-8 w-[150px] lg:w-[250px]"
                 value={searchTerms[field.termKey]}
                 onChange={(event) =>

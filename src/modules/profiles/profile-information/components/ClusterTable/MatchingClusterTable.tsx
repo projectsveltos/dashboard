@@ -20,12 +20,14 @@ import {
 import { ScrollArea } from "@/lib/components/ui/layout/scroll-area";
 import { MatchingCluster } from "@/types/profile.types";
 import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
+import { useTranslation } from "react-i18next";
 
 export default function MatchingClusterTable({
   data,
 }: {
   data: MatchingCluster[];
 }) {
+  const { t } = useTranslation();
   const [openAccordions, setOpenAccordions] = useState<number[]>([]);
 
   const toggleAccordion = (accordionId: number) => {
@@ -40,11 +42,10 @@ export default function MatchingClusterTable({
     <Card className="overflow-hidden my-2">
       <CardHeader>
         <CardTitle className={"flex items-center"}>
-          <CircleEqual className={"w-4 h-4 mx-0.5"} /> Matching Clusters
+          <CircleEqual className={"w-4 h-4 mx-0.5"} />{" "}
+          {t("common.matching_clusters")}
         </CardTitle>
-        <CardDescription>
-          List of clusters that are matching the selected profile
-        </CardDescription>
+        <CardDescription>{t("common.list_matching_clusters")}</CardDescription>
       </CardHeader>
       <CardContent>
         <ScrollArea
@@ -59,7 +60,7 @@ export default function MatchingClusterTable({
               <Archive className="h-12 w-12 text-muted-foreground" />
               <div className="flex justify-center items-center h-full">
                 <p className="text-muted-foreground mt-2">
-                  No matching clusters found.
+                  {t("common.no_matching_clusters")}
                 </p>
               </div>
             </span>
@@ -68,9 +69,9 @@ export default function MatchingClusterTable({
               <TableHeader>
                 <TableRow>
                   <TableHead className="w-[50px]"></TableHead>
-                  <TableHead>Cluster Name</TableHead>
-                  <TableHead>Namespace</TableHead>
-                  <TableHead>Status</TableHead>
+                  <TableHead>{t("common.cluster_name")}</TableHead>
+                  <TableHead>{t("common.namespace")}</TableHead>
+                  <TableHead>{t("common.status")}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -97,9 +98,14 @@ export default function MatchingClusterTable({
                         {cluster.clusterFeatureSummaries.some(
                           (feature) => feature.failureMessage,
                         ) ? (
-                          <Badge variant={"destructive"}>Failed</Badge>
+                          <Badge variant={"destructive"}>
+                            {t("common.failed")}
+                          </Badge>
                         ) : (
-                          <Badge variant={"success"}> Provisioned</Badge>
+                          <Badge variant={"success"}>
+                            {" "}
+                            {t("common.provisioned")}
+                          </Badge>
                         )}
                       </TableCell>
                     </TableRow>
@@ -122,9 +128,13 @@ export default function MatchingClusterTable({
                             <Table>
                               <TableHeader>
                                 <TableRow>
-                                  <TableHead>Feature ID</TableHead>
-                                  <TableHead>Status</TableHead>
-                                  <TableHead>Failure Message</TableHead>
+                                  <TableHead>
+                                    {t("common.feature_id")}
+                                  </TableHead>
+                                  <TableHead>{t("common.status")}</TableHead>
+                                  <TableHead>
+                                    {t("common.failure_message")}
+                                  </TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>

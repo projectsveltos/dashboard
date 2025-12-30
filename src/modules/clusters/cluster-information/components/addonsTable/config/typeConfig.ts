@@ -12,9 +12,9 @@ export const typeConfig = {
     searchConfig: [
       {
         key: "release_namespace",
-        placeholder: "Search by Release Namespace",
+        placeholder: "common.search_release_namespace",
       },
-      { key: "release_name", placeholder: "Search by Release name" },
+      { key: "release_name", placeholder: "common.search_release_name" },
     ],
   },
   [AddonTypes.RESOURCE]: {
@@ -23,10 +23,10 @@ export const typeConfig = {
     searchConfig: [
       {
         key: "resource_namespace",
-        placeholder: "Search by Resource Namespace",
+        placeholder: "common.search_resource_namespace",
       },
-      { key: "resource_name", placeholder: "Search by Resource Name" },
-      { key: "resource_kind", placeholder: "Search by Resource Kind" },
+      { key: "resource_name", placeholder: "common.search_resource_name" },
+      { key: "resource_kind", placeholder: "common.search_resource_kind" },
     ],
   },
   [AddonTypes.PROFILE]: {
@@ -35,11 +35,11 @@ export const typeConfig = {
     searchConfig: [
       {
         key: "profile_name",
-        placeholder: "Search by Profile Name",
+        placeholder: "common.search_profile_name",
       },
       {
         key: "profile_kind",
-        placeholder: "Search by Profile Kind",
+        placeholder: "common.search_profile_kind",
       },
     ],
   },

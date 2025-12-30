@@ -9,24 +9,24 @@ interface Column {
 }
 export const profileColumns: Column[] = [
   {
-    label: "Failed only",
+    label: "common.failed_only",
     className: "",
     isCheckbox: true,
     keys: AddonTableTypes.ICON,
   },
-  { label: "Feature", className: "", keys: "featureID" },
+  { label: "common.feature", className: "", keys: "featureID" },
   {
-    label: "Profile",
+    label: "common.profile",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.PROFILE,
   },
   {
-    label: "Status",
+    label: "common.status",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.STATUS,
   },
   {
-    label: "Error",
+    label: "common.error",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.FAILURE_MESSAGE,
   },
@@ -40,23 +40,23 @@ export const profileColumns: Column[] = [
 export const helmColumns: Column[] = [
   { label: "", className: "", keys: AddonTableTypes.ICON },
   {
-    label: "Namespace",
+    label: "common.namespace",
     className: "py-4 break-words whitespace-normal",
     keys: AddonTableTypes.NAMESPACE,
   },
-  { label: "Name", className: "", keys: AddonTableTypes.NAME },
+  { label: "common.name", className: "", keys: AddonTableTypes.NAME },
   {
-    label: "Version",
+    label: "common.version",
     className: "hidden sm:table-cell",
     keys: "chartVersion/version",
   },
   {
-    label: "Last Applied",
+    label: "common.last_applied",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.TIME,
   },
   {
-    label: "Profile",
+    label: "common.profile",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.PROFILE,
   },
@@ -69,25 +69,25 @@ export const helmColumns: Column[] = [
 
 export const resourceColumns: Column[] = [
   { label: "", className: "", keys: AddonTableTypes.ICON },
-  { label: "Group", className: "", keys: AddonTableTypes.GROUP },
+  { label: "common.group", className: "", keys: AddonTableTypes.GROUP },
   {
-    label: "Kind",
+    label: "common.kind",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.KIND,
   },
   {
-    label: "Namespace",
+    label: "common.namespace",
     className: "py-4 break-words whitespace-normal",
     keys: AddonTableTypes.NAMESPACE,
   },
-  { label: "Name", className: "", keys: "name" },
+  { label: "common.name", className: "", keys: "name" },
   {
-    label: "Last Applied",
+    label: "common.last_applied",
     className: "",
     keys: AddonTableTypes.TIME,
   },
   {
-    label: "Profile",
+    label: "common.profile",
     className: "",
     keys: AddonTableTypes.PROFILE,
   },

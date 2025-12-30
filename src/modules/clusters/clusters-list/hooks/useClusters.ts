@@ -4,8 +4,8 @@ import client from "@/api-client/apiClient";
 import { ClusterListResponse, ClusterType } from "@/types/cluster.types";
 import { appConfig } from "@/config/app";
 
-import { pathFromType } from "@/api-client/util/GetPathFromType";
-import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
+import { pathFromType } from "@/utils/GetPathFromType";
+import { getItemsToSkip } from "@/utils/getItemsToSkip";
 import { SearchParams } from "@/types/params.types";
 const fetchClusters = async (
   type: ClusterType,

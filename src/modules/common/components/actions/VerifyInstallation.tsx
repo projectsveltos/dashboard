@@ -3,8 +3,10 @@ import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Sparkles } from "lucide-react";
 import * as React from "react";
+import { useTranslation } from "react-i18next";
 
 export function VerifyInstallation() {
+  const { t } = useTranslation();
   const { installationQuery } = useMcp("", "", "", "", "");
 
   function triggerQuery() {
@@ -22,11 +24,13 @@ export function VerifyInstallation() {
         )
       }
       isLoading={installationQuery?.isFetching}
-      mcpResponse={installationQuery?.data?.details || ""}
+      mcpResponse={
+        installationQuery?.data?.details || t("common.no_verification_data")
+      }
     >
       {installationQuery?.data?.is_correctly_installed
-        ? "Correctly Installed"
-        : "Verify Installation"}
+        ? t("common.correctly_installed")
+        : t("common.verify_installation")}
     </McpButton>
   );
 }

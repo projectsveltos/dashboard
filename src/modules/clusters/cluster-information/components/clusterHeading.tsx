@@ -6,6 +6,7 @@ import { Icons } from "@/lib/components/icons";
 import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 import { DebugClusterResponse } from "@/hooks/useMcp";
+import { useTranslation } from "react-i18next";
 
 type ClusterHeadingProps = {
   name: string;
@@ -30,6 +31,7 @@ export const ClusterHeading = ({
   failureMsg,
   mcpDebugQuery,
 }: ClusterHeadingProps) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   function triggerMcpDebugQuery() {
     mcpDebugQuery?.refetch();
@@ -89,10 +91,10 @@ export const ClusterHeading = ({
             mcpResponse={
               mcpDebugQuery?.data?.formattedData?.length
                 ? mcpDebugQuery.data.formattedData
-                : "Relax, nothing to debug here!"
+                : t("common.no_debug_data_relax")
             }
           >
-            Debug
+            {t("common.debug")}
           </McpButton>
           <RefreshButton />
         </div>

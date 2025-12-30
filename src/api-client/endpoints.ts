@@ -9,6 +9,7 @@ export const API_ENDPOINTS = {
   MCP_INSTALLATION: "/installation",
   MCP_CLUSTER_DEBUG: "/debugCluster",
   MCP_PROFILE_CLUSTER_DEBUG: "/debugProfileCluster",
+  MCP_EVENT_PIPELINE_DEBUG: "/analyzeEventPipeline",
   EVENTS: "/events",
   EVENT: "/event",
 };

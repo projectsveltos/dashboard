@@ -1,11 +1,13 @@
 import * as React from "react";
 import { Button, ButtonProps } from "@/lib/components/ui/inputs/button";
 import { useIsFetching, useQueryClient } from "react-query";
+import { useTranslation } from "react-i18next";
 
 import { RefreshCcw } from "lucide-react";
 
 const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, ...props }, ref) => {
+    const { t } = useTranslation();
     const queryClient = useQueryClient();
     const isFetching = useIsFetching();
     const handleRefresh = () => {
@@ -26,7 +28,7 @@ const RefreshButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
           ) : (
             <RefreshCcw className="w-4 h-4 mr-2" />
           )}
-          Refresh
+          {t("common.refresh")}
         </>
       </Button>
     );

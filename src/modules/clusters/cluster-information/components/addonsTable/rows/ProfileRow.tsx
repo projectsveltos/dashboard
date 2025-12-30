@@ -21,8 +21,9 @@ import { ExternalLink, MoreHorizontal } from "lucide-react";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 import { useParams } from "react-router-dom";
 import { useMcp } from "@/hooks/useMcp";
-import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
+import { getClusterInfoType } from "@/utils/GetClusterInfoType";
 import { ClusterType } from "@/types/cluster.types";
+import { useTranslation } from "react-i18next";
 
 interface ProfileRowProps {
   row: AddonData;
@@ -31,6 +32,7 @@ interface ProfileRowProps {
 }
 
 export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
+  const { t } = useTranslation();
   const { tab: type, name, namespace } = useParams();
   const { debugProfileClusterQuery } = useMcp(
     namespace ?? "",
@@ -68,11 +70,11 @@ export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
                     mcpResponse={
                       debugProfileClusterQuery?.data
                         ? debugProfileClusterQuery.data
-                        : "No debug data available."
+                        : t("common.no_debug_data")
                     }
                     variant={"highlight"}
                   >
-                    Debug
+                    {t("common.debug")}
                   </McpButton>
                 ) : null}
               </div>

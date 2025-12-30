@@ -5,7 +5,7 @@ import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { extractFiltersFromSearchParams } from "@/lib/utils";
 import { appConfig } from "@/config/app";
-import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
+import { getItemsToSkip } from "@/utils/getItemsToSkip";
 import { EventsListResponse } from "@/types/event.types";
 
 const fetchEvents = async (
@@ -23,9 +23,9 @@ const fetchEvents = async (
 };
 
 export const DEFAULT_EVENTS_SEARCH_CONFIG = [
-  { key: "name", placeholder: "Search by Event Name" },
-  { key: "cluster_namespace", placeholder: "Cluster Namespace" },
-  { key: "cluster_name", placeholder: "Cluster Name" },
+  { key: "name", placeholder: "common.search_event_name" },
+  { key: "cluster_namespace", placeholder: "common.search_cluster_namespace" },
+  { key: "cluster_name", placeholder: "common.search_cluster_name" },
 ];
 
 const useEvents = (

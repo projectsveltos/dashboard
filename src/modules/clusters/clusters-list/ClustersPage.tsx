@@ -2,6 +2,7 @@ import { PageHeading } from "@/lib/components/ui/layout/PageHeading";
 import { appConfig } from "@/config/app";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   Tabs,
@@ -55,13 +56,12 @@ export default function ClustersPage() {
     setSearchParams(searchTerms);
   };
 
+  const { t } = useTranslation();
   return (
     <>
       <PageHeading
-        title={"Clusters"}
-        description={
-          "You can view all clusters, retry failed deployments, and find troubleshooting guides for any cluster."
-        }
+        title={t("common.clusters")}
+        description={t("common.description_clusters")}
       />
       <Tabs defaultValue={currentTab} className="w-[400px]">
         <TabsList>

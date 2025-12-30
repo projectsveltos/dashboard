@@ -15,4 +15,3 @@ export const getClusterInfoType = (type?: ClusterType): clusterInfoTypes => {
   }
   throw new Error("Invalid cluster type");
 };
-

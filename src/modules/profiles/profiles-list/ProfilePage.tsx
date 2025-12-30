@@ -1,14 +1,15 @@
 import { PageHeading } from "@/lib/components/ui/layout/PageHeading";
 import { ProfileList } from "@/modules/profiles/profiles-list/components/list/ProfileList";
 
+import { useTranslation } from "react-i18next";
+
 export const ProfilePage = () => {
+  const { t } = useTranslation();
   return (
     <>
       <PageHeading
-        title={"Profiles"}
-        description={
-          "You can view all tiers , profiles and visualize dependents and dependencies "
-        }
+        title={t("common.profiles")}
+        description={t("common.description_profiles")}
       />
       <ProfileList />
     </>

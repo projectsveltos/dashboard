@@ -6,13 +6,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/lib/components/ui/data-display/card";
-import { EventSource } from "@/types/event.types";
+import { EventSource as EventSourceType } from "@/types/event.types";
+import { useTranslation } from "react-i18next";
 
 export function ResourceSelectorView({
   eventSource,
 }: {
-  eventSource?: EventSource;
+  eventSource?: EventSourceType;
 }) {
+  const { t } = useTranslation();
   const resourceSelectors = eventSource?.spec?.resourceSelectors || [];
   const isCollectResources = eventSource?.spec?.collectResources ?? false;
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,7 +33,7 @@ export function ResourceSelectorView({
     return (
       <Card className="bg-card/50 border-border/40">
         <CardContent className="p-4 text-sm text-muted-foreground">
-          No resource selectors defined.
+          {t("common.no_resource_selectors")}
         </CardContent>
       </Card>
     );
@@ -46,7 +48,7 @@ export function ResourceSelectorView({
           <CardHeader className="py-3 px-4 border-b border-border/40">
             <CardTitle className="text-xs font-mono uppercase tracking-widest flex items-center gap-2 text-muted-foreground">
               <Box className="h-3 w-3" />
-              Resource Selector{" "}
+              {t("common.resource_selector")}{" "}
               {resourceSelectors.length > 1 &&
                 `(${currentIndex + 1}/${resourceSelectors.length})`}
             </CardTitle>
@@ -55,7 +57,7 @@ export function ResourceSelectorView({
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
                 <p className="text-[10px] text-muted-foreground uppercase font-semibold">
-                  Kind
+                  {t("common.kind")}
                 </p>
                 <p className="text-sm font-mono text-primary">
                   {sel.kind || "N/A"}
@@ -63,13 +65,13 @@ export function ResourceSelectorView({
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] text-muted-foreground uppercase font-semibold">
-                  Group
+                  {t("common.group")}
                 </p>
                 <p className="text-sm font-mono">{sel.group || "N/A"}</p>
               </div>
               <div className="space-y-1">
                 <p className="text-[10px] text-muted-foreground uppercase font-semibold">
-                  API Version
+                  {t("common.api_version")}
                 </p>
                 <p className="text-sm font-mono">{sel.version || "N/A"}</p>
               </div>
@@ -81,8 +83,8 @@ export function ResourceSelectorView({
               />
               <span>
                 {isCollectResources
-                  ? "Resource collection is enabled"
-                  : "Resource collection is disabled"}
+                  ? t("common.resource_collection_enabled")
+                  : t("common.resource_collection_disabled")}
               </span>
             </div>
           </CardContent>

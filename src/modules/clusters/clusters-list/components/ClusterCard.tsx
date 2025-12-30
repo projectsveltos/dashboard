@@ -24,6 +24,8 @@ interface ClusterCardProps {
   failureMsg?: string | null;
 }
 
+import { useTranslation } from "react-i18next";
+
 export const ClusterCard = ({
   name,
   version,
@@ -33,6 +35,7 @@ export const ClusterCard = ({
   onClick,
   failureMsg,
 }: ClusterCardProps) => {
+  const { t } = useTranslation();
   const labelEntries = Object.entries(labels || {});
   const displayEntries = labelEntries.slice(0, appConfig.maxBadges);
   const remainingCount = labelEntries.length - appConfig.maxBadges;
@@ -55,18 +58,21 @@ export const ClusterCard = ({
               {name}
             </p>
             <p className="text-sm text-muted-foreground  py-1">
-              Version:
+              {t("common.version")}:
               <span className={"text-muted-foreground mx-1"}>
                 <Tooltip>
                   <TooltipTrigger> {version}</TooltipTrigger>
                   <TooltipContent>
-                    <p>Kubernetes version : {version}</p>
+                    <p>
+                      {t("common.kubernetes_version")} : {version}
+                    </p>
                   </TooltipContent>
                 </Tooltip>
               </span>
             </p>
             <p className="text-sm text-muted-foreground  py-1">
-              Namespace: <span className="text-main-500 ">{namespace}</span>
+              {t("common.namespace")}:{" "}
+              <span className="text-main-500 ">{namespace}</span>
             </p>
             {isPaused && (
               <div className="flex items-center space-x-2 py-1">
@@ -77,7 +83,7 @@ export const ClusterCard = ({
                   className="bg-yellow-500 dark:bg-yellow-200 dark:text-slate-950 text-white flex items-center space-x-1"
                   variant="label"
                 >
-                  <PauseIcon className={"h-4 w-4"} /> Paused
+                  <PauseIcon className={"h-4 w-4"} /> {t("common.paused")}
                 </Badge>
               </div>
             )}
@@ -106,7 +112,7 @@ export const ClusterCard = ({
             <TooltipContent className={"w-min h-64 px-4 overflow-auto"}>
               <div className={"inline-flex items-baseline "}>
                 <Tags className={"w-3 h-3 mx-1 mt-1"} />
-                <p>Labels:</p>
+                <p>{t("common.labels")}:</p>
               </div>
               <br />
 

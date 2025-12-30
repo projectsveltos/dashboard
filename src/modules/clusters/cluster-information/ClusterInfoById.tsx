@@ -9,7 +9,7 @@ import { AddonTypes } from "@/types/addon.types";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { useClusterTableInfo } from "@/modules/clusters/cluster-information/hooks/useClusterTableInfo";
 import { useMcp } from "@/hooks/useMcp";
-import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
+import { getClusterInfoType } from "@/utils/GetClusterInfoType";
 
 export function ClusterInfoById() {
   const { tab: type, name, namespace } = useParams();

@@ -27,10 +27,12 @@ import {
   AccordionTrigger,
 } from "@/lib/components/ui/navigation/accordion";
 import { ModeToggle } from "@/lib/components/ui/inputs/mode-toggle";
+import { LanguageSwitcher } from "@/lib/components/ui/inputs/language-switcher";
 import { Badge } from "@/lib/components/ui/data-display/badge";
 import { LogOutIcon } from "lucide-react";
 import useAuth from "@/modules/authentication/hooks/useAuth";
 import { VerifyInstallation } from "@/modules/common/components/actions/VerifyInstallation";
+import { useTranslation } from "react-i18next";
 
 export function Header() {
   const [open, setOpen] = useState<boolean>(false);
@@ -39,6 +41,7 @@ export function Header() {
   const isPublicPreview = (version?.split(".")[0] ?? "") === "0" || true;
 
   const { logout } = useAuth();
+  const { t } = useTranslation();
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-50 w-full border-b bg-background/90 backdrop-blur">
       <div className="container px-4 md:px-8 flex h-14 items-center">
@@ -71,7 +74,7 @@ export function Header() {
                               "bg-muted": subitem.to === location.pathname,
                             })}
                           >
-                            {subitem.title}
+                            {t(`common.${subitem.title.toLowerCase()}`)}
                           </DropdownMenuItem>
                         </NavLink>
                       ) : subitem.label ? (
@@ -103,7 +106,9 @@ export function Header() {
                   }
                 >
                   {menu.icon && menu.icon}
-                  <span className="ml-1">{menu.title}</span>
+                  <span className="ml-1">
+                    {t(`common.${menu.title.toLowerCase()}`)}
+                  </span>
                 </NavLink>
               ),
             )}
@@ -117,7 +122,7 @@ export function Header() {
               className="mr-4 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
             >
               <HamburgerMenuIcon className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
+              <span className="sr-only">{t("common.toggle_menu")}</span>
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="pr-0 sm:max-w-xs">
@@ -164,7 +169,9 @@ export function Header() {
                               : "text-foreground/60",
                           )}
                         >
-                          <div className="flex">{menu.title}</div>
+                          <div className="flex">
+                            {t(`common.${menu.title.toLowerCase()}`)}
+                          </div>
                         </AccordionTrigger>
                         <AccordionContent className="pb-1 pl-4">
                           <div className="mt-1">
@@ -183,7 +190,7 @@ export function Header() {
                                     )
                                   }
                                 >
-                                  {submenu.title}
+                                  {t(`common.${submenu.title.toLowerCase()}`)}
                                 </NavLink>
                               ) : submenu.label !== "" ? null : (
                                 <div className="px-3">
@@ -206,7 +213,7 @@ export function Header() {
                           )
                         }
                       >
-                        {menu.title}
+                        {t(`common.${menu.title.toLowerCase()}`)}
                       </NavLink>
                     ),
                   )}
@@ -223,7 +230,8 @@ export function Header() {
           <div className="w-full flex-1 md:w-auto md:flex-none">
             {/* <CommandMenu /> */}
           </div>
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center space-x-2">
+            <LanguageSwitcher />
             <ModeToggle />
           </div>
 
@@ -251,7 +259,7 @@ export function Header() {
 
             <Button variant={"outline"} onClick={logout} size={"sm"}>
               <LogOutIcon className={"h-4 w-4 mx-1"} />
-              Logout
+              {t("common.logout")}
             </Button>
           </nav>
         </div>

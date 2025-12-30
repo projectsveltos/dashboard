@@ -4,20 +4,20 @@ import { SearchField } from "@/modules/clusters/clusters-list/components/searchF
 export const clusterSearchfields: SearchField[] = [
   {
     icon: ALargeSmall,
-    label: "Name",
-    placeholder: "Filter clusters by name...",
+    label: "common.name",
+    placeholder: "common.filter_name",
     termKey: "name",
   },
   {
     icon: Blocks,
-    label: "Namespace",
-    placeholder: "Filter clusters by namespace...",
+    label: "common.namespace",
+    placeholder: "common.filter_namespace",
     termKey: "namespace",
   },
   {
     icon: Tags,
-    label: "Labels",
-    placeholder: "Filter clusters by labels...",
+    label: "common.labels",
+    placeholder: "common.filter_labels",
     termKey: "labels",
     isTag: true,
   },

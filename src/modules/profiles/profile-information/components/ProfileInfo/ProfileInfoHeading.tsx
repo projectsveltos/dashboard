@@ -3,6 +3,7 @@ import { ChevronLeft } from "lucide-react";
 import { Badge } from "@/lib/components/ui/data-display/badge";
 import { useNavigate } from "react-router-dom";
 import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
+import { useTranslation } from "react-i18next";
 
 type ProfileInfoHeading = {
   name: string;
@@ -17,6 +18,7 @@ export const ProfileInfoHeading = ({
   tier,
   namespace,
 }: ProfileInfoHeading) => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   return (
     <>
@@ -28,13 +30,13 @@ export const ProfileInfoHeading = ({
           onClick={() => navigate(-1)}
         >
           <ChevronLeft className="h-4 w-4" />
-          <span className="sr-only">Back</span>
+          <span className="sr-only">{t("common.back")}</span>
         </Button>
         <Badge
           variant="default"
           className="ml-auto sm:ml-0  flex items-center "
         >
-          Tier : {tier}
+          {t("common.tier")} : {tier}
         </Badge>
         <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
           {name || namespace}
@@ -44,7 +46,7 @@ export const ProfileInfoHeading = ({
             variant="outline"
             className="ml-auto sm:ml-0  flex items-center "
           >
-            kind : {kind}
+            {t("common.kind")} : {kind}
           </Badge>
         )}
         {namespace && (

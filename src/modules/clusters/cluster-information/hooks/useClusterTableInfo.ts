@@ -5,9 +5,9 @@ import { AddonTypes } from "@/types/addon.types";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ClusterType } from "@/types/cluster.types";
-import { pathFromType } from "@/api-client/util/GetPathFromType";
-import { getClusterInfoType } from "@/api-client/util/GetClusterInfoType";
-import { getItemsToSkip } from "@/api-client/util/getItemsToSkip";
+import { pathFromType } from "@/utils/GetPathFromType";
+import { getClusterInfoType } from "@/utils/GetClusterInfoType";
+import { getItemsToSkip } from "@/utils/getItemsToSkip";
 import { appConfig } from "@/config/app";
 import { getSearchParams } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
 

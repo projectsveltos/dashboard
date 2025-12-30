@@ -24,6 +24,7 @@ import { appConfig } from "@/config/app";
 import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryParamInput";
 import { typeConfig } from "@/modules/clusters/cluster-information/components/addonsTable/config/typeConfig";
 import { hasSearchConfig } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
+import { useTranslation } from "react-i18next";
 
 interface ResourceTableProps {
   addonsData: Record<AddonTypes, AddonTableData>;
@@ -33,6 +34,7 @@ interface ResourceTableProps {
 }
 
 export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
+  const { t } = useTranslation();
   /* By default, we show helm charts , this will be hardcoded for now */
   const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
 
@@ -51,22 +53,22 @@ export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
           <Card>
             <CardHeader>
               <CardTitle className={"flex items-center"}>
-                <Blocks className={"w-4 h-4"} /> Addons
+                <Blocks className={"w-4 h-4"} /> {t("common.addons")}
               </CardTitle>
               <CardDescription>
-                Manage the cluster addons and resources
+                {t("common.manage_addons")}
                 <div className="flex items-center">
                   <div className="ml-auto flex items-center gap-2">
                     <Button size="sm" variant="outline" className="h-7 gap-1">
                       <File className="h-3.5 w-3.5" />
                       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                        Export
+                        {t("common.export")}
                       </span>
                     </Button>
                     <Button disabled size="sm" className="h-7 gap-1">
                       <PlusCircle className="h-3.5 w-3.5" />
                       <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
-                        Add Addon
+                        {t("common.add_addon")}
                       </span>
                     </Button>
                   </div>

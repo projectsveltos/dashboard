@@ -7,8 +7,15 @@ import { useEffect } from "react";
 import useAuth from "@/modules/authentication/hooks/useAuth";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "@/routes";
+import { useTranslation } from "react-i18next";
 
 export default function App() {
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
   const queryClient = new QueryClient();
   const { authenticate } = useAuth();
   queryClient.setDefaultOptions({

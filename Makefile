@@ -63,6 +63,10 @@ load-image: docker-build $(KIND)
 .PHONY: manifests
 manifests: ## Generate manifests
 	MANIFEST_IMG=$(CONTROLLER_IMG) MANIFEST_TAG=$(TAG) $(MAKE) set-manifest-image
+	MANIFEST_TAG=$(TAG) $(MAKE) set-version
 
 set-manifest-image:
 	sed -i'' -e 's@image: .*@image: '"docker.io/${MANIFEST_IMG}:$(MANIFEST_TAG)"'@' ./manifest/manifest.yaml >> ./manifest/manifest.yaml-e
+
+set-version:
+	sed -i'' -e 's@value: .*@value: '$(MANIFEST_TAG)'@' ./manifest/manifest.yaml >> ./manifest/manifest.yaml-e

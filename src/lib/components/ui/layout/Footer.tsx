@@ -10,6 +10,8 @@ export function Footer() {
             {" "}
             {appConfig.name} Community
           </a>
+          {" | "}
+          <span>Version: {appConfig.version}</span>
         </p>
       </div>
     </footer>

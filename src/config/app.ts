@@ -17,6 +17,7 @@ interface AppConfig {
   queryParams: QueryParams;
   debounceDelay: number;
   defaultTableSize: number;
+  version: string;
 }
 
 export const appConfig: AppConfig = {
@@ -34,4 +35,5 @@ export const appConfig: AppConfig = {
     failure: "failure",
   },
   debounceDelay: 600,
+  version: import.meta.env.VITE_APP_VERSION || "version number",
 };

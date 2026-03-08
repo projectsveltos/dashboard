@@ -15,7 +15,7 @@ IMAGE_NAME ?= dashboard
 ARCH ?= $(shell go env GOARCH)
 OS ?= $(shell uname -s | tr A-Z a-z)
 export CONTROLLER_IMG ?= $(REGISTRY)/$(IMAGE_NAME)
-TAG ?= v1.5.0
+TAG ?= v1.6.0
 
 # Directories.
 TOOLS_DIR := hack/tools
@@ -50,11 +50,11 @@ help: ## Display this help.
 
 .PHONY: docker-build
 docker-build: ## Build docker image with the manager.
-	docker build --load --build-arg VITE_APP_VERSION=0.0.1 --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --build-arg  BUILDOS=linux --build-arg TARGETARCH=amd64 -t $(CONTROLLER_IMG):$(TAG) .
+	docker build --load --build-arg VITE_APP_VERSION=${TAG} --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --build-arg  BUILDOS=linux --build-arg TARGETARCH=amd64 -t $(CONTROLLER_IMG):$(TAG) .
 
 .PHONY: docker-buildx
 docker-buildx: ## docker build for multiple arch and push to docker hub.
-	docker buildx build --build-arg VITE_APP_VERSION=0.0.1 --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --push --platform linux/amd64,linux/arm64 -t $(CONTROLLER_IMG):$(TAG) .
+	docker buildx build --build-arg VITE_APP_VERSION=${TAG} --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --push --platform linux/amd64,linux/arm64 -t $(CONTROLLER_IMG):$(TAG) .
 
 .PHONY: load-image
 load-image: docker-build $(KIND)

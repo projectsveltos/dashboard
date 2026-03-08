@@ -31,4 +31,4 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t sveltos-dashboard-ui:latest .
+          docker build --build-arg VITE_APP_VERSION=v0.0.1 --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --build-arg  BUILDOS=linux --build-arg TARGETARCH=amd64 -t sveltos-dashboard-ui:latest .

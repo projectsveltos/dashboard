@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 
@@ -25,7 +25,9 @@ export const useEventClusterDebugMcp = (
   params: DebugMcpParams,
   enabled: boolean = false,
 ): UseQueryResult<string[], Error> => {
-  return useQuery(["debugMcp", params], () => fetchDebugMcp(params), {
+  return useQuery({
+    queryKey: ["debugMcp", params],
+    queryFn: () => fetchDebugMcp(params),
     enabled,
     retry: false,
   });

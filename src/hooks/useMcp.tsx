@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { FailedProfile } from "@/types/profile.types";
@@ -82,8 +82,8 @@ function useMcp(
   profileName: string,
   profileKind: string,
 ) {
-  const debugProfileClusterQuery = useQuery(
-    [
+  const debugProfileClusterQuery = useQuery({
+    queryKey: [
       "debugProfileCluster",
       namespace,
       clusterName,
@@ -91,7 +91,7 @@ function useMcp(
       profileName,
       profileKind,
     ],
-    () =>
+    queryFn: () =>
       getDebugProfileCluster(
         namespace,
         clusterName,
@@ -99,32 +99,25 @@ function useMcp(
         profileName,
         profileKind,
       ),
-    {
-      enabled: false,
-      placeholderData: "",
-    },
-  );
+    enabled: false,
+    placeholderData: "",
+  });
 
-  const debugClusterQuery = useQuery(
-    ["debugCluster", namespace, clusterName, clusterType],
-    () => getDebugCluster(namespace, clusterName, clusterType),
-    {
-      enabled: false,
+  const debugClusterQuery = useQuery({
+    queryKey: ["debugCluster", namespace, clusterName, clusterType],
+    queryFn: () => getDebugCluster(namespace, clusterName, clusterType),
+    enabled: false,
+    gcTime: 0,
+    staleTime: 0,
+  });
 
-      cacheTime: 0,
-      staleTime: 0,
-    },
-  );
-
-  const installationQuery = useQuery(
-    ["installation"],
-    () => getInstallation(),
-    {
-      enabled: false,
-      placeholderData: { details: [], is_correctly_installed: false },
-      cacheTime: 0,
-    },
-  );
+  const installationQuery = useQuery({
+    queryKey: ["installation"],
+    queryFn: () => getInstallation(),
+    enabled: false,
+    placeholderData: { details: [], is_correctly_installed: false },
+    gcTime: 0,
+  });
 
   return {
     debugProfileClusterQuery,

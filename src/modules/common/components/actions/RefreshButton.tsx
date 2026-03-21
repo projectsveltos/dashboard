@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Button, ButtonProps } from "@/lib/components/ui/inputs/button";
-import { useIsFetching, useQueryClient } from "react-query";
+import { useIsFetching, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 
 import { RefreshCcw } from "lucide-react";

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
 import client from "@/api-client/apiClient";
@@ -41,8 +41,9 @@ const useEvents = (
     ? params
     : extractFiltersFromSearchParams(searchParams, searchConfig);
 
-  return useQuery(["events", page, filters], () => fetchEvents(page, filters), {
-    keepPreviousData: false,
+  return useQuery({
+    queryKey: ["events", page, filters],
+    queryFn: () => fetchEvents(page, filters),
   });
 };
 

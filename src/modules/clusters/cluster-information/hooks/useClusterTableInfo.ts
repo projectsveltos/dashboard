@@ -1,4 +1,4 @@
-import { useQueries } from "react-query";
+import { useQueries } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
 import { AddonTypes } from "@/types/addon.types";
@@ -116,76 +116,78 @@ function useClusterTableInfo(
     }
   };
 
-  const queries = useQueries([
-    {
-      queryKey: [
-        "resources",
-        namespace,
-        clusterName,
-        clusterType,
-        resourcePage,
-        getSearchParams(AddonTypes.RESOURCE, searchParams),
-      ],
-      queryFn: () =>
-        getResources(
+  const queries = useQueries({
+    queries: [
+      {
+        queryKey: [
+          "resources",
           namespace,
           clusterName,
           clusterType,
           resourcePage,
           getSearchParams(AddonTypes.RESOURCE, searchParams),
-        ),
-      enabled: !!namespace && !!clusterName && !!clusterType,
-      placeholderData: { data: [], isLoading: true, error: null },
-    },
-    {
-      queryKey: [
-        "profile",
-        namespace,
-        failedOnly,
-        clusterName,
-        clusterType,
-        profilePage,
-        getSearchParams(AddonTypes.PROFILE, searchParams),
-      ],
-      queryFn: () =>
-        getClusterProfileStatuses(
+        ],
+        queryFn: () =>
+          getResources(
+            namespace,
+            clusterName,
+            clusterType,
+            resourcePage,
+            getSearchParams(AddonTypes.RESOURCE, searchParams),
+          ),
+        enabled: !!namespace && !!clusterName && !!clusterType,
+        placeholderData: { data: [], isLoading: true, error: null },
+      },
+      {
+        queryKey: [
+          "profile",
           namespace,
+          failedOnly,
           clusterName,
           clusterType,
           profilePage,
-          failedOnly,
           getSearchParams(AddonTypes.PROFILE, searchParams),
-        ),
-      enabled: !!namespace && !!clusterName && !!clusterType,
-      placeholderData: { data: [], isLoading: true, error: null },
-    },
-    {
-      queryKey: [
-        "helmChart",
-        namespace,
-        clusterName,
-        clusterType,
-        helmPage,
-        getSearchParams(AddonTypes.HELM, searchParams),
-      ],
-      queryFn: () =>
-        getHelmCharts(
+        ],
+        queryFn: () =>
+          getClusterProfileStatuses(
+            namespace,
+            clusterName,
+            clusterType,
+            profilePage,
+            failedOnly,
+            getSearchParams(AddonTypes.PROFILE, searchParams),
+          ),
+        enabled: !!namespace && !!clusterName && !!clusterType,
+        placeholderData: { data: [], isLoading: true, error: null },
+      },
+      {
+        queryKey: [
+          "helmChart",
           namespace,
           clusterName,
           clusterType,
           helmPage,
           getSearchParams(AddonTypes.HELM, searchParams),
-        ),
-      enabled: !!namespace && !!clusterName && !!clusterType,
-      placeholderData: { data: [], isLoading: true, error: null },
-    },
-    {
-      queryKey: ["clusterInfo", namespace, clusterName, clusterType],
-      queryFn: () => getClusterInfo(namespace, clusterName, clusterType),
-      enabled: !!namespace && !!clusterName && !!clusterType,
-      placeholderData: { data: {}, isLoading: true, error: null },
-    },
-  ]);
+        ],
+        queryFn: () =>
+          getHelmCharts(
+            namespace,
+            clusterName,
+            clusterType,
+            helmPage,
+            getSearchParams(AddonTypes.HELM, searchParams),
+          ),
+        enabled: !!namespace && !!clusterName && !!clusterType,
+        placeholderData: { data: [], isLoading: true, error: null },
+      },
+      {
+        queryKey: ["clusterInfo", namespace, clusterName, clusterType],
+        queryFn: () => getClusterInfo(namespace, clusterName, clusterType),
+        enabled: !!namespace && !!clusterName && !!clusterType,
+        placeholderData: { data: {}, isLoading: true, error: null },
+      },
+    ],
+  });
 
   return { queries, setPage };
 }

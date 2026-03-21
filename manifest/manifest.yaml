@@ -19,8 +19,8 @@ spec:
           ports:
             - containerPort: 5173
           env:
-          - name: VITE_APP_VERSION
-            value: v1.6.0
+            - name: VITE_APP_VERSION
+              value: v1.6.0
 ---
 apiVersion: v1
 kind: Service

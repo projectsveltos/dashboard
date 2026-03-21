@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
 import client from "@/api-client/apiClient";
@@ -29,8 +29,9 @@ const useProfiles = (
 
   const filters = extractFiltersFromSearchParams(searchParams, searchConfig);
 
-  return useQuery(["profiles", filters], () => fetchProfiles(filters), {
-    keepPreviousData: false,
+  return useQuery({
+    queryKey: ["profiles", filters],
+    queryFn: () => fetchProfiles(filters),
   });
 };
 

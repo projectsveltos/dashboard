@@ -2,7 +2,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import useEvents, {
   DEFAULT_EVENTS_SEARCH_CONFIG,
 } from "@/modules/events/hooks/useEvents";
-import { UseQueryResult } from "react-query";
+import { UseQueryResult } from "@tanstack/react-query";
 
 import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryParamInput";
 import EventCard from "./EventCard";
@@ -31,7 +31,7 @@ export const EventList = () => {
   const events = eventsQuery.data?.eventTriggers ?? [];
   const totalEvents = eventsQuery.data?.totalEvents ?? 0;
   const isLoading = eventsQuery.isLoading;
-  const isPreviousData = eventsQuery.isPreviousData;
+  const isPlaceholderData = eventsQuery.isPlaceholderData;
   const handlePageChange = (page: number) => {
     navigate(`/sveltos/events/${page}${location.search}`);
   };
@@ -57,7 +57,7 @@ export const EventList = () => {
         onSearch={handlePageSearch}
       />
 
-      {(isLoading || isPreviousData) && <LoadingCards />}
+      {(isLoading || isPlaceholderData) && <LoadingCards />}
 
       {(!events || events.length === 0) && !isLoading && (
         <EmptyData name={"event triggers"} isFiltered={false} />

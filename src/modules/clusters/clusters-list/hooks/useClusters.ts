@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 import client from "@/api-client/apiClient";
 import { ClusterListResponse, ClusterType } from "@/types/cluster.types";
@@ -27,13 +27,10 @@ const useClusters = (
   page: number,
   searchParams: SearchParams,
 ): UseQueryResult<ClusterListResponse, Error> => {
-  return useQuery(
-    ["clusters", type, page, searchParams],
-    () => fetchClusters(type, page, searchParams),
-    {
-      keepPreviousData: false,
-    },
-  );
+  return useQuery({
+    queryKey: ["clusters", type, page, searchParams],
+    queryFn: () => fetchClusters(type, page, searchParams),
+  });
 };
 
 export default useClusters;

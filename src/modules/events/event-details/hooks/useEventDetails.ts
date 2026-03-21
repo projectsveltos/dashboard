@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
@@ -19,9 +19,10 @@ const fetchEventDetails = async (
 const useEventDetails = (
   name?: string,
 ): UseQueryResult<EventTriggerDetails, Error> => {
-  return useQuery(["event", name], () => fetchEventDetails(name), {
+  return useQuery({
+    queryKey: ["event", name],
+    queryFn: () => fetchEventDetails(name),
     enabled: !!name,
-
     staleTime: 1000 * 60,
   });
 };

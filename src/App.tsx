@@ -1,9 +1,13 @@
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { TooltipProvider } from "@/lib/components/ui/data-display/tooltip";
 import { toast, Toaster } from "sonner";
-import { QueryClient, QueryClientProvider } from "react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  QueryCache,
+} from "@tanstack/react-query";
 import { isAxiosError } from "axios";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import useAuth from "@/modules/authentication/hooks/useAuth";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "@/routes";
@@ -16,29 +20,36 @@ export default function App() {
     document.documentElement.dir = i18n.language === "ar" ? "rtl" : "ltr";
     document.documentElement.lang = i18n.language;
   }, [i18n.language]);
-  const queryClient = new QueryClient();
-  const { authenticate } = useAuth();
-  queryClient.setDefaultOptions({
-    queries: {
-      retry: 2,
-      staleTime: 30 * 1000,
-      onError: (error: unknown) => {
-        if (error instanceof Error) {
-          if (
-            isAxiosError(error) &&
-            error.response &&
-            error.response.status === 401
-          ) {
-            window.location.href = "/login?error=unauthorized";
-            toast.error("Unauthorized, please login again");
-          }
-          toast.error(`Something went wrong: ${error.message}`);
-        }
-      },
 
-      refetchOnWindowFocus: "always",
-    },
-  });
+  const queryClient = useMemo(
+    () =>
+      new QueryClient({
+        queryCache: new QueryCache({
+          onError: (error: unknown) => {
+            if (error instanceof Error) {
+              if (
+                isAxiosError(error) &&
+                error.response &&
+                error.response.status === 401
+              ) {
+                window.location.href = "/login?error=unauthorized";
+                toast.error("Unauthorized, please login again");
+              }
+              toast.error(`Something went wrong: ${error.message}`);
+            }
+          },
+        }),
+        defaultOptions: {
+          queries: {
+            retry: 2,
+            staleTime: 30 * 1000,
+            refetchOnWindowFocus: "always",
+          },
+        },
+      }),
+    [],
+  );
+  const { authenticate } = useAuth();
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

@@ -1,4 +1,4 @@
-import { useQuery, UseQueryResult } from "react-query";
+import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ProfileInfo } from "@/types/profile.types";
@@ -28,13 +28,11 @@ const useProfileInfo = (
     () => ["profile-info", profile_namespace, profile_name, profile_kind],
     [profile_namespace, profile_name, profile_kind],
   );
-  return useQuery(
+  return useQuery({
     queryKey,
-    () => fetchProfileInfo(profile_namespace, profile_name, profile_kind),
-    {
-      keepPreviousData: false,
-    },
-  );
+    queryFn: () =>
+      fetchProfileInfo(profile_namespace, profile_name, profile_kind),
+  });
 };
 
 export default useProfileInfo;

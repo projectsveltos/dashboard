@@ -19,6 +19,18 @@ export default defineConfig(({}) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
+      dedupe: ["@tanstack/react-query", "@tanstack/query-core"],
+    },
+    ssr: {
+      noExternal: ["@tanstack/react-query"],
+    },
+    optimizeDeps: {
+      include: ["@tanstack/react-query"],
+    },
+    build: {
+      commonjsOptions: {
+        transformMixedEsModules: true,
+      },
     },
     server: {
       proxy: {

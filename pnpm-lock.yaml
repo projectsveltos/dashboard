@@ -134,7 +134,7 @@ importers:
         version: 6.21.0(@typescript-eslint/parser@6.21.0(eslint@8.57.1)(typescript@5.9.3))(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react':
         specifier: ^4.4.1
-        version: 4.7.0(vite@6.4.1(@types/node@20.19.27)(jiti@1.21.7))
+        version: 4.7.0(vite@6.4.2(@types/node@20.19.27)(jiti@1.21.7))
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.23(postcss@8.5.6)
@@ -181,11 +181,11 @@ importers:
         specifier: ^5.0.0
         version: 5.9.3
       vite:
-        specifier: 6.4.1
-        version: 6.4.1(@types/node@20.19.27)(jiti@1.21.7)
+        specifier: 6.4.2
+        version: 6.4.2(@types/node@20.19.27)(jiti@1.21.7)
       vite-plugin-eslint:
         specifier: ^1.8.1
-        version: 1.8.1(eslint@8.57.1)(vite@6.4.1(@types/node@20.19.27)(jiti@1.21.7))
+        version: 1.8.1(eslint@8.57.1)(vite@6.4.2(@types/node@20.19.27)(jiti@1.21.7))
       yargs:
         specifier: ^17.7.2
         version: 17.7.2
@@ -3228,10 +3228,6 @@ packages:
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
-  picomatch@2.3.1:
-    resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
-    engines: {node: '>=8.6'}
-
   picomatch@2.3.2:
     resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
@@ -3652,10 +3648,6 @@ packages:
   thenify@3.3.1:
     resolution: {integrity: sha512-RVZSIV5IG10Hk3enotrhvz0T9em6cyHBLkH/YAZuKqd8hRkKhSfCGIcP2KUY0EPxndzANBmNllzWPwak+bheSw==}
 
-  tinyglobby@0.2.15:
-    resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
-    engines: {node: '>=12.0.0'}
-
   tinyglobby@0.2.16:
     resolution: {integrity: sha512-pn99VhoACYR8nFHhxqix+uvsbXineAasWm5ojXoN8xEwK5Kd3/TrhNn1wByuD52UxWRLy8pu+kRMniEi6Eq9Zg==}
     engines: {node: '>=12.0.0'}
@@ -3783,8 +3775,8 @@ packages:
       eslint: '>=7'
       vite: '>=2'
 
-  vite@6.4.1:
-    resolution: {integrity: sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g==}
+  vite@6.4.2:
+    resolution: {integrity: sha512-2N/55r4JDJ4gdrCvGgINMy+HH3iRpNIz8K6SFwVsA+JbQScLiC+clmAxBgwiSPgcG9U15QmvqCGWzMbqda5zGQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -5432,7 +5424,7 @@ snapshots:
   '@rollup/pluginutils@4.2.1':
     dependencies:
       estree-walker: 2.0.2
-      picomatch: 2.3.1
+      picomatch: 2.3.2
 
   '@rollup/rollup-android-arm-eabi@4.60.1':
     optional: true
@@ -5782,7 +5774,7 @@ snapshots:
 
   '@ungap/structured-clone@1.3.0': {}
 
-  '@vitejs/plugin-react@4.7.0(vite@6.4.1(@types/node@20.19.27)(jiti@1.21.7))':
+  '@vitejs/plugin-react@4.7.0(vite@6.4.2(@types/node@20.19.27)(jiti@1.21.7))':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.5)
@@ -5790,7 +5782,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.1(@types/node@20.19.27)(jiti@1.21.7)
+      vite: 6.4.2(@types/node@20.19.27)(jiti@1.21.7)
     transitivePeerDependencies:
       - supports-color
 
@@ -7206,7 +7198,7 @@ snapshots:
   micromatch@4.0.8:
     dependencies:
       braces: 3.0.3
-      picomatch: 2.3.1
+      picomatch: 2.3.2
 
   mime-db@1.52.0: {}
 
@@ -7345,8 +7337,6 @@ snapshots:
   path-type@4.0.0: {}
 
   picocolors@1.1.1: {}
-
-  picomatch@2.3.1: {}
 
   picomatch@2.3.2: {}
 
@@ -7784,7 +7774,7 @@ snapshots:
       lines-and-columns: 1.2.4
       mz: 2.7.0
       pirates: 4.0.7
-      tinyglobby: 0.2.15
+      tinyglobby: 0.2.16
       ts-interface-checker: 0.1.13
 
   supports-color@7.2.0:
@@ -7836,11 +7826,6 @@ snapshots:
   thenify@3.3.1:
     dependencies:
       any-promise: 1.3.0
-
-  tinyglobby@0.2.15:
-    dependencies:
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
 
   tinyglobby@0.2.16:
     dependencies:
@@ -7965,15 +7950,15 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite-plugin-eslint@1.8.1(eslint@8.57.1)(vite@6.4.1(@types/node@20.19.27)(jiti@1.21.7)):
+  vite-plugin-eslint@1.8.1(eslint@8.57.1)(vite@6.4.2(@types/node@20.19.27)(jiti@1.21.7)):
     dependencies:
       '@rollup/pluginutils': 4.2.1
       '@types/eslint': 8.56.12
       eslint: 8.57.1
       rollup: 2.79.2
-      vite: 6.4.1(@types/node@20.19.27)(jiti@1.21.7)
+      vite: 6.4.2(@types/node@20.19.27)(jiti@1.21.7)
 
-  vite@6.4.1(@types/node@20.19.27)(jiti@1.21.7):
+  vite@6.4.2(@types/node@20.19.27)(jiti@1.21.7):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.4)

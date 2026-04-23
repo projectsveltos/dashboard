@@ -15,8 +15,8 @@ import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
 import { EventsPage } from "@/modules/events/events-list/EventsPage";
 import EventDetails from "@/modules/events/event-details/EventDetails";
 import { OverviewPage } from "@/modules/overview/OverviewPage";
-import { DryRunPage } from "@/modules/profiles/dry-run/DryRunPage";
-import { DryRunView } from "@/modules/profiles/dry-run/DryRunView";
+import { DryRunPage } from "@/modules/dry-run/DryRunPage";
+import { DryRunView } from "@/modules/dry-run/DryRunView";
 import { EnterprisePage } from "@/modules/enterprise/EnterprisePage";
 
 const defaultTab = appConfig.defaultType;
@@ -43,7 +43,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: "/sveltos",
-        element: <PreserveSearchNavigate to={`/sveltos/overview`} />,
+        element: <PreserveSearchNavigate to={`/sveltos/clusters`} />,
       },
       {
         path: "/sveltos/overview",

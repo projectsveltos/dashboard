@@ -14,6 +14,10 @@ import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
 
 import { EventsPage } from "@/modules/events/events-list/EventsPage";
 import EventDetails from "@/modules/events/event-details/EventDetails";
+import { OverviewPage } from "@/modules/overview/OverviewPage";
+import { DryRunPage } from "@/modules/profiles/dry-run/DryRunPage";
+import { DryRunView } from "@/modules/profiles/dry-run/DryRunView";
+import { EnterprisePage } from "@/modules/enterprise/EnterprisePage";
 
 const defaultTab = appConfig.defaultType;
 const defaultPage = appConfig.defaultPage;
@@ -39,17 +43,15 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: "/sveltos",
-        element: (
-          <PreserveSearchNavigate
-            to={`/sveltos/clusters/${defaultTab}/${defaultPage}`}
-          />
-        ),
+        element: <PreserveSearchNavigate to={`/sveltos/overview`} />,
+      },
+      {
+        path: "/sveltos/overview",
+        element: <OverviewPage />,
       },
       {
         path: "/sveltos/events",
-        element: (
-          <PreserveSearchNavigate to={`/sveltos/events/${defaultPage}`} />
-        ),
+        element: <EventsPage />,
       },
       {
         path: "/sveltos/events/:pageNumber",
@@ -58,6 +60,18 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos/event/:name",
         element: <EventDetails />,
+      },
+      {
+        path: "/sveltos/dry-run",
+        element: <DryRunPage />,
+      },
+      {
+        path: "/sveltos/dry-run/:namespace/:name/:kind",
+        element: <DryRunView />,
+      },
+      {
+        path: "/sveltos/dry-run/:name/:kind",
+        element: <DryRunView />,
       },
       {
         path: "/sveltos/profiles",
@@ -86,6 +100,10 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos/cluster/:tab/:namespace/:name",
         element: <ClusterInfoById />,
+      },
+      {
+        path: "/sveltos/enterprise",
+        element: <EnterprisePage />,
       },
       {
         path: "*",

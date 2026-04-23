@@ -11,7 +11,7 @@ export interface ClusterInfoType {
   name: string;
   kind?: string;
   clusterInfo: {
-    labels: Label[];
+    labels: Label;
     version: string;
     ready: boolean;
     paused: boolean;

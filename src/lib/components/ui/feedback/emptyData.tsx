@@ -17,7 +17,7 @@ export const EmptyData = ({
     <>
       <div className="w-full mt-16 flex items-center flex-wrap justify-center gap-10">
         <div className="grid gap-4 w-64">
-          <div className="w-20 h-20 mx-auto bg-slate-50 dark:bg-slate-800 rounded-full shadow-sm justify-center items-center inline-flex">
+          <div className="w-20 h-20 mx-auto bg-slate-50 dark:bg-slate-800 rounded-full justify-center items-center inline-flex">
             <CircleOff className="w-10 h-10 text-gray-500" />
           </div>
           <div>

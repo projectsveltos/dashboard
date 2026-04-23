@@ -32,11 +32,8 @@ export const ProfileInfoHeading = ({
           <ChevronLeft className="h-4 w-4" />
           <span className="sr-only">{t("common.back")}</span>
         </Button>
-        <Badge
-          variant="default"
-          className="ml-auto sm:ml-0  flex items-center "
-        >
-          {t("common.tier")} : {tier}
+        <Badge className="ml-auto sm:ml-0 flex items-center bg-zinc-100 text-zinc-900 border border-zinc-200 shadow-none dark:bg-zinc-800 dark:text-zinc-100 dark:border-zinc-700 font-bold px-3 py-1 rounded-full text-[11px] tracking-wide">
+          {t("common.tier")} {tier}
         </Badge>
         <h1 className="flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0">
           {name || namespace}

@@ -28,7 +28,11 @@ interface HelmRowProps {
 export const HelmRow = ({ row, columns, onOpenRepo }: HelmRowProps) => {
   return (
     <TableRow
-      className={row.failureMessage ? "bg-slate-200 dark:bg-slate-700" : ""}
+      className={
+        row.failureMessage
+          ? "bg-coral/10 hover:bg-coral/20 transition-colors"
+          : ""
+      }
     >
       {columns.map((column, colIndex) => {
         const key = column.keys;

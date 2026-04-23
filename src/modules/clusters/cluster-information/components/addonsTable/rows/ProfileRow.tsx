@@ -46,7 +46,11 @@ export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
   }
   return (
     <TableRow
-      className={row.failureMessage ? "bg-red-50 dark:bg-slate-700" : ""}
+      className={
+        row.failureMessage
+          ? "bg-coral/10 hover:bg-coral/20 transition-colors"
+          : ""
+      }
     >
       {columns.map((column, colIndex) => {
         const key = column.keys;

@@ -3,9 +3,11 @@ import { appConfig } from "@/config/app";
 export function Logo({
   className = "h-6 w-6",
   full = false,
+  showText = true,
 }: {
   className?: string;
   full?: boolean;
+  showText?: boolean;
 }) {
   if (full) {
     return (
@@ -296,7 +298,7 @@ export function Logo({
             fill="#83CCED"
           />
         </svg>
-        <span className="font-bold">{appConfig.name}</span>
+        {showText && <span className="font-bold">{appConfig.name}</span>}
       </>
     );
   }

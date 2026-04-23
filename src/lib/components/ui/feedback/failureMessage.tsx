@@ -29,12 +29,12 @@ export function FailureMessage({ msg }: { msg?: string | undefined | null }) {
           <PopoverTrigger
             asChild
             className={
-              "border border-gray-300 bg-white shadow-md rounded-lg  cursor-pointer hover:shadow-lg transition-shadow"
+              "border border-border bg-card rounded-lg cursor-pointer transition-all hover:bg-muted/20"
             }
           >
-            <Card className="mr-2  ">
+            <Card className="mr-2">
               <CardContent className={"p-4 "}>
-                <p className="text-sm text-red-600 underline dark:text-red-500 font-medium line-clamp-2  break-words">
+                <p className="text-sm text-coral underline font-medium line-clamp-2 break-words">
                   {msg}
                 </p>
               </CardContent>

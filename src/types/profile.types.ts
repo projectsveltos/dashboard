@@ -47,6 +47,18 @@ export interface MatchingCluster {
     status: string;
   }[];
 }
+
+export interface HelmChart {
+  repositoryURL: string;
+  repositoryName: string;
+  chartName: string;
+  chartVersion: string;
+  releaseName: string;
+  releaseNamespace: string;
+  values?: string;
+  helmChartAction: string;
+}
+
 export interface ProfileInfo {
   name: string;
   namespace: string;
@@ -56,23 +68,56 @@ export interface ProfileInfo {
   matchingClusters: MatchingCluster[];
   spec: {
     clusterSelector: {
-      matchLabels: {
-        env: string;
+      matchLabels?: {
+        [key: string]: string;
       };
+      matchExpressions?: {
+        key: string;
+        operator: string;
+        values: string[];
+      }[];
     };
-    tier: string;
+    tier?: number;
     syncMode: string;
     stopMatchingBehavior: string;
-    policyRefs: {
+    reloader?: boolean;
+    policyRefs?: {
       namespace: string;
       name: string;
       kind: string;
       deploymentType: string;
     }[];
+    helmCharts?: HelmChart[];
   };
 }
+
 export interface FailedProfile {
   profileName: string;
   isSuccessful: boolean;
   causes: string[];
+}
+
+export interface ResourceChange {
+  name: string;
+  group: string;
+  kind: string;
+  version: string;
+  action: string;
+  message?: string;
+}
+
+export interface HelmReleaseChange {
+  releaseName: string;
+  releaseNamespace: string;
+  chartVersion: string;
+  action: string;
+  message: string;
+}
+
+export interface DryRunResponse {
+  profileName: string;
+  profileKind: string;
+  hasChanges: boolean;
+  resourceChanges?: ResourceChange[];
+  helmReleaseChanges?: HelmReleaseChange[];
 }

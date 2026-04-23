@@ -8,33 +8,19 @@ import {
 import { Badge } from "@/lib/components/ui/data-display/badge";
 import { FileSliders } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { cn } from "@/lib/utils";
+
+import { ProfileInfo } from "@/types/profile.types";
 
 type ProfileSpecCardProps = {
-  spec: {
-    clusterSelector?: {
-      matchLabels: {
-        env: string;
-      };
-    };
-    helmCharts?: {
-      chartName: string;
-      chartVersion: string;
-    }[];
-    syncMode: string;
-    stopMatchingBehavior: string;
-    policyRefs?: {
-      namespace: string;
-      name: string;
-      kind: string;
-      deploymentType: string;
-    }[];
-  };
+  spec: ProfileInfo["spec"];
+  className?: string;
 };
 
-export const ProfileSpecCard = ({ spec }: ProfileSpecCardProps) => {
+export const ProfileSpecCard = ({ spec, className }: ProfileSpecCardProps) => {
   const { t } = useTranslation();
   return (
-    <Card className="overflow-hidden">
+    <Card className={cn("overflow-hidden", className)}>
       <CardHeader>
         <CardTitle className={"flex items-center"}>
           <FileSliders className={"w-4 h-4 mx-0.5"} /> {t("common.spec")}

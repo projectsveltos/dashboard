@@ -19,7 +19,7 @@ interface ClusterCardProps {
   namespace?: string;
   paused: boolean | string;
   status: boolean;
-  labels?: Label[];
+  labels?: Label;
   onClick: () => void;
   failureMsg?: string | null;
 }
@@ -43,9 +43,7 @@ export const ClusterCard = ({
   return (
     <>
       <Card
-        className={
-          "hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer"
-        }
+        className="hover:bg-accent/50 hover:border-primary/50 transition-all cursor-pointer group"
         onClick={onClick}
       >
         <div className=" flex items-center space-x-4 rounded-md  p-4">

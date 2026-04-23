@@ -10,7 +10,7 @@ const fetchProfiles = async (
   filters: Record<string, string>,
   dryRun?: boolean,
 ): Promise<Array<TierData>> => {
-  const params = dryRun ? { ...filters, dryrun: true } : filters;
+  const params = dryRun ? { ...filters, dryRun: true } : filters;
   const { data } = await client.get<ProfilesResponseObject>(
     API_ENDPOINTS.PROFILES,
     {

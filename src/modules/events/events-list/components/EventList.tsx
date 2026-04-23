@@ -33,15 +33,15 @@ export const EventList = () => {
   const isLoading = eventsQuery.isLoading;
   const isPlaceholderData = eventsQuery.isPlaceholderData;
   const handlePageChange = (page: number) => {
-    navigate(`/sveltos/events/${page}${location.search}`);
+    if (page === 1) {
+      navigate(`/sveltos/events${location.search}`);
+    } else {
+      navigate(`/sveltos/events/${page}${location.search}`);
+    }
   };
 
   const handlePageSearch = (searchTerms: Record<string, string>) => {
-    const newPathname = location.pathname.replace(
-      `/${pageNumber}`,
-      `/${defaultPage}`,
-    );
-    navigate(`${newPathname}?${new URLSearchParams(searchTerms).toString()}`);
+    navigate(`/sveltos/events?${new URLSearchParams(searchTerms).toString()}`);
   };
 
   const [PaginationUI] = usePagination(

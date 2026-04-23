@@ -10,39 +10,34 @@ import { ProfileCard } from "@/modules/profiles/profiles-list/components/profile
 import { ScrollArea } from "@/lib/components/ui/layout/scroll-area";
 import { Tier } from "@/types/profile.types";
 
-export function TierCard({ tier }: { tier: Tier }) {
+export function TierCard({ tier, dryRun }: { tier: Tier; dryRun?: boolean }) {
   return (
     <>
-      <Card className={"max-w-sm bg-primary/5  "}>
-        <CardHeader
-          className={"border-primary border-b-2 mb-4 flex-row gap-4 "}
-        >
-          <h1 className={""}>
-            <span className={"dark:text-muted-foreground  mr-2"}>Tier</span>
+      <Card className="max-w-sm">
+        <CardHeader className="border-b border-border mb-2 flex-row gap-3 py-3 px-4">
+          <h1 className="flex items-center">
+            <span className="text-muted-foreground mr-2 text-xs font-bold uppercase tracking-wider">
+              Tier
+            </span>
             <span>
-              <Badge
-                variant={"label"}
-                className={"text-md bg-slate-200 dark:bg-slate-800"}
-              >
+              <Badge className="bg-zinc-100 text-zinc-900 border border-zinc-200 shadow-none font-bold px-2 py-0">
                 {tier?.id}
               </Badge>
             </span>
           </h1>
-          <p className={"dark:text-muted-foreground   text-sm"}>
-            {tier.totalProfiles} profile(s)
+          <p className="text-muted-foreground text-[10px] self-center">
+            {tier.totalProfiles} profiles
           </p>
-          <div className={"flex-grow"}></div>
-          <Button disabled variant={"ghost"} size={"xs"}>
-            <EllipsisVertical />
+          <div className="flex-grow"></div>
+          <Button disabled variant="ghost" size="xs" className="h-6 w-6 p-0">
+            <EllipsisVertical className="h-3 w-3" />
           </Button>
         </CardHeader>
-        <CardContent className={"h-[400px] "}>
-          <ScrollArea
-            className={"grid grid-cols-1 gap-4 h-[400px]  overflow-auto"}
-          >
+        <CardContent className="h-[300px] p-2">
+          <ScrollArea className="h-full px-2">
             {tier?.profiles.map((profile, index) => (
               <div key={index} className={"flex items-center my-2"}>
-                <ProfileCard profile={profile} />
+                <ProfileCard profile={profile} dryRun={dryRun} />
               </div>
             ))}
           </ScrollArea>

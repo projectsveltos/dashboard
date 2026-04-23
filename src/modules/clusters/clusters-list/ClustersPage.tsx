@@ -27,6 +27,7 @@ export default function ClustersPage() {
   const [searchParams, setSearchParams] = useState<
     Record<string, string | string[]>
   >({});
+
   const [currentTab, setCurrentTab] = useState<ClusterType>(() => {
     return urlTab ? (urlTab as ClusterType) : defaultTab;
   });
@@ -34,8 +35,12 @@ export default function ClustersPage() {
   const [currentPage, setCurrentPage] = useState<number>(() => {
     return urlPage ? parseInt(urlPage) : defaultPage;
   });
-  const { data, isLoading, isPreviousData, isError, isSuccess, error } =
-    useClusters(currentTab, currentPage, searchParams);
+
+  const { data, isLoading, isError, isSuccess, error } = useClusters(
+    currentTab,
+    currentPage,
+    searchParams,
+  );
 
   const handleTabChange = (value: ClusterType) => {
     setCurrentTab(value);
@@ -52,7 +57,7 @@ export default function ClustersPage() {
       `/${urlPage}`,
       `/${defaultPage}`,
     );
-    navigate(newPathname);
+    navigate(newPathname || "/sveltos/clusters");
     setSearchParams(searchTerms);
   };
 
@@ -80,7 +85,7 @@ export default function ClustersPage() {
         searchFieldsData={clusterSearchfields}
         updateQueryParams={updateQueryParams}
       />
-      {(isLoading || isPreviousData) && <LoadingCards />}
+      {isLoading && <LoadingCards />}
       {isError && <ErrorQuery name={"clusters"} error={error} />}
       {isSuccess && data && (
         <>

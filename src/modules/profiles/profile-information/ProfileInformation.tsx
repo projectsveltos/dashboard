@@ -21,13 +21,23 @@ export function ProfileInformation() {
             kind={data.kind}
             tier={data.spec.tier}
           />
-          <div className="grid grid-cols-12 gap-2 mt-2">
+          <div className="grid grid-cols-12 gap-3 mt-4">
+            <div className="col-span-7 space-y-4">
+              <ProfileSpecCard
+                spec={data.spec}
+                className="bg-card-muted border-primary/10"
+              />
+              <div className="rounded-xl border border-border bg-card overflow-hidden">
+                <div className="px-4 py-3 border-b border-border bg-muted/30">
+                  <h3 className="text-xs font-bold uppercase tracking-widest text-foreground/70 flex items-center">
+                    Matching Clusters
+                  </h3>
+                </div>
+                <MatchingClusterTable data={data?.matchingClusters ?? []} />
+              </div>
+            </div>
             <div className="col-span-5">
               <ProfileRelations profile={data} />
-            </div>
-            <div className="col-span-6">
-              <ProfileSpecCard spec={data.spec} />
-              <MatchingClusterTable data={data?.matchingClusters ?? []} />
             </div>
           </div>
         </div>

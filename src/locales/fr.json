@@ -90,6 +90,9 @@
     "search_cluster_name": "Rechercher par nom de cluster",
     "analyze_pipeline": "Analyser le pipeline",
     "relax_no_errors": "Détendez-vous, aucune erreur",
-    "correctly_installed": "Installé correctement"
+    "correctly_installed": "Installé correctement",
+    "dry run": "Essai à sec",
+    "enterprise": "Entreprise",
+    "description_dry_run": "L'essai à sec vous permet de simuler l'impact des profils avant le déploiement réel. Seuls les profils dont le champ 'Spec.DryRun' est défini sur vrai sont affichés dans cette vue."
   }
 }

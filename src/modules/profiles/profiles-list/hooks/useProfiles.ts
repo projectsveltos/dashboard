@@ -8,11 +8,13 @@ import { extractFiltersFromSearchParams } from "@/lib/utils";
 
 const fetchProfiles = async (
   filters: Record<string, string>,
+  dryRun?: boolean,
 ): Promise<Array<TierData>> => {
+  const params = dryRun ? { ...filters, dryRun: true } : filters;
   const { data } = await client.get<ProfilesResponseObject>(
     API_ENDPOINTS.PROFILES,
     {
-      params: filters,
+      params,
     },
   );
   return Object.entries(data).map(([key, value]) => ({
@@ -24,14 +26,15 @@ const fetchProfiles = async (
 
 const useProfiles = (
   searchConfig: { key: string; placeholder: string }[],
+  dryRun?: boolean,
 ): UseQueryResult<Array<TierData>, Error> => {
   const [searchParams] = useSearchParams();
 
   const filters = extractFiltersFromSearchParams(searchParams, searchConfig);
 
   return useQuery({
-    queryKey: ["profiles", filters],
-    queryFn: () => fetchProfiles(filters),
+    queryKey: ["profiles", filters, dryRun],
+    queryFn: () => fetchProfiles(filters, dryRun),
   });
 };
 

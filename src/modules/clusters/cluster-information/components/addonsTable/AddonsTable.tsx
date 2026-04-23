@@ -56,6 +56,8 @@ export const AddonsTable: FC<AddonsTableProps> = ({
 
   const handleCheckedChange = (checked: boolean) => {
     setFailureCheck(checked);
+    setUIPage(1);
+    setPage(1, type);
     searchParams.set(appConfig.queryParams.failure, checked.toString());
     navigate({ search: searchParams.toString() });
   };
@@ -63,8 +65,8 @@ export const AddonsTable: FC<AddonsTableProps> = ({
   return (
     <>
       <Table>
-        <TableHeader>
-          <TableRow>
+        <TableHeader className="bg-muted/40">
+          <TableRow className="border-b-border bg-transparent hover:bg-transparent">
             {columns.map((column, index) => (
               <TableHead
                 key={index}

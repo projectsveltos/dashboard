@@ -90,6 +90,11 @@
     "search_cluster_name": "Search by Cluster Name",
     "analyze_pipeline": "Analyze Pipeline",
     "relax_no_errors": "Relax, No Errors",
-    "correctly_installed": "Correctly Installed"
+    "correctly_installed": "Correctly Installed",
+    "dry run": "Dry Run",
+    "overview": "Overview",
+    "pull mode": "Pull Mode",
+    "enterprise": "Enterprise",
+    "description_dry_run": "Dry Run allows you to simulate the impact of profiles before actual deployment. Only profiles with the 'Spec.DryRun' field set to true are displayed in this view."
   }
 }

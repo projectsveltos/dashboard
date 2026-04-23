@@ -90,6 +90,9 @@
     "search_cluster_name": "البحث حسب اسم الكلاستر",
     "analyze_pipeline": "تحليل الانابيب",
     "relax_no_errors": "استرخ، لا توجد أخطاء",
-    "correctly_installed": "تثبيت صحيح"
+    "correctly_installed": "تثبيت صحيح",
+    "dry run": "التشغيل الجاف",
+    "enterprise": "مؤسسة",
+    "description_dry_run": "تسمح لك ميزة التشغيل الجاف بمحاكاة تأثير البروفايلات قبل النشر الفعلي. يتم عرض البروفايلات التي تم ضبط حقل 'Spec.DryRun' فيها على 'true' فقط في هذا العرض."
   }
 }

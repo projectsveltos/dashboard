@@ -1,38 +1,45 @@
-import { Card, CardTitle } from "@/lib/components/ui/data-display/card";
 import { Tags } from "lucide-react";
 import { Label } from "@/types/cluster.types";
 import { Badge } from "@/lib/components/ui/data-display/badge";
+import { useTranslation } from "react-i18next";
 
 type LabelsCardProps = {
-  labels: Label[] | [];
+  labels: Label;
 };
 
 export const LabelsCard = ({ labels }: LabelsCardProps) => {
+  const { t } = useTranslation();
   const labelEntries = Object.entries(labels || {});
   return (
-    <>
-      <div>
-        {labelEntries.length > 0 && (
-          <Card className={"px-4"}>
-            <CardTitle className={"flex items-center m-2  space-x-3"}>
-              <Tags className={"w-4 h-4 mx-0.5"} /> Labels{" "}
-              <Badge variant="outline"> Total : {labelEntries.length}</Badge>
-            </CardTitle>
-            <div className="overflow-x-auto h-14 whitespace-nowrap">
-              {labelEntries.length > 0 &&
-                labelEntries.map(([key, value]) => (
-                  <Badge
-                    key={key}
-                    className="inline-block m-2 max-h-10 p-2 rounded"
-                    variant="secondary"
-                  >
-                    <p className="inline">{`${key}: ${value}`}</p>
-                  </Badge>
-                ))}
-            </div>
-          </Card>
-        )}
-      </div>
-    </>
+    <div className="p-4">
+      {labelEntries.length > 0 && (
+        <div className="flex flex-col space-y-3">
+          <div className="flex items-center space-x-2 text-muted-foreground">
+            <Tags className="w-4 h-4" />
+            <span className="text-xs font-bold uppercase tracking-widest">
+              {t("common.labels")}
+            </span>
+            <Badge
+              variant="outline"
+              className="text-[10px] ml-auto border-primary/20 bg-primary/5 text-primary"
+            >
+              Total: {labelEntries.length}
+            </Badge>
+          </div>
+          <div className="flex flex-wrap gap-2 pt-1">
+            {labelEntries.map(([key, value]) => (
+              <Badge
+                key={key}
+                className="text-[10px] bg-background border border-border px-2 py-1 transition-all hover:border-primary/40"
+                variant="secondary"
+              >
+                <span className="text-primary mr-1">{key}:</span>
+                <span className="text-foreground/80">{value}</span>
+              </Badge>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   );
 };

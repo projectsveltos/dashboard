@@ -61,8 +61,8 @@ export function ClusterInfoById() {
             version={InfoQuery.data.managedClusters[0]?.clusterInfo.version}
           />
         )}
-        <div className={"space-y-1 min-w-3/4"}>
-          <div>
+        <div className={"space-y-4 min-w-3/4 mt-4"}>
+          <div className="bg-card-muted rounded-xl border border-border p-1">
             {InfoQuery.isSuccess && InfoQuery.data?.managedClusters && (
               <LabelsCard
                 labels={
@@ -71,19 +71,21 @@ export function ClusterInfoById() {
               />
             )}
           </div>
-          <Addons
-            setPage={setPage}
-            loading={
-              helmChartQuery.data.isLoading ||
-              resourcesQuery.data.isLoading ||
-              profileQuery.data.isLoading
-            }
-            addonsData={{
-              [AddonTypes.HELM]: helmChartQuery.data || [],
-              [AddonTypes.RESOURCE]: resourcesQuery.data || [],
-              [AddonTypes.PROFILE]: profileQuery.data || [],
-            }}
-          />
+          <div className="bg-card rounded-xl border border-border overflow-hidden">
+            <Addons
+              setPage={setPage}
+              loading={
+                helmChartQuery.data.isLoading ||
+                resourcesQuery.data.isLoading ||
+                profileQuery.data.isLoading
+              }
+              addonsData={{
+                [AddonTypes.HELM]: helmChartQuery.data || [],
+                [AddonTypes.RESOURCE]: resourcesQuery.data || [],
+                [AddonTypes.PROFILE]: profileQuery.data || [],
+              }}
+            />
+          </div>
         </div>
       </main>
     );

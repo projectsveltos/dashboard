@@ -18,6 +18,7 @@ interface AppConfig {
   debounceDelay: number;
   defaultTableSize: number;
   version: string;
+  docs: string;
 }
 
 export const appConfig: AppConfig = {
@@ -36,4 +37,5 @@ export const appConfig: AppConfig = {
   },
   debounceDelay: 600,
   version: import.meta.env.VITE_APP_VERSION || "version number",
+  docs: "https://projectsveltos.github.io/sveltos/",
 };

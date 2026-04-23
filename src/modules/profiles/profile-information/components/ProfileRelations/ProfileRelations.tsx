@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import {
   ReactFlow,
@@ -117,8 +117,13 @@ export function ProfileRelations({
     return nodes;
   }, [profile]);
 
-  const [nodes, _setNodes, onNodesChange] = useNodesState(initNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState(initNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initEdges);
+
+  useEffect(() => {
+    setNodes(initNodes);
+    setEdges(initEdges);
+  }, [initNodes, initEdges, setNodes, setEdges]);
 
   const onConnect = useCallback(
     (params: Connection) => setEdges((eds) => addEdge(params, eds)),

@@ -1,29 +1,23 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "./Header";
-import { Footer } from "./Footer";
-import { Logo } from "@/lib/components/assets/logo/logo";
-import { appConfig } from "@/config/app";
+import { Sidebar } from "./Sidebar";
+import { useState } from "react";
 
 export function Applayout() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
   return (
-    <>
-      <Header />
-      <a
-        href={appConfig.github.url}
-        target="_blank"
-        className="fixed right-2 top-1/2 -translate-y-1/2 bg-primary text-white px-6 py-2 rounded-lg shadow-lg rotate-90 flex items-center space-x-2"
-        rel="noreferrer"
-      >
-        <span>Powered by</span> <Logo />
-      </a>
-      <div className="flex-grow flex flex-col">
-        <div className="container px-4 md:px-8 flex-grow flex flex-col">
+    <div className="flex bg-background h-screen text-foreground font-sans w-full overflow-hidden">
+      <Sidebar isOpen={isSidebarOpen} />
+      <div className="flex-1 flex flex-col min-w-0">
+        <Header
+          isOpen={isSidebarOpen}
+          toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+        />
+        <main className="flex-1 p-4 md:p-6 overflow-y-auto">
           <Outlet />
-        </div>
+        </main>
       </div>
-      <div className="container px-4 md:px-8">
-        <Footer />
-      </div>
-    </>
+    </div>
   );
 }

@@ -28,7 +28,11 @@ interface ResourceRowProps {
 export const ResourceRow = ({ row, columns, onOpenRepo }: ResourceRowProps) => {
   return (
     <TableRow
-      className={row.failureMessage ? "bg-slate-200 dark:bg-slate-700" : ""}
+      className={
+        row.failureMessage
+          ? "bg-coral/10 hover:bg-coral/20 transition-colors"
+          : ""
+      }
     >
       {columns.map((column, colIndex) => {
         const key = column.keys;

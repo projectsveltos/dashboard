@@ -17,14 +17,20 @@ const searchConfig = [
   },
 ];
 
-export function ProfileList() {
-  const { data, isSuccess, isLoading, isError, error, isPreviousData } =
-    useProfiles(searchConfig);
+interface ProfileListProps {
+  dryRun?: boolean;
+}
+
+export function ProfileList({ dryRun }: ProfileListProps) {
+  const { data, isSuccess, isLoading, isError, error } = useProfiles(
+    searchConfig,
+    dryRun,
+  );
 
   return (
     <>
       <SearchQueryParamInput searchConfig={searchConfig} />
-      {(isLoading || isPreviousData) && <LoadingTier />}
+      {isLoading && <LoadingTier />}
       {(!data || data?.length <= 0) && (
         <EmptyData name={"profiles"} isFiltered={false} />
       )}
@@ -36,7 +42,7 @@ export function ProfileList() {
           }
         >
           {data.map((tier: TierData, index: number) => (
-            <TierCard tier={tier} key={index} />
+            <TierCard tier={tier} key={index} dryRun={dryRun} />
           ))}
         </div>
       )}

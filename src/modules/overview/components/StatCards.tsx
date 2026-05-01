@@ -1,56 +1,124 @@
-export function StatCards() {
-  const cards = [
+import useOverviewStats from "../hooks/useOverviewStats";
+import { 
+  Boxes, 
+  Globe, 
+  Layers, 
+  FileText, 
+  ClipboardList, 
+  Zap,
+  LucideIcon 
+} from "lucide-react";
+
+interface StatCard {
+  title: string;
+  value: number | string;
+  sub?: string;
+  subColor?: string;
+  icon: LucideIcon;
+  color: string;
+}
+
+function buildCards(stats: ReturnType<typeof useOverviewStats>["data"]): StatCard[] {
+  if (!stats) return [];
+
+  return [
     {
-      title: "TOTAL CLUSTERS",
-      value: "42",
-      sub: "-2",
-      subColor: "text-red-400",
+      title: "Sveltos Clusters",
+      value: stats.sveltosClusters,
+      sub: stats.notReadySveltosClusters > 0 ? `${stats.notReadySveltosClusters} Issues` : undefined,
+      icon: Boxes,
+      color: "text-primary bg-primary/10 border-primary/20",
     },
     {
-      title: "HEALTHY",
-      value: "38",
-      sub: "/42",
-      subColor: "text-muted-foreground",
+      title: "CAPI Clusters",
+      value: stats.capiClusters,
+      sub: stats.notReadyCAPIClusters > 0 ? `${stats.notReadyCAPIClusters} Issues` : undefined,
+      icon: Globe,
+      color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
     },
-    { title: "PROFILES APPLIED", value: "15" },
-    { title: "ADDONS DEPLOYED", value: "120" },
     {
-      title: "DRIFT DETECTED",
-      value: "3",
-      sub: "WARNING",
-      subColor:
-        "text-orange-400 bg-orange-400/10 px-2 py-0.5 rounded text-[10px] ml-2",
-      titleColor: "text-orange-400",
+      title: "Cluster Profiles",
+      value: stats.clusterProfiles,
+      icon: Layers,
+      color: "text-teal-500 bg-teal-500/10 border-teal-500/20",
     },
-    { title: "EVENTS (24H)", value: "450" },
+    {
+      title: "Profiles",
+      value: stats.profiles,
+      icon: FileText,
+      color: "text-orange-500 bg-orange-500/10 border-orange-500/20",
+    },
+    {
+      title: "Cluster Summaries",
+      value: stats.clusterSummaries,
+      icon: ClipboardList,
+      color: "text-violet-500 bg-violet-500/10 border-violet-500/20",
+    },
+    {
+      title: "Event Triggers",
+      value: stats.eventTriggers,
+      icon: Zap,
+      color: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+    },
   ];
+}
+
+function StatCardSkeleton() {
+  return (
+    <div className="bg-card rounded-xl p-4 border border-border flex flex-col pt-4 animate-pulse">
+      <div className="flex items-center justify-between mb-4">
+        <div className="h-2 bg-muted rounded w-1/2" />
+        <div className="w-8 h-8 bg-muted rounded-lg" />
+      </div>
+      <div className="h-8 bg-muted rounded w-1/3 mt-auto" />
+    </div>
+  );
+}
+
+export function StatCards() {
+  const { data, isLoading } = useOverviewStats();
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
+        {Array.from({ length: 6 }).map((_, i) => <StatCardSkeleton key={i} />)}
+      </div>
+    );
+  }
+
+  const cards = buildCards(data);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-      {cards.map((card, i) => (
-        <div
-          key={i}
-          className="bg-card rounded-xl p-4 border border-border flex flex-col pt-4"
-        >
-          <h3
-            className={`text-[10px] font-bold tracking-widest uppercase mb-3 ${card.titleColor || "text-muted-foreground"}`}
+      {cards.map((card, i) => {
+        const Icon = card.icon;
+        return (
+          <div
+            key={i}
+            className="bg-card rounded-xl p-4 border border-border flex flex-col pt-4 transition-all hover:border-primary/20 group"
           >
-            {card.title}
-          </h3>
-          <div className="flex items-baseline mt-auto">
-            <span className="text-3xl font-extrabold text-foreground">
-              {card.value}
-            </span>
-            {card.sub && (
-              <span
-                className={`ml-1 font-semibold text-[10px] ${card.subColor}`}
-              >
-                {card.sub}
+            <div className="flex items-start justify-between mb-3">
+              <h3 className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground group-hover:text-primary transition-colors">
+                {card.title}
+              </h3>
+              <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 ${card.color}`}>
+                <Icon className="w-4 h-4" />
+              </div>
+            </div>
+            
+            <div className="flex items-baseline mt-auto flex-wrap gap-2">
+              <span className="text-3xl font-extrabold text-foreground">
+                {card.value}
               </span>
-            )}
+              {card.sub && (
+                <span className={`font-black text-[9px] px-1.5 py-0.5 bg-destructive/10 text-destructive rounded-md border border-destructive/20 uppercase tracking-tighter`}>
+                  {card.sub}
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

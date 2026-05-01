@@ -13,4 +13,5 @@ export const API_ENDPOINTS = {
   MCP_EVENT_PIPELINE_DEBUG: "/analyzeEventPipeline",
   EVENTS: "/events",
   EVENT: "/event",
+  STATS: "/stats",
 };

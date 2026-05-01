@@ -43,7 +43,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: "/sveltos",
-        element: <PreserveSearchNavigate to={`/sveltos/clusters`} />,
+        element: <PreserveSearchNavigate to={`/sveltos/overview`} />,
       },
       {
         path: "/sveltos/overview",

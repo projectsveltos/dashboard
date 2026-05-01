@@ -95,6 +95,7 @@
     "overview": "Overview",
     "pull mode": "Pull Mode",
     "enterprise": "Enterprise",
+    "analyze_changes": "Analyze Changes",
     "description_dry_run": "Dry Run allows you to simulate the impact of profiles before actual deployment. Only profiles with the 'Spec.DryRun' field set to true are displayed in this view."
   }
 }

@@ -11,6 +11,7 @@ import {
   Package,
   Activity,
   GitCompare,
+  CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { cn } from "@/lib/utils";
@@ -134,7 +135,8 @@ export function DryRunDiffView({
       )}
 
       {isSuccess && data && (
-        <>
+        flattenedChanges.length > 0 ? (
+          <>
           {/* Top Review Bar */}
           <div className="flex items-center justify-between bg-card border border-border p-4 rounded-2xl">
             <div className="flex items-center gap-4">
@@ -245,18 +247,20 @@ export function DryRunDiffView({
                         <span className="text-[10px] font-medium text-zinc-400 truncate">
                           {change.kind || change.namespace || "Helm Release"}
                         </span>
-                        <Badge
-                          className={cn(
-                            "text-[9px] font-bold px-1.5 py-0 rounded border-none shadow-none",
-                            change.action === "Delete"
-                              ? "bg-red-500/10 text-red-500"
-                              : change.action === "Create"
-                                ? "bg-green-500/10 text-green-500"
-                                : "bg-primary/10 text-primary",
-                          )}
-                        >
-                          {change.action}
-                        </Badge>
+                        {change.action !== "Install" && (
+                          <Badge
+                            className={cn(
+                              "text-[9px] font-bold px-1.5 py-0 rounded border-none shadow-none",
+                              change.action === "Delete"
+                                ? "bg-red-500/10 text-red-500"
+                                : change.action === "Create"
+                                  ? "bg-green-500/10 text-green-500"
+                                  : "bg-primary/10 text-primary",
+                            )}
+                          >
+                            {change.action}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                     {activeChangeId === change.id && (
@@ -279,18 +283,20 @@ export function DryRunDiffView({
                         <h2 className="text-xl font-bold tracking-tight">
                           {activeChange.name}
                         </h2>
-                        <Badge
-                          className={cn(
-                            "text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full border-none",
-                            activeChange.action === "Delete"
-                              ? "bg-red-500/10 text-red-500"
-                              : activeChange.action === "Create"
-                                ? "bg-green-500/10 text-green-500"
-                                : "bg-primary/10 text-primary",
-                          )}
-                        >
-                          {activeChange.action}
-                        </Badge>
+                        {activeChange.action !== "Install" && (
+                          <Badge
+                            className={cn(
+                              "text-[10px] font-bold uppercase tracking-widest px-4 py-1 rounded-full border-none",
+                              activeChange.action === "Delete"
+                                ? "bg-red-500/10 text-red-500"
+                                : activeChange.action === "Create"
+                                  ? "bg-green-500/10 text-green-500"
+                                  : "bg-primary/10 text-primary",
+                            )}
+                          >
+                            {activeChange.action}
+                          </Badge>
+                        )}
                       </div>
                     </div>
 
@@ -349,7 +355,23 @@ export function DryRunDiffView({
               )}
             </div>
           </div>
-        </>
+          </>
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full space-y-4 bg-card border border-border rounded-2xl">
+            <div className="bg-green-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-4">
+              <CheckCircle2 className="w-8 h-8 text-green-500" />
+            </div>
+            <h3 className="text-lg font-bold text-green-500">
+              No Changes Detected
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Everything is already up to date on {clusterName}.
+            </p>
+            <Button variant="outline" onClick={onBack} className="rounded-xl">
+              Back to Cluster Selection
+            </Button>
+          </div>
+        )
       )}
     </div>
   );

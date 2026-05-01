@@ -5,7 +5,7 @@ const useAuth = () => {
 
   const authenticate = (authToken: string) => {
     localStorage.setItem("authToken", authToken);
-    navigate("/sveltos");
+    navigate("/sveltos/overview");
   };
 
   const logout = () => {

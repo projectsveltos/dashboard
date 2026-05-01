@@ -3,7 +3,6 @@ import { useTranslation } from "react-i18next";
 import { LogOutIcon, PanelLeftOpen, PanelLeftClose } from "lucide-react";
 import { ModeToggle } from "@/lib/components/ui/inputs/mode-toggle";
 import { LanguageSwitcher } from "@/lib/components/ui/inputs/language-switcher";
-import { VerifyInstallation } from "@/modules/common/components/actions/VerifyInstallation";
 import { Icons } from "@/lib/components/icons";
 import { appConfig } from "@/config/app";
 import { cn } from "@/lib/utils";
@@ -61,9 +60,6 @@ export function Header({ isOpen, toggleSidebar }: HeaderProps) {
                 <span className="sr-only">GitHub</span>
               </div>
             </a>
-            <div className="text-muted-foreground">
-              <VerifyInstallation />
-            </div>
             <DividerVerticalIcon className="text-border" />
 
             <Button

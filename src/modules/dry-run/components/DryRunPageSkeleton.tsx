@@ -11,7 +11,10 @@ export function DryRunPageSkeleton() {
       />
       <div className="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-          <div key={i} className="h-[180px] bg-card border border-border rounded-2xl p-6 flex flex-col justify-between">
+          <div
+            key={i}
+            className="h-[180px] bg-card border border-border rounded-2xl p-6 flex flex-col justify-between"
+          >
             <div className="space-y-3">
               <div className="h-5 w-3/4 bg-slate-200 dark:bg-slate-800 rounded" />
               <div className="h-3 w-1/2 bg-slate-200 dark:bg-slate-800 rounded" />

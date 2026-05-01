@@ -93,6 +93,7 @@
     "correctly_installed": "Installé correctement",
     "dry run": "Essai à sec",
     "enterprise": "Entreprise",
+    "analyze_changes": "Analyser les changements",
     "description_dry_run": "L'essai à sec vous permet de simuler l'impact des profils avant le déploiement réel. Seuls les profils dont le champ 'Spec.DryRun' est défini sur vrai sont affichés dans cette vue."
   }
 }

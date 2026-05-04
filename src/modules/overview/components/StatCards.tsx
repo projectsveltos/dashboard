@@ -1,12 +1,12 @@
 import useOverviewStats from "../hooks/useOverviewStats";
-import { 
-  Boxes, 
-  Globe, 
-  Layers, 
-  FileText, 
-  ClipboardList, 
+import {
+  Boxes,
+  Globe,
+  Layers,
+  FileText,
+  ClipboardList,
   Zap,
-  LucideIcon 
+  LucideIcon,
 } from "lucide-react";
 
 interface StatCard {
@@ -18,21 +18,29 @@ interface StatCard {
   color: string;
 }
 
-function buildCards(stats: ReturnType<typeof useOverviewStats>["data"]): StatCard[] {
+function buildCards(
+  stats: ReturnType<typeof useOverviewStats>["data"],
+): StatCard[] {
   if (!stats) return [];
 
   return [
     {
       title: "Sveltos Clusters",
       value: stats.sveltosClusters,
-      sub: stats.notReadySveltosClusters > 0 ? `${stats.notReadySveltosClusters} Issues` : undefined,
+      sub:
+        stats.notReadySveltosClusters > 0
+          ? `${stats.notReadySveltosClusters} Issues`
+          : undefined,
       icon: Boxes,
       color: "text-primary bg-primary/10 border-primary/20",
     },
     {
       title: "CAPI Clusters",
       value: stats.capiClusters,
-      sub: stats.notReadyCAPIClusters > 0 ? `${stats.notReadyCAPIClusters} Issues` : undefined,
+      sub:
+        stats.notReadyCAPIClusters > 0
+          ? `${stats.notReadyCAPIClusters} Issues`
+          : undefined,
       icon: Globe,
       color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
     },
@@ -81,7 +89,9 @@ export function StatCards() {
   if (isLoading) {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-        {Array.from({ length: 6 }).map((_, i) => <StatCardSkeleton key={i} />)}
+        {Array.from({ length: 6 }).map((_, i) => (
+          <StatCardSkeleton key={i} />
+        ))}
       </div>
     );
   }
@@ -101,17 +111,21 @@ export function StatCards() {
               <h3 className="text-[10px] font-bold tracking-widest uppercase text-muted-foreground group-hover:text-primary transition-colors">
                 {card.title}
               </h3>
-              <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 ${card.color}`}>
+              <div
+                className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 ${card.color}`}
+              >
                 <Icon className="w-4 h-4" />
               </div>
             </div>
-            
+
             <div className="flex items-baseline mt-auto flex-wrap gap-2">
               <span className="text-3xl font-extrabold text-foreground">
                 {card.value}
               </span>
               {card.sub && (
-                <span className={`font-black text-[9px] px-1.5 py-0.5 bg-destructive/10 text-destructive rounded-md border border-destructive/20 uppercase tracking-tighter`}>
+                <span
+                  className={`font-black text-[9px] px-1.5 py-0.5 bg-destructive/10 text-destructive rounded-md border border-destructive/20 uppercase tracking-tighter`}
+                >
                   {card.sub}
                 </span>
               )}

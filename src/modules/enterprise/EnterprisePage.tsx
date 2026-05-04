@@ -6,8 +6,6 @@ import {
   LifeBuoy,
   GitBranch,
   CheckCircle2,
-  Lock,
-  Cpu,
   Zap,
 } from "lucide-react";
 import { Button } from "@/lib/components/ui/inputs/button";

@@ -4,7 +4,7 @@ import useProfileInfo from "@/modules/profiles/profile-information/hooks/useProf
 import { MatchingCluster } from "@/types/profile.types";
 import { DryRunClusterSelectSkeleton } from "./DryRunClusterSelectSkeleton";
 import { Badge } from "@/lib/components/ui/data-display/badge";
-import { Activity, Ship, Terminal } from "lucide-react";
+import { Activity, Terminal } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -15,10 +15,6 @@ import {
 } from "@/lib/components/ui/data-display/table";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { Card } from "@/lib/components/ui/data-display/card";
-import {
-  AvatarRectangle,
-  AvatarRectFallback,
-} from "@/lib/components/ui/data-display/avatar-rectangle";
 
 export function DryRunClusterSelect({
   profileNamespace,
@@ -124,8 +120,12 @@ export function DryRunClusterSelect({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="px-6">{t("common.cluster_name")}</TableHead>
-                    <TableHead className="px-6">{t("common.namespace")}</TableHead>
+                    <TableHead className="px-6">
+                      {t("common.cluster_name")}
+                    </TableHead>
+                    <TableHead className="px-6">
+                      {t("common.namespace")}
+                    </TableHead>
                     <TableHead className="px-6">{t("common.kind")}</TableHead>
                     <TableHead className="px-6 text-right">
                       {t("common.action")}
@@ -148,7 +148,10 @@ export function DryRunClusterSelect({
                         </span>
                       </TableCell>
                       <TableCell className="px-6">
-                        <Badge variant="outline" className="text-[10px] font-bold">
+                        <Badge
+                          variant="outline"
+                          className="text-[10px] font-bold"
+                        >
                           {cluster.cluster.kind}
                         </Badge>
                       </TableCell>

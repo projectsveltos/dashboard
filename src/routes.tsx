@@ -7,6 +7,11 @@ import ClustersPage from "@/modules/clusters/clusters-list/ClustersPage";
 import { appConfig } from "@/config/app";
 import { ClusterInfoById } from "@/modules/clusters/cluster-information/ClusterInfoById";
 import { Authentication } from "@/modules/authentication/Authentication";
+import { OidcCallback } from "@/modules/authentication/OidcCallback";
+import {
+  isOidcConfigured,
+  oidcCallbackPath,
+} from "@/modules/authentication/oidc";
 import { ProfileInformation } from "@/modules/profiles/profile-information/ProfileInformation";
 import { Logout } from "@/modules/authentication/Logout";
 import PreserveSearchNavigate from "@/hooks/NavigateWithParams";
@@ -36,6 +41,9 @@ export const routes: RouteObject[] = [
     path: "/logout",
     element: <Logout />,
   },
+  ...(isOidcConfigured
+    ? [{ path: oidcCallbackPath, element: <OidcCallback /> }]
+    : []),
 
   {
     path: "/sveltos",

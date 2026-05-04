@@ -9,6 +9,7 @@ import {
 import { isAxiosError } from "axios";
 import { useEffect, useMemo } from "react";
 import useAuth from "@/modules/authentication/hooks/useAuth";
+import { useOidcTokenSync } from "@/modules/authentication/hooks/useOidcTokenSync";
 import { Route, Routes } from "react-router-dom";
 import { routes } from "@/routes";
 import { useTranslation } from "react-i18next";
@@ -58,6 +59,9 @@ export default function App() {
       authenticate(token);
     }
   }, [authenticate]);
+
+  // OIDC auth only: keep the stored token current whenever oidc-client-ts silently renews it. No-op when OIDC is not configured.
+  useOidcTokenSync();
 
   return (
     <ThemeProvider>

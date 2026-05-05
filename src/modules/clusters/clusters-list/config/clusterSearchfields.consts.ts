@@ -3,16 +3,16 @@ import { SearchField } from "@/modules/clusters/clusters-list/components/searchF
 
 export const clusterSearchfields: SearchField[] = [
   {
-    icon: ALargeSmall,
-    label: "common.name",
-    placeholder: "common.filter_name",
-    termKey: "name",
-  },
-  {
     icon: Blocks,
     label: "common.namespace",
     placeholder: "common.filter_namespace",
     termKey: "namespace",
+  },
+  {
+    icon: ALargeSmall,
+    label: "common.name",
+    placeholder: "common.filter_name",
+    termKey: "name",
   },
   {
     icon: Tags,

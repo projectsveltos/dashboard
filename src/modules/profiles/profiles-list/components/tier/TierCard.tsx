@@ -16,11 +16,11 @@ export function TierCard({ tier, dryRun }: { tier: Tier; dryRun?: boolean }) {
       <Card className="max-w-sm">
         <CardHeader className="border-b border-border mb-2 flex-row gap-3 py-3 px-4">
           <h1 className="flex items-center">
-            <span className="text-muted-foreground mr-2 text-xs font-bold uppercase tracking-wider">
+            <span className="text-muted-foreground mr-2 text-sm font-bold uppercase tracking-wider">
               Tier
             </span>
             <span>
-              <Badge className="bg-zinc-100 text-zinc-900 border border-zinc-200 shadow-none font-bold px-2 py-0">
+              <Badge className="bg-zinc-100 text-zinc-900 border border-zinc-200 shadow-none font-bold text-sm px-2 py-0">
                 {tier?.id}
               </Badge>
             </span>

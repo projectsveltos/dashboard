@@ -90,16 +90,16 @@ export const ClusterCard = ({
             <TooltipTrigger>
               {labelEntries.length > 0 && (
                 <div className="flex items-center space-x-2">
-                  <div style={{ display: "flex", flexDirection: "column" }}>
+                  <div className="flex flex-col overflow-hidden max-w-[8rem] md:max-w-[10rem] lg:max-w-[12rem]">
                     {displayEntries.map(([key, value]) => (
                       <Badge
                         key={`${key}: ${value}`}
                         className={
-                          "my-0.5 dark:bg-slate-800 bg-slate-300 hover:animate-in border-2 rounded"
+                          "my-0.5 dark:bg-slate-800 bg-slate-300 hover:animate-in border-2 rounded w-full overflow-hidden"
                         }
                         variant="label"
                       >
-                        <p className="truncate">{`${key}: ${value}`}</p>
+                        <p className="truncate w-full">{`${key}: ${value}`}</p>
                       </Badge>
                     ))}
                   </div>

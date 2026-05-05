@@ -77,7 +77,7 @@ export const SearchFieldTags = ({
 
   return (
     <>
-      <div className="hidden sm:flex h-5 items-center justify-end space-x-4 text-sm">
+      <div className="hidden sm:flex mt-6 items-end justify-end space-x-4 text-sm">
         {searchFieldsData.map((field, index) => (
           <div key={index} className="search">
             <Label

@@ -15,7 +15,7 @@ const fetchGitHubReleases = async (): Promise<GitHubRelease[]> => {
     "https://api.github.com/repos/projectsveltos/sveltos/releases",
     {
       params: { per_page: 5 },
-    }
+    },
   );
   return data;
 };

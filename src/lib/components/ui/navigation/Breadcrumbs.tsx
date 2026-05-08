@@ -74,7 +74,7 @@ export function Breadcrumbs() {
         Sveltos
       </Link>
 
-      {crumbs.map((crumb, index) => (
+      {crumbs.map((crumb, _index) => (
         <div key={crumb.path} className="flex items-center">
           <ChevronRight className="w-3.5 h-3.5 mx-1 text-muted-foreground/40" />
           {crumb.isLast ? (

@@ -6,7 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { Boxes, Play, Ship, ArrowRight, AlertCircle } from "lucide-react";
 import { RouteIcon } from "lucide-react";
 import { CardStackIcon } from "@radix-ui/react-icons";
-import { Alert, AlertTitle, AlertDescription } from "@/lib/components/ui/feedback/alert";
+import {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "@/lib/components/ui/feedback/alert";
 
 const QUICK_ACTIONS = [
   {
@@ -50,8 +54,10 @@ export function OverviewPage() {
   const { data: stats } = useOverviewStats();
   const navigate = useNavigate();
 
-  const totalClusters = (stats?.sveltosClusters ?? 0) + (stats?.capiClusters ?? 0);
-  const totalNotReady = (stats?.notReadySveltosClusters ?? 0) + (stats?.notReadyCAPIClusters ?? 0);
+  const _totalClusters =
+    (stats?.sveltosClusters ?? 0) + (stats?.capiClusters ?? 0);
+  const totalNotReady =
+    (stats?.notReadySveltosClusters ?? 0) + (stats?.notReadyCAPIClusters ?? 0);
 
   return (
     <div className="w-full flex flex-col space-y-6 animate-in slide-in-from-bottom overflow-x-hidden pb-10">
@@ -66,12 +72,22 @@ export function OverviewPage() {
 
       {/* Not Ready Clusters Alert */}
       {totalNotReady > 0 && (
-        <Alert variant="destructive" className="bg-destructive/5 border-destructive/20 animate-in fade-in slide-in-from-top-4 duration-500">
+        <Alert
+          variant="destructive"
+          className="bg-destructive/5 border-destructive/20 animate-in fade-in slide-in-from-top-4 duration-500"
+        >
           <AlertCircle className="h-4 w-4" />
           <AlertTitle className="font-bold">Clusters Not Ready</AlertTitle>
           <AlertDescription className="font-medium">
-            There are {totalNotReady} clusters requiring attention. 
-            Please review the status in the <span className="underline cursor-pointer font-bold" onClick={() => navigate("/sveltos/clusters")}>Clusters management</span> section.
+            There are {totalNotReady} clusters requiring attention. Please
+            review the status in the{" "}
+            <span
+              className="underline cursor-pointer font-bold"
+              onClick={() => navigate("/sveltos/clusters")}
+            >
+              Clusters management
+            </span>{" "}
+            section.
           </AlertDescription>
         </Alert>
       )}
@@ -97,7 +113,9 @@ export function OverviewPage() {
                   onClick={() => navigate(action.to)}
                   className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:bg-accent/40 hover:border-primary/20 transition-all text-left group"
                 >
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${action.color}`}>
+                  <div
+                    className={`w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 ${action.color}`}
+                  >
                     {Icon && <Icon className="w-5 h-5" />}
                   </div>
                   <div className="min-w-0 flex-1">
@@ -124,7 +142,8 @@ export function OverviewPage() {
           </div>
           <div className="flex flex-col flex-1 items-center justify-center p-8 gap-4 text-center">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Verify that all Sveltos components are correctly installed and running in the management cluster.
+              Verify that all Sveltos components are correctly installed and
+              running in the management cluster.
             </p>
             <VerifyInstallation />
           </div>
@@ -134,7 +153,7 @@ export function OverviewPage() {
       {/* Bottom Row: Releases */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
         <div className="lg:col-span-12">
-           <LatestReleases />
+          <LatestReleases />
         </div>
       </div>
     </div>

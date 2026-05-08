@@ -49,3 +49,23 @@ if the port is not available , it will automatically switch to the next availabl
 ##### Example :
 
 `npm run dev -- --port 3000`
+
+### Configure OIDC authentication (optional)
+
+OIDC authentication uses Authorization Code Flow with PKCE. If the following variables are not set, the login page falls back to manual token authentication.
+
+| Variable                 | Description                                  | Default                  |
+| ------------------------ | -------------------------------------------- | ------------------------ |
+| `VITE_OIDC_ISSUER`       | Issuer URL of your OIDC provider             | —                        |
+| `VITE_OIDC_CLIENT_ID`    | Client ID registered with your OIDC provider | —                        |
+| `VITE_OIDC_REDIRECT_URI` | Full redirect URI after OIDC login           | `<origin>/oidc-callback` |
+
+##### Example:
+
+```
+VITE_OIDC_ISSUER=https://accounts.example.com
+VITE_OIDC_CLIENT_ID=my-client-id
+VITE_OIDC_REDIRECT_URI=http://localhost:5173/oidc-callback
+```
+
+The redirect URI must be registered as an allowed callback URL in your OIDC provider.

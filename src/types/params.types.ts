@@ -1,1 +1,1 @@
-export interface SearchParams extends Record<string, string | string[]> {}
+export type SearchParams = Record<string, string | string[]>;

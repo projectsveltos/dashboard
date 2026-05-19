@@ -43,6 +43,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy Nginx template and entrypoint script
 COPY nginx.template.conf /etc/nginx/templates/nginx.template.conf
 COPY scripts/docker-entrypoint.sh /docker-entrypoint.sh
+COPY scripts/config.template.js /docker-entrypoint.d/config.template.js
 RUN chmod +x /docker-entrypoint.sh
 
 # ENV vars

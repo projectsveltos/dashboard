@@ -6,6 +6,9 @@ echo "🔧 Starting Docker Entrypoint..."
 echo "📦 ENV values:"
 echo "  - VITE_BACKEND_NAME: $VITE_BACKEND_NAME"
 echo "  - VITE_BACKEND_PORT: $VITE_BACKEND_PORT"
+echo "  - OIDC_ISSUER: $OIDC_ISSUER"
+echo "  - OIDC_CLIENT_ID: $OIDC_CLIENT_ID"
+echo "  - OIDC_REDIRECT_URI: $OIDC_REDIRECT_URI"
 
 # Confirm template file exists
 TEMPLATE_PATH="/etc/nginx/templates/nginx.template.conf"
@@ -18,7 +21,13 @@ fi
 
 echo "📄 Found template at $TEMPLATE_PATH"
 
-# Generate config from template
+# Generate runtime config.js from template
+echo "🔁 Generating runtime config.js..."
+envsubst '$OIDC_ISSUER $OIDC_CLIENT_ID $OIDC_REDIRECT_URI' \
+  < /docker-entrypoint.d/config.template.js \
+  > /app/dist/config.js
+
+# Generate nginx config from template
 echo "🔁 Substituting env vars into Nginx config..."
 envsubst '$VITE_BACKEND_PORT $VITE_BACKEND_NAME' < "$TEMPLATE_PATH" > "$CONF_PATH"
 

@@ -1,9 +1,15 @@
 import { UserManager, WebStorageStateStore } from "oidc-client-ts";
 
-const authority = import.meta.env.VITE_OIDC_ISSUER as string | undefined;
-const clientId = import.meta.env.VITE_OIDC_CLIENT_ID as string | undefined;
+// Prefer runtime config (injected by Docker entrypoint); fall back to build-time env vars for local dev.
+const authority =
+  window.__CONFIG__?.oidcIssuer ||
+  (import.meta.env.VITE_OIDC_ISSUER as string | undefined);
+const clientId =
+  window.__CONFIG__?.oidcClientId ||
+  (import.meta.env.VITE_OIDC_CLIENT_ID as string | undefined);
 const redirectUri =
-  (import.meta.env.VITE_OIDC_REDIRECT_URI as string | undefined) ??
+  window.__CONFIG__?.oidcRedirectUri ||
+  (import.meta.env.VITE_OIDC_REDIRECT_URI as string | undefined) ||
   `${window.location.origin}/oidc-callback`;
 
 // Derive the route path from the redirect URI

@@ -25,17 +25,15 @@ RUN npm run build
 # 2: Prepare the runtime environment
 FROM alpine AS runner
 
-# Install Node.js, npm, Nginx, envsubst
-RUN apk add --no-cache nodejs npm nginx gettext \
+# Install Nginx and envsubst (gettext)
+RUN apk add --no-cache nginx gettext \
   && mkdir -p /etc/nginx/templates \
   && mkdir -p /etc/nginx/conf.d
 
 WORKDIR /app
 
-# Copy build output and deps
+# Copy build output
 COPY --from=builder /build/dist /app/dist
-COPY --from=builder /build/node_modules /app/node_modules
-COPY --from=builder /build/package.json /app/package.json
 
 # Copy custom nginx.conf to replace default
 COPY nginx.conf /etc/nginx/nginx.conf
@@ -43,6 +41,7 @@ COPY nginx.conf /etc/nginx/nginx.conf
 # Copy Nginx template and entrypoint script
 COPY nginx.template.conf /etc/nginx/templates/nginx.template.conf
 COPY scripts/docker-entrypoint.sh /docker-entrypoint.sh
+COPY scripts/config.template.js /docker-entrypoint.d/config.template.js
 RUN chmod +x /docker-entrypoint.sh
 
 # ENV vars

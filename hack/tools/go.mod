@@ -4,11 +4,11 @@ go 1.26.3
 
 require (
 	github.com/a8m/envsubst v1.4.3
-	github.com/onsi/ginkgo/v2 v2.28.3
+	github.com/onsi/ginkgo/v2 v2.29.0
 	golang.org/x/oauth2 v0.36.0
 	k8s.io/client-go v0.36.1
 	sigs.k8s.io/controller-tools v0.21.0
-	sigs.k8s.io/kind v0.31.0
+	sigs.k8s.io/kind v0.32.0
 )
 
 require (

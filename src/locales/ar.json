@@ -14,6 +14,8 @@
     "version": "الإصدار",
     "namespace": "نيم سبيس",
     "paused": "متوقف مؤقتا",
+    "deployment_issues": "فشل نشر ملف تعريف واحد أو أكثر",
+    "deployment_in_progress": "الجاري النشر",
     "labels": "الملصقات",
     "kubernetes_version": "إصدار Kubernetes",
     "event_trigger": "مشغل الحدث",

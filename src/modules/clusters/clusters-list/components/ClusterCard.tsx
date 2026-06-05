@@ -10,7 +10,7 @@ import { ReadyFlag } from "@/lib/components/ui/data-display/ready-flag";
 import { FailedFlag } from "@/lib/components/ui/data-display/failed-flag";
 import { Label } from "@/types/cluster.types";
 import { appConfig } from "@/config/app";
-import { Tags } from "lucide-react";
+import { AlertTriangle, Clock, Tags } from "lucide-react";
 import { PauseIcon } from "@radix-ui/react-icons";
 
 interface ClusterCardProps {
@@ -22,6 +22,8 @@ interface ClusterCardProps {
   labels?: Label;
   onClick: () => void;
   failureMsg?: string | null;
+  hasIssues?: boolean;
+  isProvisioning?: boolean;
 }
 
 import { useTranslation } from "react-i18next";
@@ -34,6 +36,8 @@ export const ClusterCard = ({
   labels,
   onClick,
   failureMsg,
+  hasIssues,
+  isProvisioning,
 }: ClusterCardProps) => {
   const { t } = useTranslation();
   const labelEntries = Object.entries(labels || {});
@@ -43,17 +47,37 @@ export const ClusterCard = ({
   return (
     <>
       <Card
-        className="hover:bg-accent/50 hover:border-primary/50 transition-all cursor-pointer group"
+        className={`hover:bg-accent/50 hover:border-primary/50 transition-all cursor-pointer group ${hasIssues ? "border-l-4 border-l-amber-400" : ""}`}
         onClick={onClick}
       >
         <div className=" flex items-center space-x-4 rounded-md  p-4">
           {failureMsg ? <FailedFlag msg={failureMsg} /> : <ReadyFlag />}
           <div className="flex-1 space-y-1">
-            <p className="text-sm font-medium leading-none">
+            <p className="text-sm font-medium leading-none flex items-center gap-1.5">
               <span
-                className={`inline-block h-2.5 w-2.5 rounded-full mr-2 ${isPaused ? "bg-yellow-400" : "bg-green-400"}`}
+                className={`inline-block h-2.5 w-2.5 rounded-full shrink-0 ${isPaused ? "bg-yellow-400" : "bg-green-400"}`}
               />
               {name}
+              {hasIssues && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0 cursor-default" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("common.deployment_issues")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+              {isProvisioning && !hasIssues && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Clock className="h-3.5 w-3.5 text-blue-400 shrink-0 cursor-default" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("common.deployment_in_progress")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
             </p>
             <p className="text-sm text-muted-foreground  py-1">
               {t("common.version")}:

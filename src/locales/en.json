@@ -14,6 +14,8 @@
     "version": "Version",
     "namespace": "Namespace",
     "paused": "Paused",
+    "deployment_issues": "One or more profiles failed to deploy",
+    "deployment_in_progress": "Deployment in progress",
     "labels": "Labels",
     "kubernetes_version": "Kubernetes version",
     "event_trigger": "Event Trigger",

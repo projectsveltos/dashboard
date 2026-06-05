@@ -14,6 +14,8 @@
     "version": "Version",
     "namespace": "Espace de noms",
     "paused": "En pause",
+    "deployment_issues": "Un ou plusieurs profils n'ont pas pu être déployés",
+    "deployment_in_progress": "Déploiement en cours",
     "labels": "Étiquettes",
     "kubernetes_version": "Version de Kubernetes",
     "event_trigger": "Déclencheur d'événement",

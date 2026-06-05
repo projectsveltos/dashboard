@@ -45,6 +45,8 @@ export const ClusterList: FC<ClusterListProps> = ({
                   status={cluster.clusterInfo.ready}
                   failureMsg={cluster.clusterInfo.failureMessage}
                   labels={cluster.clusterInfo.labels}
+                  hasIssues={cluster.hasIssues}
+                  isProvisioning={cluster.isProvisioning}
                 />
               </div>
             ))}

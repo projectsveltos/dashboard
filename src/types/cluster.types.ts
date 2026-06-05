@@ -10,6 +10,8 @@ export interface ClusterInfoType {
   namespace: string;
   name: string;
   kind?: string;
+  hasIssues?: boolean;
+  isProvisioning?: boolean;
   clusterInfo: {
     labels: Label;
     version: string;

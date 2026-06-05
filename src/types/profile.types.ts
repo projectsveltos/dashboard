@@ -59,6 +59,16 @@ export interface HelmChart {
   helmChartAction: string;
 }
 
+export interface ValidateHealth {
+  name: string;
+  featureID: string;
+  group?: string;
+  version?: string;
+  kind?: string;
+  namespace?: string;
+  script?: string;
+}
+
 export interface ProfileInfo {
   name: string;
   namespace: string;
@@ -81,6 +91,8 @@ export interface ProfileInfo {
     syncMode: string;
     stopMatchingBehavior: string;
     reloader?: boolean;
+    maxUpdate?: string;
+    validateHealths?: ValidateHealth[];
     policyRefs?: {
       namespace: string;
       name: string;

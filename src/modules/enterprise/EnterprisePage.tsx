@@ -57,7 +57,6 @@ const FEATURES = [
 ];
 
 const TRUST_ITEMS = [
-  "SOC 2 Compliant",
   "Air-Gap Ready",
   "RBAC Native",
   "Multi-Tenancy",

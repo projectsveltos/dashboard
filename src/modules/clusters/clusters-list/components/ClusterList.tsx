@@ -42,7 +42,6 @@ export const ClusterList: FC<ClusterListProps> = ({
                   version={cluster.clusterInfo.version}
                   namespace={cluster.namespace}
                   paused={cluster.clusterInfo.paused}
-                  status={cluster.clusterInfo.ready}
                   failureMsg={cluster.clusterInfo.failureMessage}
                   labels={cluster.clusterInfo.labels}
                   hasIssues={cluster.hasIssues}

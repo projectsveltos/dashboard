@@ -91,7 +91,7 @@ export function Sidebar({ isOpen }: SidebarProps) {
                       "flex items-center text-sm font-semibold transition-all duration-200 border-l-4 mx-2 rounded-r-md",
                       isOpen
                         ? "px-4 py-2.5"
-                        : "px-0 py-2.5 justify-center border-l-2",
+                        : "px-0 py-2.5 justify-center",
                       isActive
                         ? "text-primary bg-primary/10 border-primary"
                         : "text-muted-foreground border-transparent hover:text-foreground hover:bg-accent/40",
@@ -141,7 +141,7 @@ export function Sidebar({ isOpen }: SidebarProps) {
           )}
         >
           <a
-            href={appConfig.docs || "#"}
+            href={appConfig.docs}
             target="_blank"
             rel="noreferrer"
             title="DOCS"

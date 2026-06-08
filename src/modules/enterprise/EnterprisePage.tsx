@@ -7,6 +7,7 @@ import {
   GitBranch,
   CheckCircle2,
   Zap,
+  CalendarDays,
 } from "lucide-react";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { Logo } from "@/lib/components/assets/logo/logo";
@@ -18,14 +19,30 @@ import {
   CardDescription,
   CardContent,
 } from "@/lib/components/ui/data-display/card";
+import useOverviewStats from "@/modules/overview/hooks/useOverviewStats";
 
 const PRICING_URL = "https://website.projectsveltos.io/pricing/";
+// TODO: replace with the actual demo-booking URL when available
+const DEMO_URL = "https://website.projectsveltos.io/contact/";
 
-const FEATURES = [
+interface Feature {
+  title: string;
+  description: string;
+  getContext?: (clusters: number) => string;
+  icon: React.ComponentType<{ className?: string }>;
+  tag: string;
+  href: string;
+}
+
+const FEATURES: Feature[] = [
   {
     title: "Pull Mode Architecture",
     description:
       "Deploy to edge locations and air-gapped networks. No inbound firewall ports required ever.",
+    getContext: (clusters) =>
+      clusters > 0
+        ? "As your fleet expands to edge locations or air-gapped environments, Pull Mode keeps every cluster connected — no inbound firewall ports, no exceptions."
+        : "",
     icon: Network,
     tag: "Networking",
     href: "https://projectsveltos.io/latest/register/register_cluster_pull_mode/",
@@ -34,6 +51,10 @@ const FEATURES = [
     title: "Progressive Rollout Pipelines",
     description:
       "Ship changes safely across thousands of clusters with automated canary rings and promotion gates.",
+    getContext: (clusters) =>
+      clusters > 0
+        ? "Rolling out changes across a growing fleet manually is a reliability risk. Automated canary rings and promotion gates let you scale deployments with confidence."
+        : "",
     icon: GitBranch,
     tag: "Deployment",
     href: "https://projectsveltos.io/latest/deployment_order/progressive_rollout/",
@@ -42,6 +63,10 @@ const FEATURES = [
     title: "AI-Powered Management",
     description:
       "Natural language operations via MCP Server. Ask questions, diagnose incidents, and automate remediation.",
+    getContext: (clusters) =>
+      clusters > 0
+        ? "Query your entire fleet — clusters, profiles, and live incidents — using natural language. No kubectl, no context-switching."
+        : "",
     icon: Zap,
     tag: "AI",
     href: "https://projectsveltos.io/latest/features/mcp/",
@@ -57,7 +82,6 @@ const FEATURES = [
 ];
 
 const TRUST_ITEMS = [
-  "SOC 2 Compliant",
   "Air-Gap Ready",
   "RBAC Native",
   "Multi-Tenancy",
@@ -66,6 +90,10 @@ const TRUST_ITEMS = [
 ];
 
 export function EnterprisePage() {
+  const { data: stats } = useOverviewStats();
+  const totalClusters =
+    (stats?.sveltosClusters ?? 0) + (stats?.capiClusters ?? 0);
+
   return (
     <div className="w-full flex flex-col space-y-8 animate-in slide-in-from-bottom pb-20">
       {/* Page Header */}
@@ -79,6 +107,12 @@ export function EnterprisePage() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <a href={DEMO_URL} target="_blank" rel="noreferrer">
+            <Button variant="outline" className="h-11 px-6 font-bold gap-2">
+              <CalendarDays className="h-4 w-4" />
+              Book a Demo
+            </Button>
+          </a>
           <a href={PRICING_URL} target="_blank" rel="noreferrer">
             <Button className="h-11 px-6 font-bold gap-2">
               <ShieldCheck className="h-4 w-4" />
@@ -105,6 +139,7 @@ export function EnterprisePage() {
       <div className="grid gap-4 sm:grid-cols-2">
         {FEATURES.map((feature) => {
           const Icon = feature.icon;
+          const context = feature.getContext?.(totalClusters);
           return (
             <a
               key={feature.title}
@@ -133,9 +168,14 @@ export function EnterprisePage() {
                   </div>
                 </CardHeader>
                 <CardContent className="flex-1">
-                  <CardDescription className="text-sm font-medium leading-relaxed mb-4">
+                  <CardDescription className="text-sm font-medium leading-relaxed mb-3">
                     {feature.description}
                   </CardDescription>
+                  {context && (
+                    <p className="text-[11px] text-primary/80 font-semibold bg-primary/5 border border-primary/10 rounded-lg px-3 py-2 mb-3 leading-relaxed">
+                      {context}
+                    </p>
+                  )}
                   <div className="inline-flex items-center gap-1.5 text-xs font-bold text-primary">
                     Technical Documentation
                     <ExternalLink className="h-3 w-3" />
@@ -170,11 +210,21 @@ export function EnterprisePage() {
                 Get Enterprise Access
               </Button>
             </a>
-            <a href={PRICING_URL} target="_blank" rel="noreferrer">
+            <a href={DEMO_URL} target="_blank" rel="noreferrer">
               <Button
                 variant="outline"
                 size="lg"
                 className="h-14 px-10 text-base font-black gap-2"
+              >
+                <CalendarDays className="h-5 w-5" />
+                Book a Demo
+              </Button>
+            </a>
+            <a href={PRICING_URL} target="_blank" rel="noreferrer">
+              <Button
+                variant="ghost"
+                size="lg"
+                className="h-14 px-6 text-base font-bold gap-2 text-muted-foreground"
               >
                 View Pricing & SLA
                 <ArrowRight className="h-5 w-5" />

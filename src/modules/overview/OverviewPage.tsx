@@ -54,10 +54,20 @@ export function OverviewPage() {
   const { data: stats } = useOverviewStats();
   const navigate = useNavigate();
 
-  const _totalClusters =
-    (stats?.sveltosClusters ?? 0) + (stats?.capiClusters ?? 0);
-  const totalNotReady =
-    (stats?.notReadySveltosClusters ?? 0) + (stats?.notReadyCAPIClusters ?? 0);
+  const notReadySveltos = stats?.notReadySveltosClusters ?? 0;
+  const notReadyCAPI = stats?.notReadyCAPIClusters ?? 0;
+  const totalNotReady = notReadySveltos + notReadyCAPI;
+
+  const notReadyParts: string[] = [];
+  if (notReadySveltos > 0)
+    notReadyParts.push(
+      `${notReadySveltos} Sveltos cluster${notReadySveltos > 1 ? "s" : ""}`,
+    );
+  if (notReadyCAPI > 0)
+    notReadyParts.push(
+      `${notReadyCAPI} CAPI cluster${notReadyCAPI > 1 ? "s" : ""}`,
+    );
+  const notReadyLabel = notReadyParts.join(" and ");
 
   return (
     <div className="w-full flex flex-col space-y-6 animate-in slide-in-from-bottom overflow-x-hidden pb-10">
@@ -79,8 +89,8 @@ export function OverviewPage() {
           <AlertCircle className="h-4 w-4" />
           <AlertTitle className="font-bold">Clusters Not Ready</AlertTitle>
           <AlertDescription className="font-medium">
-            There are {totalNotReady} clusters requiring attention. Please
-            review the status in the{" "}
+            {notReadyLabel} require{totalNotReady === 1 ? "s" : ""} attention.
+            Please review the status in the{" "}
             <span
               className="underline cursor-pointer font-bold"
               onClick={() => navigate("/sveltos/clusters")}

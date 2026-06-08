@@ -6,8 +6,7 @@ import {
   PopoverTrigger,
 } from "@/lib/components/ui/feedback/popover";
 import { Button } from "@/lib/components/ui/inputs/button";
-import { Copy } from "lucide-react";
-import { Card, CardContent } from "@/lib/components/ui/data-display/card";
+import { AlertCircle, Copy } from "lucide-react";
 
 export function FailureMessage({ msg }: { msg?: string | undefined | null }) {
   function handleCopy() {
@@ -22,33 +21,27 @@ export function FailureMessage({ msg }: { msg?: string | undefined | null }) {
     }
   }
 
+  if (!msg) return null;
+
   return (
-    <>
-      {msg && (
-        <Popover>
-          <PopoverTrigger
-            asChild
-            className={
-              "border border-border bg-card rounded-lg cursor-pointer transition-all hover:bg-muted/20"
-            }
-          >
-            <Card className="mr-2">
-              <CardContent className={"p-4 "}>
-                <p className="text-sm text-coral underline font-medium line-clamp-2 break-words">
-                  {msg}
-                </p>
-              </CardContent>
-            </Card>
-          </PopoverTrigger>
-          <PopoverContent className="w-96 p-4">
-            <p className="text-sm ">{msg}</p>
-            <Button variant={"outline"} className={"mt-2"} onClick={handleCopy}>
-              {" "}
-              <Copy className="h-4 w-4 mr-2" /> Copy to Clipboard
-            </Button>
-          </PopoverContent>
-        </Popover>
-      )}
-    </>
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          className="text-xs text-red-500 border-red-200 hover:bg-red-50 dark:border-red-900 dark:hover:bg-red-950 gap-1.5 whitespace-nowrap"
+        >
+          <AlertCircle className="h-3 w-3 shrink-0" />
+          View Error
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-96 p-4 space-y-3">
+        <p className="text-sm leading-relaxed break-words">{msg}</p>
+        <Button variant="outline" size="sm" onClick={handleCopy}>
+          <Copy className="h-4 w-4 mr-2" />
+          Copy to Clipboard
+        </Button>
+      </PopoverContent>
+    </Popover>
   );
 }

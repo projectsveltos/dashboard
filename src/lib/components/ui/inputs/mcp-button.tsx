@@ -43,6 +43,39 @@ export interface McpButtonProps
   icon?: React.ReactNode;
 }
 
+// Renders a single "ProfileName: cause text" line.
+// Splits on the first ": " so the profile name becomes a compact label
+// and the cause is shown as normal readable text below it.
+function ResponseLine({ text, index }: { text: string; index: number }) {
+  const colonAt = text.indexOf(": ");
+  const label = colonAt !== -1 ? text.slice(0, colonAt) : text;
+  const body = colonAt !== -1 ? text.slice(colonAt + 2).trim() : "";
+  const errorMatch = body.match(/Error:(.*)/s);
+
+  return (
+    <div key={index} className="flex flex-col space-y-1">
+      <span className="text-xs font-semibold text-foreground flex items-center gap-1.5">
+        <Sparkles className="h-3.5 w-3.5 text-yellow-500 shrink-0" />
+        {label}
+      </span>
+      {body && (
+        <p className="text-xs text-muted-foreground pl-5 leading-relaxed">
+          {errorMatch ? (
+            <>
+              {body.split("Error:")[0]}
+              <span className="text-red-500 font-medium">
+                Error:{errorMatch[1]}
+              </span>
+            </>
+          ) : (
+            body
+          )}
+        </p>
+      )}
+    </div>
+  );
+}
+
 const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
   (
     {
@@ -58,6 +91,12 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
     ref,
   ) => {
     const Comp = asChild ? Slot : "button";
+
+    const lines = mcpResponse
+      ? Array.isArray(mcpResponse)
+        ? mcpResponse
+        : mcpResponse.split("\n").filter(Boolean)
+      : [];
 
     return (
       <Popover>
@@ -85,43 +124,11 @@ const McpButton = React.forwardRef<HTMLButtonElement, McpButtonProps>(
             </>
           </Comp>
         </PopoverTrigger>
-        {mcpResponse && !isLoading && Array.isArray(mcpResponse) && (
-          <PopoverContent className="w-96 text-xs rounded-md p-4 flex flex-col space-y-2">
-            {mcpResponse.map((text, index) => {
-              const errorMatch = text.match(/(Error:)(.*)/); // Match "Error:" and the text after it
-              return (
-                <div key={index} className="flex flex-col space-y-1">
-                  <h4 className="text-sm font-semibold">
-                    <span className="relative pl-6">
-                      <Sparkles className="absolute left-0 top-0 h-5 w-5 text-yellow-500" />
-                      {text.split(".")[0] + "."}
-                    </span>
-                  </h4>
-                  <span className="text-left">
-                    {errorMatch ? (
-                      <>
-                        {text.split("Error:")[0]}
-                        <span className="text-red-500 my-2 font-bold text-md">
-                          Error:{errorMatch[2]}
-                        </span>
-                      </>
-                    ) : (
-                      text.split(".").slice(1).join(".").trim()
-                    )}
-                  </span>
-                </div>
-              );
-            })}
-          </PopoverContent>
-        )}
-        {mcpResponse && !isLoading && !Array.isArray(mcpResponse) && (
-          <PopoverContent className="w-72 text-sm rounded-md p-4">
-            <h4 className="text-lg font-semibold">
-              <span className="relative pl-6">
-                <Sparkles className="absolute left-0 top-0 h-5 w-5 text-yellow-500" />
-                {mcpResponse}
-              </span>
-            </h4>
+        {lines.length > 0 && !isLoading && (
+          <PopoverContent className="w-96 rounded-md p-4 flex flex-col space-y-3">
+            {lines.map((text, index) => (
+              <ResponseLine key={index} text={text} index={index} />
+            ))}
           </PopoverContent>
         )}
       </Popover>

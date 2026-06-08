@@ -18,7 +18,6 @@ interface ClusterCardProps {
   version?: string;
   namespace?: string;
   paused: boolean | string;
-  status: boolean;
   labels?: Label;
   onClick: () => void;
   failureMsg?: string | null;
@@ -79,18 +78,9 @@ export const ClusterCard = ({
                 </Tooltip>
               )}
             </p>
-            <p className="text-sm text-muted-foreground  py-1">
+            <p className="text-sm text-muted-foreground py-1">
               {t("common.version")}:
-              <span className={"text-muted-foreground mx-1"}>
-                <Tooltip>
-                  <TooltipTrigger> {version}</TooltipTrigger>
-                  <TooltipContent>
-                    <p>
-                      {t("common.kubernetes_version")} : {version}
-                    </p>
-                  </TooltipContent>
-                </Tooltip>
-              </span>
+              <span className="text-muted-foreground mx-1">{version}</span>
             </p>
             <p className="text-sm text-muted-foreground  py-1">
               {t("common.namespace")}:{" "}

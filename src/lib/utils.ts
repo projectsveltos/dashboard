@@ -34,7 +34,7 @@ export const extractFiltersFromSearchParams = (
   if (!Array.isArray(searchConfig)) {
     // Defensive: if the caller passed the wrong type (e.g. URLSearchParams) avoid crashing.
     // Return empty filters so callers request unfiltered data instead of throwing.
-    // eslint-disable-next-line no-console
+     
     console.warn(
       "extractFiltersFromSearchParams: expected searchConfig array, got",
       searchConfig,

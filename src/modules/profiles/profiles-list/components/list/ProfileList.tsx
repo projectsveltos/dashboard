@@ -1,3 +1,4 @@
+import { Blocks, ALargeSmall } from "lucide-react";
 import { TierCard } from "@/modules/profiles/profiles-list/components/tier/TierCard";
 import useProfiles from "@/modules/profiles/profiles-list/hooks/useProfiles";
 import { TierData } from "@/types/profile.types";
@@ -9,11 +10,15 @@ import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryPar
 const searchConfig = [
   {
     key: "profile_namespace",
-    placeholder: "common.search_profile_namespace",
+    label: "common.namespace",
+    placeholder: "common.filter_profile_namespace",
+    icon: Blocks,
   },
   {
     key: "profile_name",
-    placeholder: "common.search_profile_name",
+    label: "common.name",
+    placeholder: "common.filter_profile_name",
+    icon: ALargeSmall,
   },
 ];
 

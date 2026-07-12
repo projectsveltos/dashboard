@@ -11,7 +11,10 @@ export const API_ENDPOINTS = {
   MCP_CLUSTER_DEBUG: "/debugCluster",
   MCP_PROFILE_CLUSTER_DEBUG: "/debugProfileCluster",
   MCP_EVENT_PIPELINE_DEBUG: "/analyzeEventPipeline",
+  MCP_CLASSIFIER_PIPELINE_DEBUG: "/analyzeClassifierPipeline",
   EVENTS: "/events",
   EVENT: "/event",
+  CLASSIFIERS: "/classifiers",
+  CLASSIFIER: "/classifier",
   STATS: "/stats",
 };

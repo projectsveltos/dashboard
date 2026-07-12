@@ -19,6 +19,8 @@ import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
 
 import { EventsPage } from "@/modules/events/events-list/EventsPage";
 import EventDetails from "@/modules/events/event-details/EventDetails";
+import { ClassifiersPage } from "@/modules/classifiers/classifiers-list/ClassifiersPage";
+import ClassifierInformation from "@/modules/classifiers/classifier-information/ClassifierInformation";
 import { OverviewPage } from "@/modules/overview/OverviewPage";
 import { DryRunPage } from "@/modules/dry-run/DryRunPage";
 import { DryRunView } from "@/modules/dry-run/DryRunView";
@@ -68,6 +70,18 @@ export const routes: RouteObject[] = [
       {
         path: "/sveltos/event/:name",
         element: <EventDetails />,
+      },
+      {
+        path: "/sveltos/classifiers",
+        element: <ClassifiersPage />,
+      },
+      {
+        path: "/sveltos/classifiers/:pageNumber",
+        element: <ClassifiersPage />,
+      },
+      {
+        path: "/sveltos/classifier/:type/:name",
+        element: <ClassifierInformation />,
       },
       {
         path: "/sveltos/dry-run",

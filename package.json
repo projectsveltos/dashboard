@@ -73,7 +73,9 @@
     "yargs": "^17.7.2"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild"],
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ],
     "overrides": {
       "picomatch": "^4.0.3"
     }

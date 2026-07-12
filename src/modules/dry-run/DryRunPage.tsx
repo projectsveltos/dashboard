@@ -7,11 +7,11 @@ import useProfiles from "@/modules/profiles/profiles-list/hooks/useProfiles";
 const searchConfig = [
   {
     key: "profile_namespace",
-    placeholder: "common.search_profile_namespace",
+    placeholder: "common.filter_profile_namespace",
   },
   {
     key: "profile_name",
-    placeholder: "common.search_profile_name",
+    placeholder: "common.filter_profile_name",
   },
 ];
 

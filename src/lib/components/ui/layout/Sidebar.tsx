@@ -89,9 +89,7 @@ export function Sidebar({ isOpen }: SidebarProps) {
                   className={({ isActive }) =>
                     cn(
                       "flex items-center text-sm font-semibold transition-all duration-200 border-l-4 mx-2 rounded-r-md",
-                      isOpen
-                        ? "px-4 py-2.5"
-                        : "px-0 py-2.5 justify-center",
+                      isOpen ? "px-4 py-2.5" : "px-0 py-2.5 justify-center",
                       isActive
                         ? "text-primary bg-primary/10 border-primary"
                         : "text-muted-foreground border-transparent hover:text-foreground hover:bg-accent/40",

@@ -12,6 +12,8 @@ export interface OverviewStats {
   profiles: number;
   clusterSummaries: number;
   eventTriggers: number;
+  classifiers: number;
+  managementClusterClassifiers: number;
 }
 
 const fetchStats = async (): Promise<OverviewStats> => {

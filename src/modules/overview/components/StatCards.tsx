@@ -8,6 +8,8 @@ import {
   ClipboardList,
   Zap,
   Radio,
+  Tags,
+  Workflow,
   LucideIcon,
 } from "lucide-react";
 
@@ -49,6 +51,13 @@ function buildCards(
       to: "/sveltos/clusters/ClusterAPI/1",
     },
     {
+      title: "Pull Mode Clusters",
+      value: stats.pullModeClusters,
+      icon: Radio,
+      color: "text-cyan-500 bg-cyan-500/10 border-cyan-500/20",
+      to: "/sveltos/clusters",
+    },
+    {
       title: "Cluster Profiles",
       value: stats.clusterProfiles,
       icon: Layers,
@@ -77,11 +86,18 @@ function buildCards(
       to: "/sveltos/events",
     },
     {
-      title: "Pull Mode Clusters",
-      value: stats.pullModeClusters,
-      icon: Radio,
-      color: "text-cyan-500 bg-cyan-500/10 border-cyan-500/20",
-      to: "/sveltos/clusters",
+      title: "Classifiers",
+      value: stats.classifiers,
+      icon: Tags,
+      color: "text-pink-500 bg-pink-500/10 border-pink-500/20",
+      to: "/sveltos/classifiers",
+    },
+    {
+      title: "Management Cluster Classifiers",
+      value: stats.managementClusterClassifiers,
+      icon: Workflow,
+      color: "text-lime-500 bg-lime-500/10 border-lime-500/20",
+      to: "/sveltos/classifiers",
     },
   ];
 }
@@ -105,7 +121,7 @@ export function StatCards() {
   if (isLoading) {
     return (
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        {Array.from({ length: 7 }).map((_, i) => (
+        {Array.from({ length: 9 }).map((_, i) => (
           <StatCardSkeleton key={i} />
         ))}
       </div>

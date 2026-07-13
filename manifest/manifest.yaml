@@ -15,12 +15,12 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: docker.io/projectsveltos/dashboard:v1.12.0
+          image: docker.io/projectsveltos/dashboard:main
           ports:
             - containerPort: 5173
           env:
             - name: VITE_APP_VERSION
-              value: v1.12.0
+              value: main
 ---
 apiVersion: v1
 kind: Service

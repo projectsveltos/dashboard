@@ -1,4 +1,11 @@
-import { Boxes, RouteIcon, Ship, Play, LayoutDashboard } from "lucide-react";
+import {
+  Boxes,
+  RouteIcon,
+  Ship,
+  Play,
+  LayoutDashboard,
+  Tags,
+} from "lucide-react";
 import { CardStackIcon } from "@radix-ui/react-icons";
 
 interface NavItem {
@@ -36,6 +43,11 @@ export const mainMenu: NavItemWithChildren[] = [
     title: "Events",
     to: "/sveltos/events",
     icon: <RouteIcon className={"w-4 h-4"} />,
+  },
+  {
+    title: "Classifiers",
+    to: "/sveltos/classifiers",
+    icon: <Tags className={"w-4 h-4"} />,
   },
   {
     title: "Dry Run",

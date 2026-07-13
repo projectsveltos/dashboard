@@ -111,7 +111,9 @@ export const ProfileSpecCard = ({ spec, className }: ProfileSpecCardProps) => {
                           )}
                           {check.namespace && (
                             <>
-                              <dt className="text-muted-foreground">Namespace</dt>
+                              <dt className="text-muted-foreground">
+                                Namespace
+                              </dt>
                               <dd className="font-medium">{check.namespace}</dd>
                             </>
                           )}
@@ -166,8 +168,12 @@ export const ProfileSpecCard = ({ spec, className }: ProfileSpecCardProps) => {
                           <dd className="font-medium">{policy.namespace}</dd>
                           <dt className="text-muted-foreground">Kind</dt>
                           <dd className="font-medium">{policy.kind}</dd>
-                          <dt className="text-muted-foreground">Deployment Type</dt>
-                          <dd className="font-medium">{policy.deploymentType}</dd>
+                          <dt className="text-muted-foreground">
+                            Deployment Type
+                          </dt>
+                          <dd className="font-medium">
+                            {policy.deploymentType}
+                          </dd>
                         </dl>
                       </DialogContent>
                     </Dialog>
@@ -196,18 +202,36 @@ export const ProfileSpecCard = ({ spec, className }: ProfileSpecCardProps) => {
                           <DialogTitle>{chart.chartName}</DialogTitle>
                         </DialogHeader>
                         <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                          <dt className="text-muted-foreground">Repository URL</dt>
-                          <dd className="font-medium break-all">{chart.repositoryURL}</dd>
-                          <dt className="text-muted-foreground">Repository Name</dt>
-                          <dd className="font-medium">{chart.repositoryName}</dd>
-                          <dt className="text-muted-foreground">Chart Version</dt>
+                          <dt className="text-muted-foreground">
+                            Repository URL
+                          </dt>
+                          <dd className="font-medium break-all">
+                            {chart.repositoryURL}
+                          </dd>
+                          <dt className="text-muted-foreground">
+                            Repository Name
+                          </dt>
+                          <dd className="font-medium">
+                            {chart.repositoryName}
+                          </dd>
+                          <dt className="text-muted-foreground">
+                            Chart Version
+                          </dt>
                           <dd className="font-medium">{chart.chartVersion}</dd>
-                          <dt className="text-muted-foreground">Release Name</dt>
+                          <dt className="text-muted-foreground">
+                            Release Name
+                          </dt>
                           <dd className="font-medium">{chart.releaseName}</dd>
-                          <dt className="text-muted-foreground">Release Namespace</dt>
-                          <dd className="font-medium">{chart.releaseNamespace}</dd>
+                          <dt className="text-muted-foreground">
+                            Release Namespace
+                          </dt>
+                          <dd className="font-medium">
+                            {chart.releaseNamespace}
+                          </dd>
                           <dt className="text-muted-foreground">Action</dt>
-                          <dd className="font-medium">{chart.helmChartAction}</dd>
+                          <dd className="font-medium">
+                            {chart.helmChartAction}
+                          </dd>
                         </dl>
                         {chart.values && (
                           <div className="rounded-md overflow-hidden border border-border">

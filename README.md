@@ -9,8 +9,8 @@
 
 <div align="center">
 
-| 🌐 Website | 📚 Documentation | 📅 Book a Demo | 💼 Enterprise Support | 🏢 Adopters |
-|:---:|:---:|:---:|:---:|:---:|
+|                 🌐 Website                 |                     📚 Documentation                     |                          📅 Book a Demo                           |              💼 Enterprise Support              |                                  🏢 Adopters                                  |
+| :----------------------------------------: | :------------------------------------------------------: | :---------------------------------------------------------------: | :---------------------------------------------: | :---------------------------------------------------------------------------: |
 | [Visit](https://website.projectsveltos.io) | [Get Started](https://projectsveltos.github.io/sveltos/) | [Schedule 30 min](https://cal.com/gianluca-mardente-nuclsu/30min) | [Contact Us](mailto:gianluca@projectsveltos.io) | [View List](https://github.com/projectsveltos/adopters/blob/main/ADOPTERS.md) |
 
 </div>

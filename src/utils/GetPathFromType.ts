@@ -17,13 +17,15 @@ export const typeFromPath = (path: string): ClusterType => {
   if (
     lowerPath === API_ENDPOINTS.SVELTOS_CLUSTERS.toLowerCase() ||
     lowerPath === sveltosClusterValue.toLowerCase() ||
-    lowerPath === "sveltoscluster"
+    lowerPath === "sveltoscluster" ||
+    lowerPath === "sveltos"
   ) {
     return sveltosClusterValue;
   } else if (
     lowerPath === API_ENDPOINTS.CAPI_CLUSTERS.toLowerCase() ||
     lowerPath === "cluster" ||
-    lowerPath === clusterAPIValue.toLowerCase()
+    lowerPath === clusterAPIValue.toLowerCase() ||
+    lowerPath === "capi"
   ) {
     return clusterAPIValue;
   }

@@ -5,13 +5,22 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/lib/components/ui/inputs/input-group";
+import { Label } from "@/lib/components/ui/inputs/label";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/lib/components/ui/data-display/tooltip";
 import { Search, Trash2 } from "lucide-react";
 import useDebounce from "@/hooks/useDebounce";
 import { appConfig } from "@/config/app";
 
-interface SearchConfig {
+export interface SearchConfig {
   key: string;
+  label?: string;
   placeholder: string;
+  tooltip?: string;
+  icon?: React.ElementType;
 }
 
 interface SearchInputProps {
@@ -86,34 +95,50 @@ export const SearchQueryParamInput: FC<SearchInputProps> = memo(
 
     return (
       <div className="flex flex-wrap gap-4">
-        {searchConfig.map(({ key, placeholder }) => (
-          <InputGroup key={key} className="max-w-sm my-2">
-            <InputGroupInput
-              placeholder={t(placeholder)}
-              value={values[key]}
-              onChange={(e) => handleChange(key, e.target.value)}
-            />
-            <InputGroupAddon>
-              <Search className="cursor-pointer" />
-            </InputGroupAddon>
-            <InputGroupAddon align="inline-end" className="capitalize">
-              {key
-                .replace(/_/g, " ")
-                .replace(/\b\w/g, (char) => char.toUpperCase())}
-            </InputGroupAddon>
-            {values[key] && (
-              <InputGroupAddon
-                align="inline-end"
-                onClick={() => handleClear(key)}
-                className={
-                  "cursor-pointer bg-slate-300 rounded text-xs mx-1 px-1"
-                }
-              >
-                <Trash2 className={"h-4 w-4"} />
-              </InputGroupAddon>
-            )}
-          </InputGroup>
-        ))}
+        {searchConfig.map(({ key, label, placeholder, tooltip, icon: Icon }) => {
+          const field = (
+            <div key={key}>
+              {label && (
+                <Label className="flex items-center text-sm" htmlFor={key}>
+                  {Icon && <Icon className="w-4 h-4" />} {t(label)}
+                </Label>
+              )}
+              <InputGroup className="max-w-sm my-2">
+                <InputGroupInput
+                  id={key}
+                  placeholder={t(placeholder)}
+                  value={values[key]}
+                  onChange={(e) => handleChange(key, e.target.value)}
+                />
+                <InputGroupAddon>
+                  <Search className="cursor-pointer" />
+                </InputGroupAddon>
+                {values[key] && (
+                  <InputGroupAddon
+                    align="inline-end"
+                    onClick={() => handleClear(key)}
+                    className={
+                      "cursor-pointer bg-slate-300 rounded text-xs mx-1 px-1"
+                    }
+                  >
+                    <Trash2 className={"h-4 w-4"} />
+                  </InputGroupAddon>
+                )}
+              </InputGroup>
+            </div>
+          );
+
+          if (!tooltip) {
+            return field;
+          }
+
+          return (
+            <Tooltip key={key}>
+              <TooltipTrigger>{field}</TooltipTrigger>
+              <TooltipContent>{t(tooltip)}</TooltipContent>
+            </Tooltip>
+          );
+        })}
       </div>
     );
   },

@@ -97,9 +97,11 @@ export const ClusterMatchCard = ({
           onClick={() => McpQuery?.refetch()}
           isLoading={McpQuery?.isRefetching}
           mcpResponse={
-            McpQuery?.data && McpQuery.data.length > 0
-              ? McpQuery.data
-              : t("common.relax_no_errors")
+            McpQuery?.isError
+              ? t("common.mcp_unavailable")
+              : McpQuery?.data && McpQuery.data.length > 0
+                ? McpQuery.data
+                : t("common.relax_no_errors")
           }
         >
           {t("common.analyze_pipeline")}

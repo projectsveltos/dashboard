@@ -1,5 +1,5 @@
 import { Button } from "@/lib/components/ui/inputs/button";
-import { Check, ChevronLeft } from "lucide-react";
+import { ArrowUpCircle, Check, ChevronLeft } from "lucide-react";
 import { Badge } from "@/lib/components/ui/data-display/badge";
 import { useNavigate } from "react-router-dom";
 import { Icons } from "@/lib/components/icons";
@@ -18,7 +18,14 @@ type ClusterHeadingProps = {
   mcpDebugQuery?: {
     refetch: () => void;
     isFetching: boolean;
+    isError: boolean;
     data?: DebugClusterResponse;
+  };
+  outdatedHelmChartsQuery?: {
+    refetch: () => void;
+    isFetching: boolean;
+    isError: boolean;
+    data?: string[];
   };
 };
 
@@ -30,11 +37,15 @@ export const ClusterHeading = ({
   namespace,
   failureMsg,
   mcpDebugQuery,
+  outdatedHelmChartsQuery,
 }: ClusterHeadingProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   function triggerMcpDebugQuery() {
     mcpDebugQuery?.refetch();
+  }
+  function triggerOutdatedHelmChartsQuery() {
+    outdatedHelmChartsQuery?.refetch();
   }
   return (
     <>
@@ -86,12 +97,30 @@ export const ClusterHeading = ({
 
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
           <McpButton
+            onClick={triggerOutdatedHelmChartsQuery}
+            isLoading={outdatedHelmChartsQuery?.isFetching}
+            icon={
+              <ArrowUpCircle className="mr-2 h-4 w-4 mx-auto text-sky-500" />
+            }
+            mcpResponse={
+              outdatedHelmChartsQuery?.isError
+                ? t("common.mcp_unavailable")
+                : outdatedHelmChartsQuery?.data?.length
+                  ? outdatedHelmChartsQuery.data
+                  : t("common.no_updates_data_relax")
+            }
+          >
+            {t("common.updates")}
+          </McpButton>
+          <McpButton
             onClick={triggerMcpDebugQuery}
             isLoading={mcpDebugQuery?.isFetching}
             mcpResponse={
-              mcpDebugQuery?.data?.formattedData?.length
-                ? mcpDebugQuery.data.formattedData
-                : t("common.no_debug_data_relax")
+              mcpDebugQuery?.isError
+                ? t("common.mcp_unavailable")
+                : mcpDebugQuery?.data?.formattedData?.length
+                  ? mcpDebugQuery.data.formattedData
+                  : t("common.no_debug_data_relax")
             }
           >
             {t("common.debug")}

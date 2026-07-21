@@ -22,6 +22,9 @@ export type AddonData = {
   profileType?: string;
   profileNames?: string[];
   repoURL?: string;
+  latestVersion?: string;
+  latestPatchVersion?: string;
+  lastCheckedTime?: string;
   helmReleases?: AddonTableTypes[];
   totalHelmReleases?: number;
   resources?: AddonTableTypes[];

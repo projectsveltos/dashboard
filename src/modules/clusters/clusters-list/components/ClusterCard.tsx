@@ -10,7 +10,7 @@ import { ReadyFlag } from "@/lib/components/ui/data-display/ready-flag";
 import { FailedFlag } from "@/lib/components/ui/data-display/failed-flag";
 import { Label } from "@/types/cluster.types";
 import { appConfig } from "@/config/app";
-import { AlertTriangle, Clock, Tags } from "lucide-react";
+import { AlertTriangle, ArrowUpCircle, Clock, Tags } from "lucide-react";
 import { PauseIcon } from "@radix-ui/react-icons";
 
 interface ClusterCardProps {
@@ -23,6 +23,7 @@ interface ClusterCardProps {
   failureMsg?: string | null;
   hasIssues?: boolean;
   isProvisioning?: boolean;
+  hasOutdatedHelmCharts?: boolean;
 }
 
 import { useTranslation } from "react-i18next";
@@ -37,6 +38,7 @@ export const ClusterCard = ({
   failureMsg,
   hasIssues,
   isProvisioning,
+  hasOutdatedHelmCharts,
 }: ClusterCardProps) => {
   const { t } = useTranslation();
   const labelEntries = Object.entries(labels || {});
@@ -74,6 +76,16 @@ export const ClusterCard = ({
                   </TooltipTrigger>
                   <TooltipContent>
                     <p>{t("common.deployment_in_progress")}</p>
+                  </TooltipContent>
+                </Tooltip>
+              )}
+              {hasOutdatedHelmCharts && (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <ArrowUpCircle className="h-3.5 w-3.5 text-sky-500 shrink-0 cursor-default" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <p>{t("common.helm_updates_available")}</p>
                   </TooltipContent>
                 </Tooltip>
               )}

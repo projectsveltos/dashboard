@@ -7,6 +7,7 @@ export enum AddonTableTypes {
   GROUP = "group/version",
   KIND = "kind",
   STATUS = "status",
+  HELM_UPDATE = "latestVersion/latestPatchVersion",
   ACTION = "action",
   ICON = "icon",
   FAILURE_MESSAGE = "failureMessage",

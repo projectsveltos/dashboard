@@ -51,6 +51,11 @@ export const helmColumns: Column[] = [
     keys: "chartVersion/version",
   },
   {
+    label: "common.update_available",
+    className: "hidden sm:table-cell",
+    keys: AddonTableTypes.HELM_UPDATE,
+  },
+  {
     label: "common.last_applied",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.TIME,

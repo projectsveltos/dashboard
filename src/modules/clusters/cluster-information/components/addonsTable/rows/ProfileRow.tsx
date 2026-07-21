@@ -72,9 +72,11 @@ export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
                     onClick={triggerMcp}
                     isLoading={debugProfileClusterQuery?.isFetching}
                     mcpResponse={
-                      debugProfileClusterQuery?.data
-                        ? debugProfileClusterQuery.data
-                        : t("common.no_debug_data")
+                      debugProfileClusterQuery?.isError
+                        ? t("common.mcp_unavailable")
+                        : debugProfileClusterQuery?.data
+                          ? debugProfileClusterQuery.data
+                          : t("common.no_debug_data")
                     }
                     variant={"highlight"}
                   >

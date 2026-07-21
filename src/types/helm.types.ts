@@ -6,6 +6,9 @@ export interface HelmReleaseType {
   icon: string;
   lastAppliedTime: string;
   profileName: string;
+  latestVersion?: string;
+  latestPatchVersion?: string;
+  lastCheckedTime?: string;
 }
 
 export type HelmReleaseReponse = {

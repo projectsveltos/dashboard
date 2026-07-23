@@ -12,6 +12,7 @@ export interface ClusterInfoType {
   kind?: string;
   hasIssues?: boolean;
   isProvisioning?: boolean;
+  hasOutdatedHelmCharts?: boolean;
   clusterInfo: {
     labels: Label;
     version: string;

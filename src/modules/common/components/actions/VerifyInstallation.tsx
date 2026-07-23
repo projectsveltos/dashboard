@@ -25,7 +25,9 @@ export function VerifyInstallation() {
       }
       isLoading={installationQuery?.isFetching}
       mcpResponse={
-        installationQuery?.data?.details || t("common.no_verification_data")
+        installationQuery?.isError
+          ? t("common.mcp_unavailable")
+          : installationQuery?.data?.details || t("common.no_verification_data")
       }
     >
       {installationQuery?.data?.is_correctly_installed

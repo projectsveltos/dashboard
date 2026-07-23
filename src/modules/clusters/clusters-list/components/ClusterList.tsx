@@ -46,6 +46,7 @@ export const ClusterList: FC<ClusterListProps> = ({
                   labels={cluster.clusterInfo.labels}
                   hasIssues={cluster.hasIssues}
                   isProvisioning={cluster.isProvisioning}
+                  hasOutdatedHelmCharts={cluster.hasOutdatedHelmCharts}
                 />
               </div>
             ))}

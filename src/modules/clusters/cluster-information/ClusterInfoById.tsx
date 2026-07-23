@@ -9,6 +9,7 @@ import { AddonTypes } from "@/types/addon.types";
 import { ErrorQuery } from "@/modules/common/components/feedback/ErrorQuery";
 import { useClusterTableInfo } from "@/modules/clusters/cluster-information/hooks/useClusterTableInfo";
 import { useMcp } from "@/hooks/useMcp";
+import { useOutdatedHelmCharts } from "@/hooks/useOutdatedHelmCharts";
 import { getClusterInfoType } from "@/utils/GetClusterInfoType";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { Tags } from "lucide-react";
@@ -25,6 +26,11 @@ export function ClusterInfoById() {
     "",
     "",
   );
+  const outdatedHelmChartsQuery = useOutdatedHelmCharts({
+    namespace: namespace ?? "",
+    name: name ?? "",
+    type: getClusterInfoType(type as ClusterType),
+  });
   const { queries, setPage } = useClusterTableInfo(
     namespace as string,
     name as string,
@@ -62,6 +68,7 @@ export function ClusterInfoById() {
               InfoQuery.data.managedClusters[0]?.clusterInfo.failureMessage
             }
             mcpDebugQuery={debugClusterQuery}
+            outdatedHelmChartsQuery={outdatedHelmChartsQuery}
             namespace={InfoQuery.data.managedClusters[0].namespace}
             version={InfoQuery.data.managedClusters[0]?.clusterInfo.version}
           />

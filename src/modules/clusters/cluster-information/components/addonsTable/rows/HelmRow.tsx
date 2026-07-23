@@ -85,6 +85,21 @@ export const HelmRow = ({ row, columns, onOpenRepo }: HelmRowProps) => {
             </TableCell>
           );
         }
+        if (key === AddonTableTypes.HELM_UPDATE) {
+          const newerVersion = row.latestPatchVersion || row.latestVersion;
+          return (
+            <TableCell key={colIndex} className={column.className}>
+              {newerVersion && (
+                <Badge
+                  variant="outline"
+                  className="border-amber-400 text-amber-600"
+                >
+                  {newerVersion}
+                </Badge>
+              )}
+            </TableCell>
+          );
+        }
         if (key === AddonTableTypes.PROFILE) {
           return (
             <TableCell

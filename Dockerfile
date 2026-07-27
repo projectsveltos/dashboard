@@ -56,6 +56,15 @@ ENV VITE_BACKEND_NAME=${VITE_BACKEND_NAME}
 ENV VITE_APP_BACKEND_URL=${VITE_APP_BACKEND_URL}
 ENV VITE_APP_VERSION=${VITE_APP_VERSION}
 
+LABEL org.opencontainers.image.source="https://github.com/projectsveltos/dashboard" \
+      org.opencontainers.image.url="https://projectsveltos.io" \
+      org.opencontainers.image.licenses="Apache-2.0" \
+      org.opencontainers.image.vendor="projectsveltos" \
+      org.opencontainers.image.title="dashboard" \
+      org.opencontainers.image.description="Sveltos Dashboard web UI." \
+      org.opencontainers.image.version="$VITE_APP_VERSION" \
+      org.opencontainers.image.revision="$VITE_APP_VERSION"
+
 EXPOSE 5173
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

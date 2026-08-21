@@ -16,19 +16,28 @@ jobs:
       - name: checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      - name: Set up pnpm
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install --frozen-lockfile
 
       - name: Run linting
-        run: npm run lint
+        run: pnpm run lint
 
       # Will be added later on
       #      - name: Run tests
-      #        run: npm test -- --coverage
+      #        run: pnpm test -- --coverage
 
-      - name: Build
-        run: npm run build
-
+      # The app build itself is exercised by "Build Docker image" below (the Dockerfile's
+      # builder stage runs pnpm install + pnpm run build again from a clean checkout) - running
+      # it a second time here on the runner would only duplicate that, not add coverage.
       - name: Build Docker image
         run: |
           docker build --build-arg VITE_APP_VERSION=v0.0.1 --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --build-arg  BUILDOS=linux --build-arg TARGETARCH=amd64 -t sveltos-dashboard-ui:latest .

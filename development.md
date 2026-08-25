@@ -54,11 +54,12 @@ if the port is not available , it will automatically switch to the next availabl
 
 OIDC authentication uses Authorization Code Flow with PKCE. If the following variables are not set, the login page falls back to manual token authentication.
 
-| Variable                 | Description                                  | Default                  |
-| ------------------------ | -------------------------------------------- | ------------------------ |
-| `VITE_OIDC_ISSUER`       | Issuer URL of your OIDC provider             | —                        |
-| `VITE_OIDC_CLIENT_ID`    | Client ID registered with your OIDC provider | —                        |
-| `VITE_OIDC_REDIRECT_URI` | Full redirect URI after OIDC login           | `<origin>/oidc-callback` |
+| Variable                 | Description                                  | Default                                   |
+| ------------------------ | -------------------------------------------- | ------------------------------------------ |
+| `VITE_OIDC_ISSUER`       | Issuer URL of your OIDC provider             | —                                          |
+| `VITE_OIDC_CLIENT_ID`    | Client ID registered with your OIDC provider | —                                          |
+| `VITE_OIDC_REDIRECT_URI` | Full redirect URI after OIDC login           | `<origin>/oidc-callback`                  |
+| `VITE_OIDC_SCOPE`        | Scope requested during OIDC login            | `openid profile email offline_access`     |
 
 ##### Example:
 
@@ -69,3 +70,11 @@ VITE_OIDC_REDIRECT_URI=http://localhost:5173/oidc-callback
 ```
 
 The redirect URI must be registered as an allowed callback URL in your OIDC provider.
+
+Override `VITE_OIDC_SCOPE` when the API server expects an access token audienced to a
+specific resource — e.g. AKS with Microsoft Entra ID authorization requires the AKS
+server app's scope included:
+
+```
+VITE_OIDC_SCOPE=openid profile email offline_access 6dae42f8-4368-4678-94ff-3960e28e3630/user_impersonation
+```

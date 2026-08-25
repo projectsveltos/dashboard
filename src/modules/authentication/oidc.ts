@@ -11,6 +11,13 @@ const redirectUri =
   window.__CONFIG__?.oidcRedirectUri ||
   (import.meta.env.VITE_OIDC_REDIRECT_URI as string | undefined) ||
   `${window.location.origin}/oidc-callback`;
+const defaultScope = "openid profile email offline_access";
+// Override when the provider must issue an access token audienced to a specific resource,
+// e.g. AKS with Microsoft Entra ID authorization requires the AKS server app's scope here.
+const scope =
+  window.__CONFIG__?.oidcScope ||
+  (import.meta.env.VITE_OIDC_SCOPE as string | undefined) ||
+  defaultScope;
 
 // Derive the route path from the redirect URI
 export const oidcCallbackPath = new URL(redirectUri, window.location.origin)
@@ -24,7 +31,7 @@ export const userManager = isOidcConfigured
       client_id: clientId!,
       redirect_uri: redirectUri,
       response_type: "code",
-      scope: "openid profile email offline_access",
+      scope,
       userStore: new WebStorageStateStore({ store: window.sessionStorage }),
       automaticSilentRenew: true,
     })

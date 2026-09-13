@@ -2,6 +2,7 @@ interface AppConfig {
   oidcIssuer: string;
   oidcClientId: string;
   oidcRedirectUri: string;
+  oidcScope: string;
 }
 
 declare global {

@@ -16,6 +16,8 @@ export const colorFromStatus = (status: string | undefined) => {
       return "bg-red-500";
     case "Removing":
       return "bg-yellow-500";
+    case "Blocked":
+      return "bg-amber-500";
     case "Removed":
       return "bg-gray-500";
     default:

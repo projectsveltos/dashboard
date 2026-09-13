@@ -1,0 +1,3 @@
+minimumReleaseAgeExclude:
+  - autoprefixer@10.6.0
+  - tailwind-merge@3.7.0

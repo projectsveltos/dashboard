@@ -1,5 +1,5 @@
 import { Button } from "@/lib/components/ui/inputs/button";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Pencil, Trash2 } from "lucide-react";
 import { Badge } from "@/lib/components/ui/data-display/badge";
 import { useNavigate } from "react-router-dom";
 import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
@@ -10,6 +10,8 @@ type ProfileInfoHeading = {
   kind?: string;
   namespace?: string;
   tier?: string | number;
+  onEdit?: () => void;
+  onDelete?: () => void;
 };
 
 export const ProfileInfoHeading = ({
@@ -17,6 +19,8 @@ export const ProfileInfoHeading = ({
   kind,
   tier,
   namespace,
+  onEdit,
+  onDelete,
 }: ProfileInfoHeading) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -56,6 +60,18 @@ export const ProfileInfoHeading = ({
         )}
 
         <div className="hidden items-center gap-2 md:ml-auto md:flex">
+          {onEdit && (
+            <Button variant="outline" size="sm" onClick={onEdit}>
+              <Pencil className="h-4 w-4 mr-2" />
+              {t("common.edit")}
+            </Button>
+          )}
+          {onDelete && (
+            <Button variant="outline" size="sm" onClick={onDelete}>
+              <Trash2 className="h-4 w-4 mr-2" />
+              {t("common.delete")}
+            </Button>
+          )}
           <RefreshButton />
         </div>
       </div>

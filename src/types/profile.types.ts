@@ -133,3 +133,58 @@ export interface DryRunResponse {
   resourceChanges?: ResourceChange[];
   helmReleaseChanges?: HelmReleaseChange[];
 }
+
+export interface ProfileIdentity {
+  kind: string;
+  namespace?: string;
+  name: string;
+}
+
+export interface HelmChartInput {
+  repositoryURL: string;
+  repositoryName?: string;
+  chartName?: string;
+  chartVersion?: string;
+  releaseNamespace: string;
+  releaseName: string;
+  values?: string;
+}
+
+export interface ExistingContentRef {
+  kind: string;
+  namespace: string;
+  name: string;
+}
+
+export interface RemoteURLSecretRef {
+  namespace: string;
+  name: string;
+}
+
+export interface RemoteURLInput {
+  url: string;
+  interval?: string;
+  secretRef?: RemoteURLSecretRef;
+  template?: boolean;
+  insecureSkipTLSVerify?: boolean;
+  plainHTTP?: boolean;
+}
+
+export interface CreateProfileRequest extends ProfileIdentity {
+  clusterSelector: { [key: string]: string };
+  tier?: number;
+  dependsOn?: string[];
+  helmChart?: HelmChartInput;
+  yaml?: string;
+  existingContent?: ExistingContentRef;
+  remoteURL?: RemoteURLInput;
+}
+
+export interface UpdateProfileRequest extends ProfileIdentity {
+  specYAML: string;
+  referencedContent?: { [key: string]: string };
+}
+
+export interface DeleteProfileRequest extends ProfileIdentity {
+  removeReferencedContent?: boolean;
+}

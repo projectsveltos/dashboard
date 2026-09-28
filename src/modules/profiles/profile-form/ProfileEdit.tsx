@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { dump } from "js-yaml";
 
 import { Button } from "@/lib/components/ui/inputs/button";
 import { Textarea } from "@/lib/components/ui/inputs/textarea";
@@ -10,6 +9,7 @@ import { Card, CardContent } from "@/lib/components/ui/data-display/card";
 import { LoadingPage } from "@/lib/components/ui/feedback/LoadingPage";
 import useProfileInfo from "@/modules/profiles/profile-information/hooks/useProfileInfo";
 import { useUpdateProfile } from "@/modules/profiles/profile-form/hooks/useProfileMutations";
+import toYaml from "@/utils/toYaml";
 
 export const ProfileEdit = () => {
   const { t } = useTranslation();
@@ -27,7 +27,7 @@ export const ProfileEdit = () => {
   // The backend parses specYAML with sigs.k8s.io/yaml so the edited YAML is sent back as is.
   useEffect(() => {
     if (data) {
-      setSpecYAML(dump(data.spec));
+      setSpecYAML(toYaml(data.spec));
     }
   }, [data]);
 

@@ -2,8 +2,13 @@ import { CardsFilterToolbar } from "@/modules/clusters/clusters-list/components/
 interface PageHeadingProps {
   title: string;
   description: string;
+  actions?: React.ReactNode;
 }
-export const PageHeading = ({ title, description }: PageHeadingProps) => {
+export const PageHeading = ({
+  title,
+  description,
+  actions,
+}: PageHeadingProps) => {
   return (
     <>
       <div className="hidden space-y-1 py-4 flex-col md:flex">
@@ -23,8 +28,11 @@ export const PageHeading = ({ title, description }: PageHeadingProps) => {
               .
             </p>
           </div>
-          <div className="justify-end scale-90 origin-right">
-            <CardsFilterToolbar />
+          <div className="flex items-center gap-2">
+            {actions}
+            <div className="justify-end scale-90 origin-right">
+              <CardsFilterToolbar />
+            </div>
           </div>
         </div>
       </div>

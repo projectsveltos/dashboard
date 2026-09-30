@@ -13,6 +13,8 @@ import {
   oidcCallbackPath,
 } from "@/modules/authentication/oidc";
 import { ProfileInformation } from "@/modules/profiles/profile-information/ProfileInformation";
+import { ProfileCreatePage } from "@/modules/profiles/profile-form/ProfileCreatePage";
+import { ProfileEdit } from "@/modules/profiles/profile-form/ProfileEdit";
 import { Logout } from "@/modules/authentication/Logout";
 import PreserveSearchNavigate from "@/hooks/NavigateWithParams";
 import { ProfilePage } from "@/modules/profiles/profiles-list/ProfilePage";
@@ -100,12 +102,24 @@ export const routes: RouteObject[] = [
         element: <ProfilePage />,
       },
       {
+        path: "/sveltos/profile/new",
+        element: <ProfileCreatePage />,
+      },
+      {
         path: "/sveltos/profile/:namespace/:name/:kind",
         element: <ProfileInformation />,
       },
       {
         path: "/sveltos/profile/:name/:kind",
         element: <ProfileInformation />,
+      },
+      {
+        path: "/sveltos/profile/:namespace/:name/:kind/edit",
+        element: <ProfileEdit />,
+      },
+      {
+        path: "/sveltos/profile/:name/:kind/edit",
+        element: <ProfileEdit />,
       },
       {
         path: "/sveltos/clusters",

@@ -22,6 +22,40 @@ import { MatchingCluster } from "@/types/profile.types";
 import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
 import { useTranslation } from "react-i18next";
 
+type ClusterStatus = "failed" | "provisioning" | "provisioned";
+
+// The status of a cluster is derived from the status of its features
+function getClusterStatus(
+  features: MatchingCluster["clusterFeatureSummaries"],
+): ClusterStatus {
+  if (features.some((feature) => feature.failureMessage)) {
+    return "failed";
+  }
+
+  // No feature yet (for instance, waiting for a dependency) or a feature not deployed yet
+  if (
+    features.length === 0 ||
+    features.some((feature) => feature.status !== "Provisioned")
+  ) {
+    return "provisioning";
+  }
+
+  return "provisioned";
+}
+
+function ClusterStatusBadge({ status }: { status: ClusterStatus }) {
+  const { t } = useTranslation();
+
+  switch (status) {
+    case "failed":
+      return <Badge variant={"destructive"}>{t("common.failed")}</Badge>;
+    case "provisioning":
+      return <Badge variant={"warning"}>{t("common.provisioning")}</Badge>;
+    default:
+      return <Badge variant={"success"}>{t("common.provisioned")}</Badge>;
+  }
+}
+
 export default function MatchingClusterTable({
   data,
 }: {
@@ -95,18 +129,11 @@ export default function MatchingClusterTable({
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        {cluster.clusterFeatureSummaries.some(
-                          (feature) => feature.failureMessage,
-                        ) ? (
-                          <Badge variant={"destructive"}>
-                            {t("common.failed")}
-                          </Badge>
-                        ) : (
-                          <Badge variant={"success"}>
-                            {" "}
-                            {t("common.provisioned")}
-                          </Badge>
-                        )}
+                        <ClusterStatusBadge
+                          status={getClusterStatus(
+                            cluster.clusterFeatureSummaries,
+                          )}
+                        />
                       </TableCell>
                     </TableRow>
                     <TableRow

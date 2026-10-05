@@ -49,6 +49,7 @@
     "status": "Statut",
     "failed": "Échoué",
     "provisioned": "Provisionné",
+    "provisioning": "Provisionnement en cours",
     "feature_id": "ID de fonctionnalité",
     "failure_message": "Message d'échec",
     "trigger_event": "Déclencher l'événement",

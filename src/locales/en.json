@@ -48,6 +48,7 @@
     "status": "Status",
     "failed": "Failed",
     "provisioned": "Provisioned",
+    "provisioning": "Provisioning",
     "feature_id": "Feature ID",
     "failure_message": "Failure Message",
     "trigger_event": "Trigger Event",

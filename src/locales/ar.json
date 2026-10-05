@@ -48,6 +48,7 @@
     "status": "الحالة",
     "failed": "فشل",
     "provisioned": "تم توفيره",
+    "provisioning": "قيد التوفير",
     "feature_id": "معرف الميزة",
     "failure_message": "رسالة الفشل",
     "trigger_event": "تشغيل الحدث",

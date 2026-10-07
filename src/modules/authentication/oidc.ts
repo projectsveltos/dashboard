@@ -1,4 +1,4 @@
-import { UserManager, WebStorageStateStore } from "oidc-client-ts";
+import { User, UserManager, WebStorageStateStore } from "oidc-client-ts";
 
 // Prefer runtime config (injected by Docker entrypoint); fall back to build-time env vars for local dev.
 const authority =
@@ -19,6 +19,17 @@ const scope =
   (import.meta.env.VITE_OIDC_SCOPE as string | undefined) ||
   defaultScope;
 
+// Which token of the OIDC login is sent to the backend as the bearer token.
+// The access token is the default. Set "id_token" when the provider issues access tokens that the
+// Kubernetes API server, or the OIDC proxy in front of it, cannot verify, for instance encrypted (JWE)
+// or opaque ones: both only accept signed JWTs, which the ID token is.
+type OidcTokenType = "access_token" | "id_token";
+const tokenTypeSetting =
+  window.__CONFIG__?.oidcTokenType ||
+  (import.meta.env.VITE_OIDC_TOKEN_TYPE as string | undefined);
+export const oidcTokenType: OidcTokenType =
+  tokenTypeSetting === "id_token" ? "id_token" : "access_token";
+
 // Derive the route path from the redirect URI
 export const oidcCallbackPath = new URL(redirectUri, window.location.origin)
   .pathname;
@@ -37,10 +48,22 @@ export const userManager = isOidcConfigured
     })
   : null;
 
+/**
+ * Returns the token of the user to send to the backend: the access token, or the ID token when the
+ * dashboard is configured for it. Undefined when the provider did not return the configured one.
+ */
+export const getAuthToken = (
+  user: Pick<User, "access_token" | "id_token">,
+): string | undefined =>
+  oidcTokenType === "id_token" ? user.id_token : user.access_token;
+
 /** Registers a callback invoked whenever oidc-client-ts loads a (renewed) user. Returns a cleanup function to deregister it. */
-export const onTokenRenewed = (cb: (accessToken: string) => void) => {
+export const onTokenRenewed = (cb: (token: string) => void) => {
   if (!userManager) return () => {};
-  const handler = (user: { access_token: string }) => cb(user.access_token);
+  const handler = (user: User) => {
+    const token = getAuthToken(user);
+    if (token) cb(token);
+  };
   userManager.events.addUserLoaded(handler);
   return () => userManager.events.removeUserLoaded(handler);
 };

@@ -8,8 +8,8 @@ export const useOidcTokenSync = () => {
   useEffect(() => {
     if (!isOidcConfigured) return;
 
-    return onTokenRenewed((accessToken) => {
-      localStorage.setItem("authToken", accessToken);
+    return onTokenRenewed((token) => {
+      localStorage.setItem("authToken", token);
     });
   }, []);
 };

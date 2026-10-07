@@ -3,4 +3,5 @@ window.__CONFIG__ = {
   oidcClientId: "${OIDC_CLIENT_ID}",
   oidcRedirectUri: "${OIDC_REDIRECT_URI}",
   oidcScope: "${OIDC_SCOPE}",
+  oidcTokenType: "${OIDC_TOKEN_TYPE}",
 };

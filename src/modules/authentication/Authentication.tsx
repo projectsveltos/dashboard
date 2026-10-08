@@ -16,6 +16,9 @@ export const Authentication = () => {
     if (params.get("error") === "unauthorized") {
       setErrorMessage("Unauthorized, please login again");
     }
+    if (params.get("error") === "session_expired") {
+      setErrorMessage("Your session has expired, please login again");
+    }
   }, [location]);
 
   return (

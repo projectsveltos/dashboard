@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { userManager } from "@/modules/authentication/oidc";
+import { getAuthToken, userManager } from "@/modules/authentication/oidc";
 import useAuth from "@/modules/authentication/hooks/useAuth";
 
 export const OidcCallback = () => {
@@ -15,7 +15,12 @@ export const OidcCallback = () => {
     userManager
       .signinRedirectCallback()
       .then((user) => {
-        authenticate(user.access_token);
+        const token = getAuthToken(user);
+        if (!token) {
+          navigate("/login?error=unauthorized");
+          return;
+        }
+        authenticate(token);
       })
       .catch(() => {
         navigate("/login?error=unauthorized");

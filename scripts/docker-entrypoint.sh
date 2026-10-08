@@ -10,6 +10,7 @@ echo "  - OIDC_ISSUER: $OIDC_ISSUER"
 echo "  - OIDC_CLIENT_ID: $OIDC_CLIENT_ID"
 echo "  - OIDC_REDIRECT_URI: $OIDC_REDIRECT_URI"
 echo "  - OIDC_SCOPE: $OIDC_SCOPE"
+echo "  - OIDC_TOKEN_TYPE: $OIDC_TOKEN_TYPE"
 
 # Confirm template file exists
 TEMPLATE_PATH="/etc/nginx/templates/nginx.template.conf"
@@ -24,7 +25,7 @@ echo "📄 Found template at $TEMPLATE_PATH"
 
 # Generate runtime config.js from template
 echo "🔁 Generating runtime config.js..."
-envsubst '$OIDC_ISSUER $OIDC_CLIENT_ID $OIDC_REDIRECT_URI $OIDC_SCOPE' \
+envsubst '$OIDC_ISSUER $OIDC_CLIENT_ID $OIDC_REDIRECT_URI $OIDC_SCOPE $OIDC_TOKEN_TYPE' \
   < /docker-entrypoint.d/config.template.js \
   > /app/dist/config.js
 

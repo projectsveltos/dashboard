@@ -177,6 +177,13 @@
     "edit": "Edit",
     "delete": "Delete",
     "kind_hint_cluster_profile": "Cluster scoped, matches clusters across all namespaces.",
-    "kind_hint_profile": "Namespace scoped, matches clusters in the same namespace."
+    "kind_hint_profile": "Namespace scoped, matches clusters in the same namespace.",
+    "drift": "Drift",
+    "drift_truncated": "The most recent drift involved more resources than could be reported.",
+    "drift_resources_not_reported": "Drift was detected, but the affected resources were not reported.",
+    "helm_release": "Helm release",
+    "drift_history": "Drift history",
+    "drift_last_detected": "Last drift detected at",
+    "detected": "Detected"
   }
 }

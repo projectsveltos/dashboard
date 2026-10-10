@@ -9,29 +9,20 @@ import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
 import { AddonData } from "@/types/addon.types";
 import { AddonColumn, AddonTableTypes } from "@/types/addonTable.types";
 import { colorFromStatus, isNotProvisioned } from "@/lib/utils";
-import { Button } from "@/lib/components/ui/inputs/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "@/lib/components/ui/inputs/dropdown-menu";
-import { ExternalLink, MoreHorizontal } from "lucide-react";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 import { useParams } from "react-router-dom";
 import { useMcp } from "@/hooks/useMcp";
 import { getClusterInfoType } from "@/utils/GetClusterInfoType";
 import { ClusterType } from "@/types/cluster.types";
 import { useTranslation } from "react-i18next";
+import { DriftDialog } from "@/modules/clusters/cluster-information/components/addonsTable/DriftDialog";
 
 interface ProfileRowProps {
   row: AddonData;
   columns: AddonColumn[];
-  onOpenRepo?: (url: string | undefined) => void;
 }
 
-export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
+export const ProfileRow = ({ row, columns }: ProfileRowProps) => {
   const { t } = useTranslation();
   const { tab: type, name, namespace } = useParams();
   const { debugProfileClusterQuery } = useMcp(
@@ -124,29 +115,15 @@ export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
             </TableCell>
           );
         }
-        if (key === AddonTableTypes.ACTION) {
+        if (key === AddonTableTypes.DRIFT) {
           return (
             <TableCell key={colIndex} className={column.className}>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button aria-haspopup="true" size="icon" variant="ghost">
-                    <MoreHorizontal className="h-4 w-4" />
-                    <span className="sr-only">Toggle menu</span>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                  {row.repoURL && (
-                    <DropdownMenuItem
-                      onSelect={() => onOpenRepo && onOpenRepo(row.repoURL)}
-                    >
-                      <ExternalLink className={"w-4 h-4 mx-1"} /> repoURL
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuItem disabled>Edit</DropdownMenuItem>
-                  <DropdownMenuItem disabled>Delete</DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              {row.driftHistory && (
+                <DriftDialog
+                  featureID={row.featureID}
+                  history={row.driftHistory}
+                />
+              )}
             </TableCell>
           );
         }
@@ -155,7 +132,9 @@ export const ProfileRow = ({ row, columns, onOpenRepo }: ProfileRowProps) => {
             {key
               .split("/")
               .map((k: string) => (
-                <div key={k}>{row[k as keyof AddonData]}</div>
+                <div key={k}>
+                  {row[k as keyof AddonData] as unknown as string}
+                </div>
               ))
               .filter(Boolean)}
           </TableCell>

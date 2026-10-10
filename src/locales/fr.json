@@ -130,6 +130,13 @@
     "search_cluster_namespace_tooltip_events": "Filtre les déclencheurs d'événements correspondant à un cluster dans cet espace de noms",
     "search_cluster_name_tooltip_events": "Filtre les déclencheurs d'événements correspondant à un cluster portant ce nom",
     "search_cluster_namespace_tooltip_classifiers": "Filtre les classificateurs correspondant à un cluster dans cet espace de noms",
-    "search_cluster_name_tooltip_classifiers": "Filtre les classificateurs correspondant à un cluster portant ce nom"
+    "search_cluster_name_tooltip_classifiers": "Filtre les classificateurs correspondant à un cluster portant ce nom",
+    "drift": "Dérive",
+    "drift_truncated": "La dernière dérive concernait plus de ressources que celles qui ont pu être signalées.",
+    "drift_resources_not_reported": "Une dérive a été détectée, mais les ressources concernées n'ont pas été signalées.",
+    "helm_release": "Release Helm",
+    "drift_history": "Historique des dérives",
+    "drift_last_detected": "Dernière dérive détectée le",
+    "detected": "Détectée"
   }
 }

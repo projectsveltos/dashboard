@@ -129,6 +129,13 @@
     "search_cluster_namespace_tooltip_events": "تصفية مشغلات الأحداث المطابقة لكلاستر في هذا النيم سبيس",
     "search_cluster_name_tooltip_events": "تصفية مشغلات الأحداث المطابقة لكلاستر بهذا الاسم",
     "search_cluster_namespace_tooltip_classifiers": "تصفية المصنّفات المطابقة لكلاستر في هذا النيم سبيس",
-    "search_cluster_name_tooltip_classifiers": "تصفية المصنّفات المطابقة لكلاستر بهذا الاسم"
+    "search_cluster_name_tooltip_classifiers": "تصفية المصنّفات المطابقة لكلاستر بهذا الاسم",
+    "drift": "الانحراف",
+    "drift_truncated": "شمل آخر انحراف موارد أكثر مما أمكن الإبلاغ عنه.",
+    "drift_resources_not_reported": "تم اكتشاف انحراف، لكن لم يتم الإبلاغ عن الموارد المتأثرة.",
+    "helm_release": "إصدار Helm",
+    "drift_history": "سجل الانحراف",
+    "drift_last_detected": "آخر انحراف تم اكتشافه في",
+    "detected": "تم الاكتشاف"
   }
 }

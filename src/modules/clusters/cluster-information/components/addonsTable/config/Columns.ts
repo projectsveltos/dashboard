@@ -31,9 +31,9 @@ export const profileColumns: Column[] = [
     keys: AddonTableTypes.FAILURE_MESSAGE,
   },
   {
-    label: "",
-    className: "",
-    keys: AddonTableTypes.ACTION,
+    label: "common.drift",
+    className: "hidden sm:table-cell",
+    keys: AddonTableTypes.DRIFT,
   },
 ];
 

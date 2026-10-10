@@ -13,8 +13,24 @@ export type AddonTableData = {
   profiles?: AddonData[];
 };
 export const addonTypes: AddonTypes[] = Object.values(AddonTypes);
+export type DriftedResource = {
+  group?: string;
+  kind: string;
+  namespace?: string;
+  name: string;
+  helmReleaseNamespace?: string;
+  helmReleaseName?: string;
+  detectedTime: string;
+};
+export type DriftHistory = {
+  lastDetectedTime: string;
+  resources?: DriftedResource[];
+  truncated?: boolean;
+};
 export type AddonData = {
   failureMessage?: string;
+  featureID?: string;
+  driftHistory?: DriftHistory;
   icon?: string;
   lastAppliedTime?: string;
   status?: string;

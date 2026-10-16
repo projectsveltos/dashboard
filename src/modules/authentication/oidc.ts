@@ -36,6 +36,16 @@ export const oidcCallbackPath = new URL(redirectUri, window.location.origin)
 
 export const isOidcConfigured = Boolean(authority && clientId);
 
+/**
+ * Explains why the sign-in could not start. Starting it means fetching the provider's discovery
+ * document, so the usual causes are a provider the browser cannot reach and a TLS certificate it does
+ * not trust. Browsers report both only as a failed fetch.
+ */
+export const describeSigninError = (error: unknown): string => {
+  const detail = error instanceof Error ? error.message : String(error);
+  return `Could not start the sign-in with ${authority || "the OIDC provider"}: ${detail}. Check that the provider is reachable from this browser and that its TLS certificate is trusted.`;
+};
+
 export const userManager = isOidcConfigured
   ? new UserManager({
       authority: authority!,

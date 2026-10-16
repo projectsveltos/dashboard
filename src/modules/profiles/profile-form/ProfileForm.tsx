@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useFormik } from "formik";
 import { Plus, X } from "lucide-react";
 
 import { Button } from "@/lib/components/ui/inputs/button";
@@ -20,160 +21,80 @@ import {
 } from "@/lib/components/ui/inputs/toggle-group";
 import TagInput from "@/lib/components/ui/data-display/TagInput";
 import { useCreateProfile } from "@/modules/profiles/profile-form/hooks/useProfileMutations";
-import { CreateProfileRequest } from "@/types/profile.types";
+import {
+  ContentType,
+  ProfileFormValues,
+  ProfileKind,
+  buildCreateRequest,
+  createProfileFormSchema,
+  initialProfileFormValues,
+  isRemoteHelmSource,
+} from "@/modules/profiles/profile-form/profileFormSchema";
 
-type ContentType = "helm" | "yaml" | "existing" | "remoteURL";
-
-type SelectorRow = { key: string; value: string };
-
-const isRemoteHelmSource = (repositoryURL: string) => {
-  const lower = repositoryURL.toLowerCase();
-  return (
-    lower.startsWith("http://") ||
-    lower.startsWith("https://") ||
-    lower.startsWith("oci://")
-  );
-};
+const FieldError = ({ message }: { message?: string }) =>
+  message ? <p className="text-sm text-destructive mt-1">{message}</p> : null;
 
 export const ProfileForm = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const createProfile = useCreateProfile();
 
-  const [kind, setKind] = useState<"ClusterProfile" | "Profile">(
-    "ClusterProfile",
-  );
-  const [namespace, setNamespace] = useState("");
-  const [name, setName] = useState("");
-  const [tier, setTier] = useState("");
-  const [dependsOn, setDependsOn] = useState<string[]>([]);
-  const [selectorRows, setSelectorRows] = useState<SelectorRow[]>([
-    { key: "", value: "" },
-  ]);
-  const [contentType, setContentType] = useState<ContentType>("helm");
+  // Errors returned by the backend. Field errors come from the Yup schema.
+  const [serverError, setServerError] = useState<string | null>(null);
 
-  const [repositoryURL, setRepositoryURL] = useState("");
-  const [repositoryName, setRepositoryName] = useState("");
-  const [chartName, setChartName] = useState("");
-  const [chartVersion, setChartVersion] = useState("");
-  const [releaseName, setReleaseName] = useState("");
-  const [releaseNamespace, setReleaseNamespace] = useState("");
-  const [values, setValues] = useState("");
+  const formik = useFormik<ProfileFormValues>({
+    initialValues: initialProfileFormValues,
+    validationSchema: createProfileFormSchema(t),
+    onSubmit: (values) => {
+      setServerError(null);
+      createProfile.mutate(buildCreateRequest(values), {
+        onSuccess: () => navigate("/sveltos/profiles"),
+        onError: (mutationError) => setServerError(mutationError.message),
+      });
+    },
+  });
 
-  const [yaml, setYaml] = useState("");
+  const { values } = formik;
 
-  const [existingKind, setExistingKind] = useState("ConfigMap");
-  const [existingNamespace, setExistingNamespace] = useState("");
-  const [existingName, setExistingName] = useState("");
+  // A field's error is shown once the user has left it or tried to submit.
+  const errorFor = (field: keyof ProfileFormValues) => {
+    const error = formik.errors[field];
+    const showError = formik.touched[field] || formik.submitCount > 0;
+    return showError && typeof error === "string" ? error : undefined;
+  };
 
-  const [remoteURL, setRemoteURL] = useState("");
-  const [remoteURLInterval, setRemoteURLInterval] = useState("");
-  const [remoteURLTemplate, setRemoteURLTemplate] = useState(false);
-  const [remoteURLInsecureSkipTLSVerify, setRemoteURLInsecureSkipTLSVerify] =
-    useState(false);
-  const [remoteURLPlainHTTP, setRemoteURLPlainHTTP] = useState(false);
-  const [remoteURLSecretNamespace, setRemoteURLSecretNamespace] = useState("");
-  const [remoteURLSecretName, setRemoteURLSecretName] = useState("");
-
-  const [error, setError] = useState<string | null>(null);
+  // repositoryName, chartName and chartVersion are only optional for Flux sources.
+  const isHelmChartRemote =
+    values.contentType === "helm" && isRemoteHelmSource(values.repositoryURL);
+  const optionalUnlessRemote = isHelmChartRemote
+    ? ""
+    : ` (${t("common.optional")})`;
 
   const updateSelectorRow = (
     index: number,
     field: "key" | "value",
     fieldValue: string,
   ) => {
-    setSelectorRows(
-      selectorRows.map((row, i) =>
+    formik.setFieldValue(
+      "selectorRows",
+      values.selectorRows.map((row, i) =>
         i === index ? { ...row, [field]: fieldValue } : row,
       ),
     );
   };
 
   const removeSelectorRow = (index: number) => {
-    setSelectorRows(selectorRows.filter((_, i) => i !== index));
+    formik.setFieldValue(
+      "selectorRows",
+      values.selectorRows.filter((_, i) => i !== index),
+    );
   };
 
-  const handleSubmit = () => {
-    setError(null);
-
-    if (
-      contentType === "helm" &&
-      isRemoteHelmSource(repositoryURL) &&
-      !repositoryName
-    ) {
-      setError(
-        `${t("common.repository_name")} ${t("common.required")}: ${t("common.repository_url")} ${repositoryURL}`,
-      );
-      return;
-    }
-
-    if (contentType === "remoteURL") {
-      if (!remoteURL) {
-        setError(`${t("common.url")} ${t("common.required")}`);
-        return;
-      }
-      if (
-        (remoteURLSecretNamespace && !remoteURLSecretName) ||
-        (!remoteURLSecretNamespace && remoteURLSecretName)
-      ) {
-        setError(
-          `${t("common.remote_url_secret_ref")} ${t("common.content_namespace")} + ${t("common.content_name")}: ${t("common.required")}`,
-        );
-        return;
-      }
-    }
-
-    const clusterSelector: { [key: string]: string } = {};
-    selectorRows.forEach((row) => {
-      if (row.key) {
-        clusterSelector[row.key] = row.value;
-      }
-    });
-
-    const request: CreateProfileRequest = {
-      kind,
-      namespace: kind === "Profile" ? namespace : undefined,
-      name,
-      clusterSelector,
-      tier: tier ? Number(tier) : undefined,
-      dependsOn: dependsOn.length > 0 ? dependsOn : undefined,
-    };
-
-    if (contentType === "helm") {
-      request.helmChart = {
-        repositoryURL,
-        repositoryName: repositoryName || undefined,
-        chartName: chartName || undefined,
-        chartVersion: chartVersion || undefined,
-        releaseName,
-        releaseNamespace,
-        values: values || undefined,
-      };
-    } else if (contentType === "yaml") {
-      request.yaml = yaml;
-    } else if (contentType === "existing") {
-      request.existingContent = {
-        kind: existingKind,
-        namespace: existingNamespace,
-        name: existingName,
-      };
-    } else {
-      request.remoteURL = {
-        url: remoteURL,
-        interval: remoteURLInterval || undefined,
-        secretRef: remoteURLSecretName
-          ? { namespace: remoteURLSecretNamespace, name: remoteURLSecretName }
-          : undefined,
-        template: remoteURLTemplate || undefined,
-        insecureSkipTLSVerify: remoteURLInsecureSkipTLSVerify || undefined,
-        plainHTTP: remoteURLPlainHTTP || undefined,
-      };
-    }
-
-    createProfile.mutate(request, {
-      onSuccess: () => navigate("/sveltos/profiles"),
-      onError: (mutationError) => setError(mutationError.message),
-    });
+  const addSelectorRow = () => {
+    formik.setFieldValue("selectorRows", [
+      ...values.selectorRows,
+      { key: "", value: "" },
+    ]);
   };
 
   return (
@@ -183,10 +104,10 @@ export const ProfileForm = () => {
           <div className="mb-4">
             <ToggleGroup
               type="single"
-              value={kind}
+              value={values.kind}
               onValueChange={(newKind) => {
                 if (newKind) {
-                  setKind(newKind as "ClusterProfile" | "Profile");
+                  formik.setFieldValue("kind", newKind as ProfileKind);
                 }
               }}
               className="justify-start bg-muted p-1 rounded-md inline-flex w-fit"
@@ -197,7 +118,7 @@ export const ProfileForm = () => {
               <ToggleGroupItem value="Profile">Profile</ToggleGroupItem>
             </ToggleGroup>
             <p className="text-sm text-muted-foreground mt-2">
-              {kind === "Profile"
+              {values.kind === "Profile"
                 ? t("common.kind_hint_profile")
                 : t("common.kind_hint_cluster_profile")}
             </p>
@@ -206,15 +127,14 @@ export const ProfileForm = () => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <Label>{t("common.name")}</Label>
-              <Input value={name} onChange={(e) => setName(e.target.value)} />
+              <Input {...formik.getFieldProps("name")} />
+              <FieldError message={errorFor("name")} />
             </div>
-            {kind === "Profile" && (
+            {values.kind === "Profile" && (
               <div>
                 <Label>{t("common.namespace")}</Label>
-                <Input
-                  value={namespace}
-                  onChange={(e) => setNamespace(e.target.value)}
-                />
+                <Input {...formik.getFieldProps("namespace")} />
+                <FieldError message={errorFor("namespace")} />
               </div>
             )}
           </div>
@@ -224,19 +144,16 @@ export const ProfileForm = () => {
               <Label>
                 {t("common.tier")} ({t("common.optional")})
               </Label>
-              <Input
-                type="number"
-                value={tier}
-                onChange={(e) => setTier(e.target.value)}
-              />
+              <Input type="number" {...formik.getFieldProps("tier")} />
+              <FieldError message={errorFor("tier")} />
             </div>
             <div>
               <Label>
                 {t("common.depends_on")} ({t("common.optional")})
               </Label>
               <TagInput
-                tags={dependsOn}
-                setTags={setDependsOn}
+                tags={values.dependsOn}
+                setTags={(tags) => formik.setFieldValue("dependsOn", tags)}
                 placeholder=""
               />
             </div>
@@ -249,7 +166,7 @@ export const ProfileForm = () => {
           <CardTitle>{t("common.cluster_selector")}</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          {selectorRows.map((row, index) => (
+          {values.selectorRows.map((row, index) => (
             <div key={index} className="grid grid-cols-[1fr_1fr_auto] gap-2">
               <Input
                 placeholder={t("common.key")}
@@ -274,13 +191,7 @@ export const ProfileForm = () => {
               </Button>
             </div>
           ))}
-          <Button
-            variant="ghost"
-            className="w-fit"
-            onClick={() =>
-              setSelectorRows([...selectorRows, { key: "", value: "" }])
-            }
-          >
+          <Button variant="ghost" className="w-fit" onClick={addSelectorRow}>
             <Plus className="w-4 h-4 mr-2" />
             {t("common.add_label")}
           </Button>
@@ -291,10 +202,13 @@ export const ProfileForm = () => {
         <CardContent className="pt-6">
           <ToggleGroup
             type="single"
-            value={contentType}
+            value={values.contentType}
             onValueChange={(newContentType) => {
               if (newContentType) {
-                setContentType(newContentType as ContentType);
+                formik.setFieldValue(
+                  "contentType",
+                  newContentType as ContentType,
+                );
               }
             }}
             className="justify-start bg-muted p-1 rounded-md inline-flex w-fit mb-4"
@@ -313,56 +227,47 @@ export const ProfileForm = () => {
             </ToggleGroupItem>
           </ToggleGroup>
 
-          {contentType === "helm" && (
+          {values.contentType === "helm" && (
             <div className="flex flex-col gap-3">
               <div>
                 <Label>{t("common.repository_url")}</Label>
-                <Input
-                  value={repositoryURL}
-                  onChange={(e) => setRepositoryURL(e.target.value)}
-                />
+                <Input {...formik.getFieldProps("repositoryURL")} />
+                <FieldError message={errorFor("repositoryURL")} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <Label>
-                    {t("common.repository_name")} ({t("common.optional")})
+                    {t("common.repository_name")}
+                    {optionalUnlessRemote}
                   </Label>
-                  <Input
-                    value={repositoryName}
-                    onChange={(e) => setRepositoryName(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("repositoryName")} />
+                  <FieldError message={errorFor("repositoryName")} />
                 </div>
                 <div>
                   <Label>
-                    {t("common.chart_name")} ({t("common.optional")})
+                    {t("common.chart_name")}
+                    {optionalUnlessRemote}
                   </Label>
-                  <Input
-                    value={chartName}
-                    onChange={(e) => setChartName(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("chartName")} />
+                  <FieldError message={errorFor("chartName")} />
                 </div>
                 <div>
                   <Label>
-                    {t("common.chart_version")} ({t("common.optional")})
+                    {t("common.chart_version")}
+                    {optionalUnlessRemote}
                   </Label>
-                  <Input
-                    value={chartVersion}
-                    onChange={(e) => setChartVersion(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("chartVersion")} />
+                  <FieldError message={errorFor("chartVersion")} />
                 </div>
                 <div>
                   <Label>{t("common.release_name")}</Label>
-                  <Input
-                    value={releaseName}
-                    onChange={(e) => setReleaseName(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("releaseName")} />
+                  <FieldError message={errorFor("releaseName")} />
                 </div>
                 <div className="col-span-2">
                   <Label>{t("common.release_namespace")}</Label>
-                  <Input
-                    value={releaseNamespace}
-                    onChange={(e) => setReleaseNamespace(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("releaseNamespace")} />
+                  <FieldError message={errorFor("releaseNamespace")} />
                 </div>
               </div>
               <div>
@@ -372,14 +277,13 @@ export const ProfileForm = () => {
                 <Textarea
                   className="font-mono text-xs"
                   rows={6}
-                  value={values}
-                  onChange={(e) => setValues(e.target.value)}
+                  {...formik.getFieldProps("values")}
                 />
               </div>
             </div>
           )}
 
-          {contentType === "yaml" && (
+          {values.contentType === "yaml" && (
             <div>
               <p className="text-sm text-muted-foreground mb-2">
                 {t("common.yaml_hint")}
@@ -388,13 +292,13 @@ export const ProfileForm = () => {
               <Textarea
                 className="font-mono text-xs"
                 rows={12}
-                value={yaml}
-                onChange={(e) => setYaml(e.target.value)}
+                {...formik.getFieldProps("yaml")}
               />
+              <FieldError message={errorFor("yaml")} />
             </div>
           )}
 
-          {contentType === "existing" && (
+          {values.contentType === "existing" && (
             <div>
               <p className="text-sm text-muted-foreground mb-2">
                 {t("common.existing_content_hint")}
@@ -404,10 +308,10 @@ export const ProfileForm = () => {
                   <Label>{t("common.content_kind")}</Label>
                   <ToggleGroup
                     type="single"
-                    value={existingKind}
+                    value={values.existingKind}
                     onValueChange={(newKind) => {
                       if (newKind) {
-                        setExistingKind(newKind);
+                        formik.setFieldValue("existingKind", newKind);
                       }
                     }}
                     className="justify-start bg-muted p-1 rounded-md inline-flex w-fit"
@@ -420,23 +324,19 @@ export const ProfileForm = () => {
                 </div>
                 <div>
                   <Label>{t("common.content_namespace")}</Label>
-                  <Input
-                    value={existingNamespace}
-                    onChange={(e) => setExistingNamespace(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("existingNamespace")} />
+                  <FieldError message={errorFor("existingNamespace")} />
                 </div>
                 <div>
                   <Label>{t("common.content_name")}</Label>
-                  <Input
-                    value={existingName}
-                    onChange={(e) => setExistingName(e.target.value)}
-                  />
+                  <Input {...formik.getFieldProps("existingName")} />
+                  <FieldError message={errorFor("existingName")} />
                 </div>
               </div>
             </div>
           )}
 
-          {contentType === "remoteURL" && (
+          {values.contentType === "remoteURL" && (
             <div className="flex flex-col gap-3">
               <p className="text-sm text-muted-foreground">
                 {t("common.remote_url_hint")}
@@ -445,9 +345,9 @@ export const ProfileForm = () => {
                 <Label>{t("common.url")}</Label>
                 <Input
                   placeholder="https://example.com/manifest.yaml"
-                  value={remoteURL}
-                  onChange={(e) => setRemoteURL(e.target.value)}
+                  {...formik.getFieldProps("remoteURL")}
                 />
+                <FieldError message={errorFor("remoteURL")} />
               </div>
               <div>
                 <Label>
@@ -455,17 +355,20 @@ export const ProfileForm = () => {
                 </Label>
                 <Input
                   placeholder="5m"
-                  value={remoteURLInterval}
-                  onChange={(e) => setRemoteURLInterval(e.target.value)}
+                  {...formik.getFieldProps("remoteURLInterval")}
                 />
+                <FieldError message={errorFor("remoteURLInterval")} />
               </div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <Checkbox
                     id="remoteURLTemplate"
-                    checked={remoteURLTemplate}
+                    checked={values.remoteURLTemplate}
                     onCheckedChange={(checked) =>
-                      setRemoteURLTemplate(checked === true)
+                      formik.setFieldValue(
+                        "remoteURLTemplate",
+                        checked === true,
+                      )
                     }
                   />
                   <Label htmlFor="remoteURLTemplate">
@@ -475,9 +378,12 @@ export const ProfileForm = () => {
                 <div className="flex items-center gap-2">
                   <Checkbox
                     id="remoteURLInsecureSkipTLSVerify"
-                    checked={remoteURLInsecureSkipTLSVerify}
+                    checked={values.remoteURLInsecureSkipTLSVerify}
                     onCheckedChange={(checked) =>
-                      setRemoteURLInsecureSkipTLSVerify(checked === true)
+                      formik.setFieldValue(
+                        "remoteURLInsecureSkipTLSVerify",
+                        checked === true,
+                      )
                     }
                   />
                   <Label htmlFor="remoteURLInsecureSkipTLSVerify">
@@ -487,9 +393,12 @@ export const ProfileForm = () => {
                 <div className="flex items-center gap-2">
                   <Checkbox
                     id="remoteURLPlainHTTP"
-                    checked={remoteURLPlainHTTP}
+                    checked={values.remoteURLPlainHTTP}
                     onCheckedChange={(checked) =>
-                      setRemoteURLPlainHTTP(checked === true)
+                      formik.setFieldValue(
+                        "remoteURLPlainHTTP",
+                        checked === true,
+                      )
                     }
                   />
                   <Label htmlFor="remoteURLPlainHTTP">
@@ -502,18 +411,22 @@ export const ProfileForm = () => {
                   {t("common.remote_url_secret_ref")} ({t("common.optional")})
                 </Label>
                 <div className="grid grid-cols-2 gap-3 mt-1">
-                  <Input
-                    placeholder={t("common.content_namespace")}
-                    value={remoteURLSecretNamespace}
-                    onChange={(e) =>
-                      setRemoteURLSecretNamespace(e.target.value)
-                    }
-                  />
-                  <Input
-                    placeholder={t("common.content_name")}
-                    value={remoteURLSecretName}
-                    onChange={(e) => setRemoteURLSecretName(e.target.value)}
-                  />
+                  <div>
+                    <Input
+                      placeholder={t("common.content_namespace")}
+                      {...formik.getFieldProps("remoteURLSecretNamespace")}
+                    />
+                    <FieldError
+                      message={errorFor("remoteURLSecretNamespace")}
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      placeholder={t("common.content_name")}
+                      {...formik.getFieldProps("remoteURLSecretName")}
+                    />
+                    <FieldError message={errorFor("remoteURLSecretName")} />
+                  </div>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
                   {t("common.remote_url_secret_ref_hint")}
@@ -524,13 +437,16 @@ export const ProfileForm = () => {
         </CardContent>
       </Card>
 
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {serverError && <p className="text-sm text-destructive">{serverError}</p>}
 
       <div className="flex justify-end gap-2">
         <Button variant="outline" onClick={() => navigate(-1)}>
           {t("common.cancel")}
         </Button>
-        <Button onClick={handleSubmit} disabled={createProfile.isPending}>
+        <Button
+          onClick={() => formik.handleSubmit()}
+          disabled={createProfile.isPending}
+        >
           {t("common.create_profile")}
         </Button>
       </div>

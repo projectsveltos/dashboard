@@ -8,6 +8,10 @@ import {
   CheckCircle2,
   Zap,
   CalendarDays,
+  HeartPulse,
+  Lock,
+  PackageCheck,
+  Compass,
 } from "lucide-react";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { Logo } from "@/lib/components/assets/logo/logo";
@@ -60,6 +64,22 @@ const FEATURES: Feature[] = [
     href: "https://projectsveltos.io/latest/deployment_order/progressive_rollout/",
   },
   {
+    title: "Job-Based Health Validation",
+    description:
+      "Run a Kubernetes Job after a deployment, such as a smoke test or a connectivity probe, and use its outcome as the health check.",
+    icon: HeartPulse,
+    tag: "Health",
+    href: "https://projectsveltos.io/latest/addons/clusterprofile/#job-based-health-validation",
+  },
+  {
+    title: "Least-Privilege Agents",
+    description:
+      "Limit drift detection and the agents to specific namespaces instead of cluster-wide access. One annotation configures both.",
+    icon: Lock,
+    tag: "Security",
+    href: "https://projectsveltos.io/latest/features/configuration_drift/#namespace-scoped-watch-mode",
+  },
+  {
     title: "AI-Powered Management",
     description:
       "Natural language operations via MCP Server. Ask questions, diagnose incidents, and automate remediation.",
@@ -76,6 +96,22 @@ const FEATURES: Feature[] = [
     description:
       "Direct line to Sveltos core engineers. Priority ticketing, guaranteed response times, and dedicated Slack.",
     icon: LifeBuoy,
+    tag: "Support",
+    href: "https://website.projectsveltos.io/pricing/",
+  },
+  {
+    title: "Priority Patches & Feature Delivery",
+    description:
+      "CVE-patched images before the next release, with your bug fixes and feature requests prioritized.",
+    icon: PackageCheck,
+    tag: "Support",
+    href: "https://website.projectsveltos.io/pricing/",
+  },
+  {
+    title: "Architectural Guidance",
+    description:
+      "Expert guidance on architecture and best practices for running Sveltos in production.",
+    icon: Compass,
     tag: "Support",
     href: "https://website.projectsveltos.io/pricing/",
   },

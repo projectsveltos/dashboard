@@ -7,6 +7,7 @@ import { Badge } from "@/lib/components/ui/data-display/badge";
 import React from "react";
 import { cn } from "@/lib/utils";
 import { Book, LifeBuoy, ExternalLink } from "lucide-react";
+import mascot from "@/assets/admiral-sveltopus.png";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -129,6 +130,15 @@ export function Sidebar({ isOpen }: SidebarProps) {
       </div>
 
       <div className={cn("p-4 mb-2 mt-auto", !isOpen && "px-2 pb-4")}>
+        {/* Decorative. Only when expanded and the window is tall enough: the sidebar clips what does not fit,
+            and Docs and Support must stay visible */}
+        {isOpen && (
+          <img
+            src={mascot}
+            alt=""
+            className="mx-auto mb-4 hidden h-24 w-24 [@media(min-height:700px)]:block"
+          />
+        )}
         {/* Separator before Support/Docs */}
         <div className="h-px bg-border w-full mb-6 opacity-50"></div>
 

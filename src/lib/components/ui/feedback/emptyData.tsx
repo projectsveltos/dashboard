@@ -1,6 +1,7 @@
-import { CircleOff, FilterX } from "lucide-react";
+import { FilterX } from "lucide-react";
 import { Button } from "@/lib/components/ui/inputs/button";
 import { RefreshButton } from "@/modules/common/components/actions/RefreshButton";
+import mascot from "@/assets/admiral-sveltopus.png";
 
 type EmptyDataProps = {
   name: string;
@@ -17,9 +18,8 @@ export const EmptyData = ({
     <>
       <div className="w-full mt-16 flex items-center flex-wrap justify-center gap-10">
         <div className="grid gap-4 w-64">
-          <div className="w-20 h-20 mx-auto bg-slate-50 dark:bg-slate-800 rounded-full justify-center items-center inline-flex">
-            <CircleOff className="w-10 h-10 text-gray-500" />
-          </div>
+          {/* Decorative: the text below says what is missing */}
+          <img src={mascot} alt="" className="w-32 h-32 mx-auto" />
           <div>
             <h2 className="text-center  text-base font-semibold leading-relaxed pb-1">
               There’s no {name} found.

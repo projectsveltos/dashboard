@@ -15,6 +15,7 @@ export const API_ENDPOINTS = {
   MCP_CLASSIFIER_PIPELINE_DEBUG: "/analyzeClassifierPipeline",
   EVENTS: "/events",
   EVENT: "/event",
+  EVENT_RESOURCES: "/eventResources",
   CLASSIFIERS: "/classifiers",
   CLASSIFIER: "/classifier",
   STATS: "/stats",

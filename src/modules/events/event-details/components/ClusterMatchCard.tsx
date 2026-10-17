@@ -1,13 +1,14 @@
 import { useNavigate } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/lib/components/ui/inputs/button";
-import { ClusterEventMatch, Resource } from "@/types/event.types";
+import { ClusterEventMatch } from "@/types/event.types";
 import { Badge } from "@/lib/components/ui/data-display/badge";
 import { FailedFlag } from "@/lib/components/ui/data-display/failed-flag";
 import { ReadyFlag } from "@/lib/components/ui/data-display/ready-flag";
 import { useTranslation } from "react-i18next";
 import { McpButton } from "@/lib/components/ui/inputs/mcp-button";
 import * as React from "react";
+import { EventResourcesDialog } from "@/modules/events/event-details/components/EventResourcesDialog";
 import { useEventClusterDebugMcp } from "@/modules/events/hooks/debugMcp";
 import { typeFromPath } from "@/utils/GetPathFromType";
 import { getClusterInfoType } from "@/utils/GetClusterInfoType";
@@ -21,6 +22,7 @@ export const ClusterMatchCard = ({
 }) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [resourcesOpen, setResourcesOpen] = React.useState(false);
 
   const McpQuery = useEventClusterDebugMcp({
     namespace: cluster.clusterNamespace,
@@ -59,27 +61,31 @@ export const ClusterMatchCard = ({
         </Button>
       </div>
       <div className="flex-grow text-sm">
-        <div className="text-xs text-muted-foreground mb-1">
-          {t("common.resources")}
-        </div>
-        <div className="space-y-1">
-          {cluster.resources?.map((res: Resource, idx: number) => (
-            <div
-              key={idx}
-              className="bg-muted/30 p-1.5 rounded text-xs font-mono flex items-center justify-between"
+        {cluster.matchingResourcesCount > 0 ? (
+          <>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setResourcesOpen(true)}
             >
-              <span>
-                {res.kind}/{res.name}
-              </span>
-              <span className="text-muted-foreground">{res.namespace}</span>
-            </div>
-          ))}
-          {(!cluster.resources || cluster.resources.length === 0) && (
-            <div className="text-muted-foreground italic text-xs">
-              {t("common.no_resources")}
-            </div>
-          )}
-        </div>
+              {t("common.matching_resources_count", {
+                count: cluster.matchingResourcesCount,
+              })}
+            </Button>
+            <EventResourcesDialog
+              open={resourcesOpen}
+              onOpenChange={setResourcesOpen}
+              eventName={eventName}
+              clusterNamespace={cluster.clusterNamespace}
+              clusterName={cluster.clusterName}
+              clusterType={typeFromPath(cluster.clusterKind)}
+            />
+          </>
+        ) : (
+          <div className="text-muted-foreground italic text-xs">
+            {t("common.no_resources")}
+          </div>
+        )}
       </div>
       <div className="flex items-center gap-2 mt-4">
         <Badge variant="secondary" className="flex items-center gap-2">

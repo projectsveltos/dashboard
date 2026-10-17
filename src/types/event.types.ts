@@ -14,8 +14,15 @@ export type ClusterEventMatch = {
   clusterName: string;
   clusterKind: string;
   failureMessage?: string;
-  resources?: Resource[];
+  // Number of resources matching the EventSource in the cluster. They are loaded, paginated, on demand.
+  matchingResourcesCount: number;
   paused?: boolean;
+};
+
+export type EventResourcesResponse = {
+  // Number of resources matching the filters, before pagination
+  totalResources: number;
+  resources: Resource[];
 };
 
 export type LabelFilter = {

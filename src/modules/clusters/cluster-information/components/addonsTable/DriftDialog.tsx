@@ -67,6 +67,8 @@ export const DriftDialog = ({ featureID, history }: DriftDialogProps) => {
       <Button
         variant="outline"
         size="sm"
+        // Only shown when a drift was detected: amber, like the other warnings, so it stands out
+        className="border-amber-500 bg-amber-50 text-amber-700 hover:bg-amber-100 hover:text-amber-800 dark:border-amber-400 dark:bg-amber-950 dark:text-amber-300 dark:hover:bg-amber-900 dark:hover:text-amber-200"
         title={formatDetectedTime(history.lastDetectedTime)}
         onClick={() => setOpen(true)}
       >

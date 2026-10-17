@@ -18,12 +18,12 @@ import { useTranslation } from "react-i18next";
 import { FC, useState } from "react";
 import { getRowsAndTotal } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
 import { typeConfig } from "@/modules/clusters/cluster-information/components/addonsTable/config/typeConfig";
-import { AddonTableData, AddonTypes } from "@/types/addon.types";
+import { AddonTableData, TableAddonTypes } from "@/types/addon.types";
 
 interface AddonsTableProps {
   data: AddonTableData;
-  type: AddonTypes;
-  setPage: (page: number, type: AddonTypes) => void;
+  type: TableAddonTypes;
+  setPage: (page: number, type: TableAddonTypes) => void;
   loading: boolean;
 }
 

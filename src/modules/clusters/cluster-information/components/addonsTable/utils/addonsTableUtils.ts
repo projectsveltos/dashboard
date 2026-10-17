@@ -1,4 +1,10 @@
-import { AddonTableData, AddonTypes } from "@/types/addon.types";
+import {
+  AddonTableData,
+  AddonTypes,
+  TableAddonTypes,
+} from "@/types/addon.types";
+import { healthSearchConfig } from "@/modules/health/healthSearchConfig";
+import { pickSearchParams } from "@/utils/pickSearchParams";
 import { typeConfig } from "@/modules/clusters/cluster-information/components/addonsTable/config/typeConfig";
 
 export const getRowsAndTotal = (data: AddonTableData, type: AddonTypes) => {
@@ -29,19 +35,23 @@ export function hasSearchConfig(
   );
 }
 export const getSearchParams = (
-  type: AddonTypes,
+  type: TableAddonTypes,
   searchParams: URLSearchParams,
 ): Record<string, string> => {
   const typeConfigEntry = typeConfig[type];
   const config = hasSearchConfig(typeConfigEntry)
     ? typeConfigEntry.searchConfig
     : [];
-  const params: Record<string, string> = {};
-  config.forEach((item: { key: string }) => {
-    const value = searchParams.get(item.key);
-    if (value) {
-      params[item.key] = value;
-    }
-  });
-  return params;
+  return pickSearchParams(config, searchParams);
+};
+
+// getSearchConfig returns the filters of any addons tab
+export const getSearchConfig = (
+  tab: AddonTypes,
+): { key: string; placeholder: string }[] => {
+  if (tab === AddonTypes.UNHEALTHY) {
+    return healthSearchConfig;
+  }
+  const typeConfigEntry = typeConfig[tab];
+  return hasSearchConfig(typeConfigEntry) ? typeConfigEntry.searchConfig : [];
 };

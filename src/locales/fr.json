@@ -137,6 +137,19 @@
     "helm_release": "Release Helm",
     "drift_history": "Historique des dérives",
     "drift_last_detected": "Dernière dérive détectée le",
-    "detected": "Détectée"
+    "detected": "Détectée",
+    "health_healthy": "Sain",
+    "health_progressing": "En cours",
+    "health_degraded": "Dégradé",
+    "health_suspended": "Suspendu",
+    "health_no_data": "Aucune donnée",
+    "health_tooltip": "Surveillance de santé : {{status}}",
+    "health_message": "Message",
+    "health_check": "HealthCheck : {{name}}",
+    "health_not_enabled": "Rien n'est surveillé sur ce cluster : aucun profil n'a activé la surveillance de santé et aucun rapport de santé n'existe.",
+    "health_no_data_yet": "La surveillance de santé est activée, mais aucun rapport n'a encore été reçu.",
+    "health_all_healthy": "Toutes les ressources surveillées sont saines.",
+    "health_no_match": "Aucune ressource défaillante ne correspond aux filtres.",
+    "health": "Santé"
   }
 }

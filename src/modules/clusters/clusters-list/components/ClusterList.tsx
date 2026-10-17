@@ -5,6 +5,7 @@ import { ClusterInfoType, ClusterListResponse } from "@/types/cluster.types";
 import { EmptyData } from "@/lib/components/ui/feedback/emptyData";
 import { usePagination } from "@/hooks/usePagination";
 import { FC } from "react";
+import { buildClusterHealthPath } from "@/utils/clusterHealthPath";
 
 type ClusterListProps = {
   data: ClusterListResponse;
@@ -47,6 +48,16 @@ export const ClusterList: FC<ClusterListProps> = ({
                   hasIssues={cluster.hasIssues}
                   isProvisioning={cluster.isProvisioning}
                   hasOutdatedHelmCharts={cluster.hasOutdatedHelmCharts}
+                  healthStatus={cluster.healthStatus}
+                  onHealthClick={() =>
+                    navigate(
+                      buildClusterHealthPath(
+                        tab,
+                        cluster.namespace,
+                        cluster.name,
+                      ),
+                    )
+                  }
                 />
               </div>
             ))}

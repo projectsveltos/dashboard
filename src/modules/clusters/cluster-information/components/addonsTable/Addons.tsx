@@ -17,30 +17,49 @@ import {
 } from "@/lib/components/ui/navigation/tabs";
 
 import { AddonsTable } from "@/modules/clusters/cluster-information/components/addonsTable/AddonsTable";
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-import { AddonTableData, addonTypes, AddonTypes } from "@/types/addon.types";
+import {
+  AddonTableData,
+  addonTypes,
+  AddonTypes,
+  TableAddonTypes,
+} from "@/types/addon.types";
 import { appConfig } from "@/config/app";
 import { SearchQueryParamInput } from "@/lib/components/ui/inputs/SearchQueryParamInput";
-import { typeConfig } from "@/modules/clusters/cluster-information/components/addonsTable/config/typeConfig";
-import { hasSearchConfig } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
+import { getSearchConfig } from "@/modules/clusters/cluster-information/components/addonsTable/utils/addonsTableUtils";
+import { ClusterHealthView } from "@/modules/clusters/cluster-information/components/ClusterHealthView";
+import { omitSearchParams } from "@/utils/pickSearchParams";
+import {
+  ADDONS_TAB_PARAM,
+  addonTabFromParam,
+  addonTabSlug,
+} from "@/utils/addonTabs";
 import { useTranslation } from "react-i18next";
 
 interface ResourceTableProps {
-  addonsData: Record<AddonTypes, AddonTableData>;
+  addonsData: Record<TableAddonTypes, AddonTableData>;
   loading: boolean;
 
-  setPage: (page: number, type: AddonTypes) => void;
+  setPage: (page: number, type: TableAddonTypes) => void;
 }
 
 export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
   const { t } = useTranslation();
-  /* By default, we show helm charts , this will be hardcoded for now */
-  const [activeTab, setActiveTab] = useState<AddonTypes>(AddonTypes.HELM);
+  /* The tab is in the URL, so it can be linked to. By default, we show helm charts */
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = addonTabFromParam(searchParams.get(ADDONS_TAB_PARAM));
 
   const handleChangeTab = (tab: AddonTypes) => {
-    setActiveTab(tab);
-    setPage(appConfig.defaultPage, tab);
+    // The filters belong to the tab being left: some tabs share filters (a profile health badge opens the
+    // unhealthy resources already filtered by profile), which must not follow the user back to the Profiles tab
+    const next = omitSearchParams(getSearchConfig(activeTab), searchParams);
+    next.set(ADDONS_TAB_PARAM, addonTabSlug(tab));
+    setSearchParams(next, { replace: true });
+    // The unhealthy resources tab keeps its own page
+    if (tab !== AddonTypes.UNHEALTHY) {
+      setPage(appConfig.defaultPage, tab);
+    }
   };
   return (
     <div className="grid auto-rows-max items-start">
@@ -79,35 +98,29 @@ export function Addons({ addonsData, setPage, loading }: ResourceTableProps) {
             <CardContent>
               <TabsList>
                 {addonTypes.map((tab: AddonTypes) => (
-                  <TabsTrigger
-                    key={tab}
-                    value={tab}
-                    onClick={() => setActiveTab(tab)}
-                  >
+                  <TabsTrigger key={tab} value={tab}>
                     {tab}
                   </TabsTrigger>
                 ))}
               </TabsList>
 
+              {/* Remounted per tab, so its fields start from the URL (a badge can open a tab already filtered) */}
               <SearchQueryParamInput
-                searchConfig={
-                  hasSearchConfig(typeConfig[activeTab])
-                    ? (
-                        typeConfig[activeTab] as {
-                          searchConfig: { key: string; placeholder: string }[];
-                        }
-                      ).searchConfig
-                    : []
-                }
+                key={activeTab}
+                searchConfig={getSearchConfig(activeTab)}
               />
               {addonTypes.map((type: AddonTypes) => (
                 <TabsContent key={type} value={type}>
-                  <AddonsTable
-                    type={type}
-                    loading={loading}
-                    setPage={setPage}
-                    data={addonsData[type]}
-                  />
+                  {type === AddonTypes.UNHEALTHY ? (
+                    <ClusterHealthView />
+                  ) : (
+                    <AddonsTable
+                      type={type}
+                      loading={loading}
+                      setPage={setPage}
+                      data={addonsData[type]}
+                    />
+                  )}
                 </TabsContent>
               ))}
             </CardContent>

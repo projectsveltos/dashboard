@@ -187,6 +187,19 @@
     "helm_release": "Helm release",
     "drift_history": "Drift history",
     "drift_last_detected": "Last drift detected at",
-    "detected": "Detected"
+    "detected": "Detected",
+    "health_healthy": "Healthy",
+    "health_progressing": "Progressing",
+    "health_degraded": "Degraded",
+    "health_suspended": "Suspended",
+    "health_no_data": "No data",
+    "health_tooltip": "Health monitoring: {{status}}",
+    "health_message": "Message",
+    "health_check": "HealthCheck: {{name}}",
+    "health_not_enabled": "Nothing is monitored on this cluster: no profile has health monitoring enabled and there are no health reports.",
+    "health_no_data_yet": "Health monitoring is enabled, but no report has been received yet.",
+    "health_all_healthy": "All the monitored resources are healthy.",
+    "health_no_match": "No unhealthy resources match the filters.",
+    "health": "Health"
   }
 }

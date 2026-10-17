@@ -1,7 +1,7 @@
 import { useQueries } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 import { useState } from "react";
-import { AddonTypes } from "@/types/addon.types";
+import { AddonTypes, TableAddonTypes } from "@/types/addon.types";
 import client from "@/api-client/apiClient";
 import { API_ENDPOINTS } from "@/api-client/endpoints";
 import { ClusterType } from "@/types/cluster.types";
@@ -100,7 +100,7 @@ function useClusterTableInfo(
   const [resourcePage, setResourcePage] = useState(appConfig.defaultPage);
   const [profilePage, setProfilePage] = useState(appConfig.defaultPage);
 
-  const setPage = (page: number, type: AddonTypes) => {
+  const setPage = (page: number, type: TableAddonTypes) => {
     switch (type) {
       case AddonTypes.HELM:
         setHelmPage(page);

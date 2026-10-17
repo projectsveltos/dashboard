@@ -136,6 +136,19 @@
     "helm_release": "إصدار Helm",
     "drift_history": "سجل الانحراف",
     "drift_last_detected": "آخر انحراف تم اكتشافه في",
-    "detected": "تم الاكتشاف"
+    "detected": "تم الاكتشاف",
+    "health_healthy": "سليم",
+    "health_progressing": "قيد التقدم",
+    "health_degraded": "متدهور",
+    "health_suspended": "معلق",
+    "health_no_data": "لا توجد بيانات",
+    "health_tooltip": "مراقبة الصحة: {{status}}",
+    "health_message": "الرسالة",
+    "health_check": "HealthCheck: {{name}}",
+    "health_not_enabled": "لا شيء قيد المراقبة على هذا الكلاستر: لا يوجد بروفايل مفعّل لمراقبة الصحة ولا توجد تقارير صحة.",
+    "health_no_data_yet": "مراقبة الصحة مفعّلة، لكن لم يتم استلام أي تقرير بعد.",
+    "health_all_healthy": "جميع الموارد المراقبة سليمة.",
+    "health_no_match": "لا توجد موارد غير سليمة تطابق عوامل التصفية.",
+    "health": "الصحة"
   }
 }

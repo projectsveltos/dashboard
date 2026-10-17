@@ -12,6 +12,7 @@ export enum AddonTableTypes {
   ICON = "icon",
   FAILURE_MESSAGE = "failureMessage",
   DRIFT = "driftHistory",
+  HEALTH = "healthStatus",
 }
 export interface AddonColumn {
   label: string;

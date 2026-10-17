@@ -26,13 +26,19 @@ export const profileColumns: Column[] = [
     keys: AddonTableTypes.STATUS,
   },
   {
+    label: "common.health",
+    className: "hidden sm:table-cell",
+    keys: AddonTableTypes.HEALTH,
+  },
+  {
     label: "common.error",
     className: "hidden sm:table-cell",
     keys: AddonTableTypes.FAILURE_MESSAGE,
   },
   {
     label: "common.drift",
-    className: "hidden sm:table-cell",
+    // max-w-none: the cell clips at 6rem otherwise, and the Drift history button shows as "..."
+    className: "hidden sm:table-cell max-w-none",
     keys: AddonTableTypes.DRIFT,
   },
 ];

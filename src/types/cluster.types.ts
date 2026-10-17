@@ -1,3 +1,5 @@
+import { HealthStatus } from "@/types/health.types";
+
 export type SveltosClusterType = "SveltosCluster";
 export type ClusterApiType = "ClusterAPI";
 export type ClusterType = SveltosClusterType | ClusterApiType;
@@ -13,6 +15,9 @@ export interface ClusterInfoType {
   hasIssues?: boolean;
   isProvisioning?: boolean;
   hasOutdatedHelmCharts?: boolean;
+  // Health reported for the cluster. Absent when nothing monitors it: no profile with health monitoring
+  // enabled and no health report.
+  healthStatus?: HealthStatus;
   clusterInfo: {
     labels: Label;
     version: string;

@@ -9,6 +9,8 @@ import {
 import { ReadyFlag } from "@/lib/components/ui/data-display/ready-flag";
 import { FailedFlag } from "@/lib/components/ui/data-display/failed-flag";
 import { Label } from "@/types/cluster.types";
+import { HealthStatus } from "@/types/health.types";
+import { HealthBadge } from "@/lib/components/ui/data-display/health-badge";
 import { appConfig } from "@/config/app";
 import { AlertTriangle, ArrowUpCircle, Clock, Tags } from "lucide-react";
 import { PauseIcon } from "@radix-ui/react-icons";
@@ -24,6 +26,8 @@ interface ClusterCardProps {
   hasIssues?: boolean;
   isProvisioning?: boolean;
   hasOutdatedHelmCharts?: boolean;
+  healthStatus?: HealthStatus;
+  onHealthClick?: () => void;
 }
 
 import { useTranslation } from "react-i18next";
@@ -39,6 +43,8 @@ export const ClusterCard = ({
   hasIssues,
   isProvisioning,
   hasOutdatedHelmCharts,
+  healthStatus,
+  onHealthClick,
 }: ClusterCardProps) => {
   const { t } = useTranslation();
   const labelEntries = Object.entries(labels || {});
@@ -79,6 +85,7 @@ export const ClusterCard = ({
                   </TooltipContent>
                 </Tooltip>
               )}
+              <HealthBadge status={healthStatus} onClick={onHealthClick} />
               {hasOutdatedHelmCharts && (
                 <Tooltip>
                   <TooltipTrigger asChild>

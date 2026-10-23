@@ -34,6 +34,21 @@ export interface Dependency {
   apiVersion: string;
 }
 
+// Where a matching cluster is in the rollout of the latest profile version.
+export type RolloutState =
+  "updated" | "updating" | "waiting" | "paused" | "notReady";
+
+// Matching clusters per rollout state. Only sent while a rollout is pending.
+export interface RolloutSummary {
+  // Number of clusters updated in parallel. 0 when maxUpdate is not set.
+  maxUpdate: number;
+  updated: number;
+  updating: number;
+  waiting: number;
+  paused: number;
+  notReady: number;
+}
+
 export interface MatchingCluster {
   cluster: {
     kind: string;
@@ -46,6 +61,8 @@ export interface MatchingCluster {
     featureID: string;
     status: string;
   }[];
+  // Absent when there is nothing to report: no rollout pending and cluster not paused.
+  rolloutState?: RolloutState;
 }
 
 export interface HelmChart {
@@ -76,6 +93,7 @@ export interface ProfileInfo {
   dependencies: Dependency[];
   dependents: Dependency[];
   matchingClusters: MatchingCluster[];
+  rollout?: RolloutSummary;
   spec: {
     clusterSelector: {
       matchLabels?: {

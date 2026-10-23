@@ -122,7 +122,11 @@ export function ProfileInformation() {
                     Matching Clusters
                   </h3>
                 </div>
-                <MatchingClusterTable data={data?.matchingClusters ?? []} />
+                <MatchingClusterTable
+                  data={data?.matchingClusters ?? []}
+                  rollout={data?.rollout}
+                  maxUpdate={data?.spec.maxUpdate}
+                />
               </div>
             </div>
             <div className="col-span-5">

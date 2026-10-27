@@ -18,8 +18,22 @@ import {
   CardTitle,
 } from "@/lib/components/ui/data-display/card";
 import { ScrollArea } from "@/lib/components/ui/layout/scroll-area";
-import { MatchingCluster } from "@/types/profile.types";
+import { MatchingCluster, RolloutSummary } from "@/types/profile.types";
 import { FailureMessage } from "@/lib/components/ui/feedback/failureMessage";
+import {
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/lib/components/ui/inputs/toggle-group";
+import { RolloutStateBadge } from "@/modules/profiles/profile-information/components/ClusterTable/RolloutStateBadge";
+import { RolloutSummaryStrip } from "@/modules/profiles/profile-information/components/ClusterTable/RolloutSummaryStrip";
+import {
+  countByRolloutState,
+  filterByRolloutState,
+  hasRolloutInfo,
+  RolloutFilter,
+  rolloutStates,
+  rolloutStateStyle,
+} from "@/utils/rolloutState";
 import { useTranslation } from "react-i18next";
 
 type ClusterStatus = "failed" | "provisioning" | "provisioned";
@@ -56,15 +70,33 @@ function ClusterStatusBadge({ status }: { status: ClusterStatus }) {
   }
 }
 
+function getClusterKey(cluster: MatchingCluster): string {
+  return `${cluster.cluster.kind}/${cluster.cluster.namespace}/${cluster.cluster.name}`;
+}
+
 export default function MatchingClusterTable({
   data,
+  rollout,
+  maxUpdate,
 }: {
   data: MatchingCluster[];
+  rollout?: RolloutSummary;
+  maxUpdate?: string | number;
 }) {
   const { t } = useTranslation();
-  const [openAccordions, setOpenAccordions] = useState<number[]>([]);
+  const [openAccordions, setOpenAccordions] = useState<string[]>([]);
+  const [rolloutFilter, setRolloutFilter] = useState<RolloutFilter>("all");
 
-  const toggleAccordion = (accordionId: number) => {
+  const showRollout = hasRolloutInfo(data);
+  const rolloutCounts = countByRolloutState(data);
+  // The filtered state may have no cluster left, for instance once the rollout is done
+  const activeFilter =
+    rolloutFilter !== "all" && rolloutCounts[rolloutFilter] === 0
+      ? "all"
+      : rolloutFilter;
+  const visibleClusters = filterByRolloutState(data, activeFilter);
+
+  const toggleAccordion = (accordionId: string) => {
     setOpenAccordions((prev) =>
       prev.includes(accordionId)
         ? prev.filter((id) => id !== accordionId)
@@ -82,6 +114,38 @@ export default function MatchingClusterTable({
         <CardDescription>{t("common.list_matching_clusters")}</CardDescription>
       </CardHeader>
       <CardContent>
+        {rollout && (
+          <RolloutSummaryStrip rollout={rollout} maxUpdate={maxUpdate} />
+        )}
+        {showRollout && (
+          <div className="flex flex-wrap items-center gap-2 mb-2">
+            <span className="text-xs text-muted-foreground">
+              {t("common.filter_rollout_state")}
+            </span>
+            <ToggleGroup
+              type="single"
+              variant="outline"
+              size="sm"
+              value={activeFilter}
+              onValueChange={(value) => {
+                // Clicking the selected item unselects it: go back to all
+                setRolloutFilter(
+                  value === "" ? "all" : (value as RolloutFilter),
+                );
+              }}
+            >
+              <ToggleGroupItem value="all">{t("common.all")}</ToggleGroupItem>
+              {rolloutStates
+                .filter((state) => rolloutCounts[state] > 0)
+                .map((state) => (
+                  <ToggleGroupItem key={state} value={state}>
+                    {t(rolloutStateStyle[state].labelKey)} (
+                    {rolloutCounts[state]})
+                  </ToggleGroupItem>
+                ))}
+            </ToggleGroup>
+          </div>
+        )}
         <ScrollArea
           className={data.length === 0 ? "" : " h-96" + "rounded-md border p-4"}
         >
@@ -106,103 +170,121 @@ export default function MatchingClusterTable({
                   <TableHead>{t("common.cluster_name")}</TableHead>
                   <TableHead>{t("common.namespace")}</TableHead>
                   <TableHead>{t("common.status")}</TableHead>
+                  {showRollout && <TableHead>{t("common.rollout")}</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.map((cluster, index) => (
-                  <Fragment key={index}>
-                    <TableRow
-                      onClick={() => toggleAccordion(index)}
-                      className="cursor-pointer hover:bg-muted/50"
-                    >
-                      <TableCell>
-                        {openAccordions.includes(index) ? (
-                          <ChevronDown className="h-4 w-4" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4" />
+                {visibleClusters.map((cluster) => {
+                  const clusterKey = getClusterKey(cluster);
+                  return (
+                    <Fragment key={clusterKey}>
+                      <TableRow
+                        onClick={() => toggleAccordion(clusterKey)}
+                        className="cursor-pointer hover:bg-muted/50"
+                      >
+                        <TableCell>
+                          {openAccordions.includes(clusterKey) ? (
+                            <ChevronDown className="h-4 w-4" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4" />
+                          )}
+                        </TableCell>
+                        <TableCell>{cluster.cluster.name}</TableCell>
+                        <TableCell>
+                          <Badge variant={"outline"}>
+                            {cluster.cluster.namespace}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <ClusterStatusBadge
+                            status={getClusterStatus(
+                              cluster.clusterFeatureSummaries,
+                            )}
+                          />
+                        </TableCell>
+                        {showRollout && (
+                          <TableCell>
+                            {cluster.rolloutState && (
+                              <RolloutStateBadge state={cluster.rolloutState} />
+                            )}
+                          </TableCell>
                         )}
-                      </TableCell>
-                      <TableCell>{cluster.cluster.name}</TableCell>
-                      <TableCell>
-                        <Badge variant={"outline"}>
-                          {cluster.cluster.namespace}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <ClusterStatusBadge
-                          status={getClusterStatus(
-                            cluster.clusterFeatureSummaries,
-                          )}
-                        />
-                      </TableCell>
-                    </TableRow>
-                    <TableRow
-                      className={cn(
-                        "bg-muted/50 transition-all",
-                        openAccordions.includes(index) ? "table-row" : "hidden",
-                      )}
-                    >
-                      <TableCell colSpan={4} className="p-0">
-                        <div
-                          className={cn(
-                            "grid transition-all",
-                            openAccordions.includes(index)
-                              ? "grid-rows-[1fr]"
-                              : "grid-rows-[0fr]",
-                          )}
+                      </TableRow>
+                      <TableRow
+                        className={cn(
+                          "bg-muted/50 transition-all",
+                          openAccordions.includes(clusterKey)
+                            ? "table-row"
+                            : "hidden",
+                        )}
+                      >
+                        <TableCell
+                          colSpan={showRollout ? 5 : 4}
+                          className="p-0"
                         >
-                          <div className="overflow-hidden">
-                            <Table>
-                              <TableHeader>
-                                <TableRow>
-                                  <TableHead>
-                                    {t("common.feature_id")}
-                                  </TableHead>
-                                  <TableHead>{t("common.status")}</TableHead>
-                                  <TableHead>
-                                    {t("common.failure_message")}
-                                  </TableHead>
-                                </TableRow>
-                              </TableHeader>
-                              <TableBody>
-                                {cluster.clusterFeatureSummaries.map(
-                                  (feature, featureIndex) => (
-                                    <TableRow
-                                      className={
-                                        feature.failureMessage != null
-                                          ? "bg-red-200 dark:bg-red-500"
-                                          : ""
-                                      }
-                                      key={featureIndex}
-                                    >
-                                      <TableCell>{feature.featureID}</TableCell>
-                                      <TableCell
+                          <div
+                            className={cn(
+                              "grid transition-all",
+                              openAccordions.includes(clusterKey)
+                                ? "grid-rows-[1fr]"
+                                : "grid-rows-[0fr]",
+                            )}
+                          >
+                            <div className="overflow-hidden">
+                              <Table>
+                                <TableHeader>
+                                  <TableRow>
+                                    <TableHead>
+                                      {t("common.feature_id")}
+                                    </TableHead>
+                                    <TableHead>{t("common.status")}</TableHead>
+                                    <TableHead>
+                                      {t("common.failure_message")}
+                                    </TableHead>
+                                  </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                  {cluster.clusterFeatureSummaries.map(
+                                    (feature, featureIndex) => (
+                                      <TableRow
                                         className={
-                                          "break-words whitespace-normal"
+                                          feature.failureMessage != null
+                                            ? "bg-red-200 dark:bg-red-500"
+                                            : ""
                                         }
+                                        key={featureIndex}
                                       >
-                                        {feature.status}
-                                      </TableCell>
-                                      <TableCell
-                                        className={
-                                          "break-words whitespace-normal"
-                                        }
-                                      >
-                                        <FailureMessage
-                                          msg={feature.failureMessage}
-                                        />
-                                      </TableCell>
-                                    </TableRow>
-                                  ),
-                                )}
-                              </TableBody>
-                            </Table>
+                                        <TableCell>
+                                          {feature.featureID}
+                                        </TableCell>
+                                        <TableCell
+                                          className={
+                                            "break-words whitespace-normal"
+                                          }
+                                        >
+                                          {feature.status}
+                                        </TableCell>
+                                        <TableCell
+                                          className={
+                                            "break-words whitespace-normal"
+                                          }
+                                        >
+                                          <FailureMessage
+                                            msg={feature.failureMessage}
+                                          />
+                                        </TableCell>
+                                      </TableRow>
+                                    ),
+                                  )}
+                                </TableBody>
+                              </Table>
+                            </div>
                           </div>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  </Fragment>
-                ))}
+                        </TableCell>
+                      </TableRow>
+                    </Fragment>
+                  );
+                })}
               </TableBody>
             </Table>
           )}

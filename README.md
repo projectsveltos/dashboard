@@ -15,7 +15,10 @@
 
 </div>
 
-<img alt="sveltosUI" src="https://raw.githubusercontent.com/projectsveltos/sveltos/main/docs/assets/logo.png" width="200">
+<p align="center">
+  <img src="https://raw.githubusercontent.com/projectsveltos/sveltos/main/docs/assets/logo.png" width="200">
+  <img src="https://raw.githubusercontent.com/projectsveltos/sveltos/main/docs/assets/mascott/admiral-sveltopus-fleet-whitebg.png" width="220" alt="Admiral Sveltopus, the Sveltos mascot">
+</p>
 
 Please refere to sveltos [documentation](https://projectsveltos.github.io/sveltos/).
 

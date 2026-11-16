@@ -13,6 +13,27 @@ spec:
       labels:
         app: dashboard
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 100
+        runAsGroup: 101
+        fsGroup: 101
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+        - name: copy-dist
+          image: docker.io/projectsveltos/dashboard:v1.17.0
+          command: ["sh", "-c", "cp -R /app/dist/. /work/"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: dist
+              mountPath: /work
       containers:
         - name: dashboard
           image: docker.io/projectsveltos/dashboard:v1.17.0
@@ -21,6 +42,34 @@ spec:
           env:
             - name: VITE_APP_VERSION
               value: v1.17.0
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: dist
+              mountPath: /app/dist
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d
+            - name: nginx-run
+              mountPath: /run/nginx
+            - name: nginx-tmp
+              mountPath: /var/lib/nginx/tmp
+            - name: nginx-log
+              mountPath: /var/log/nginx
+      volumes:
+        - name: dist
+          emptyDir: {}
+        - name: nginx-conf
+          emptyDir: {}
+        - name: nginx-run
+          emptyDir: {}
+        - name: nginx-tmp
+          emptyDir: {}
+        - name: nginx-log
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

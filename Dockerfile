@@ -1,7 +1,7 @@
 ### Multi-stage builds
 
 # 1: Build the application
-FROM node:25-alpine AS builder
+FROM node:25-alpine@sha256:bdf2cca6fe3dabd014ea60163eca3f0f7015fbd5c7ee1b0e9ccb4ced6eb02ef4 AS builder
 
 # ENV vars
 ARG VITE_BACKEND_PORT
@@ -26,10 +26,14 @@ COPY . .
 RUN pnpm run build
 
 # 2: Prepare the runtime environment
-FROM alpine AS runner
+FROM alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf AS runner
 
-# Install Nginx and envsubst (gettext)
-RUN apk add --no-cache nginx gettext \
+# Keep nginx >= 1.30.7-r0: earlier builds affected by NGINX2Root (CVE-2026-123007).
+# renovate: datasource=repology depName=alpine_3_24/nginx versioning=loose
+ARG NGINX_VERSION=1.30.7-r0
+# renovate: datasource=repology depName=alpine_3_24/gettext versioning=loose
+ARG GETTEXT_VERSION=1.0-r0
+RUN apk add --no-cache nginx="${NGINX_VERSION}" gettext="${GETTEXT_VERSION}" \
   && mkdir -p /etc/nginx/templates \
   && mkdir -p /etc/nginx/conf.d
 

@@ -15,7 +15,9 @@ IMAGE_NAME ?= dashboard
 ARCH ?= $(shell go env GOARCH)
 OS ?= $(shell uname -s | tr A-Z a-z)
 export CONTROLLER_IMG ?= $(REGISTRY)/$(IMAGE_NAME)
-TAG ?= v1.17.0
+TAG ?= v1.18.0
+# Commit the image is built from, stored in the revision label of the image
+GIT_COMMIT ?= $(shell git rev-parse HEAD)
 
 # Directories.
 TOOLS_DIR := hack/tools
@@ -50,11 +52,20 @@ help: ## Display this help.
 
 .PHONY: docker-build
 docker-build: ## Build docker image with the manager.
-	docker build --load --build-arg VITE_APP_VERSION=${TAG} --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --build-arg  BUILDOS=linux --build-arg TARGETARCH=amd64 -t $(CONTROLLER_IMG):$(TAG) .
+	docker build --load --build-arg VITE_APP_VERSION=${TAG} --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --build-arg  BUILDOS=linux --build-arg TARGETARCH=amd64 --build-arg GIT_COMMIT=$(GIT_COMMIT) -t $(CONTROLLER_IMG):$(TAG) .
+
+.PHONY: check-clean-tree
+check-clean-tree: ## Fail if the working tree is not clean: the revision label of the image would not match the content
+	@# CLAUDE.md is untracked on purpose and is excluded from the image by .dockerignore
+	@if [ -n "$$(git status --porcelain -- . ':(exclude)CLAUDE.md')" ]; then \
+		echo "The working tree is not clean, the image would not match its revision label. Commit, stash or remove:"; \
+		git status --porcelain -- . ':(exclude)CLAUDE.md'; \
+		exit 1; \
+	fi
 
 .PHONY: docker-buildx
-docker-buildx: ## docker build for multiple arch and push to docker hub.
-	docker buildx build --build-arg VITE_APP_VERSION=${TAG} --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --push --platform linux/amd64,linux/arm64 -t $(CONTROLLER_IMG):$(TAG) .
+docker-buildx: check-clean-tree ## docker build for multiple arch and push to docker hub (fails if the working tree is not clean).
+	docker buildx build --build-arg VITE_APP_VERSION=${TAG} --build-arg VITE_BACKEND_PORT="80" --build-arg  VITE_BACKEND_NAME="ui-backend-manager" --push --platform linux/amd64,linux/arm64 --build-arg GIT_COMMIT=$(GIT_COMMIT) -t $(CONTROLLER_IMG):$(TAG) .
 
 .PHONY: load-image
 load-image: docker-build $(KIND)

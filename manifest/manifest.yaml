@@ -23,7 +23,7 @@ spec:
           type: RuntimeDefault
       initContainers:
         - name: copy-dist
-          image: docker.io/projectsveltos/dashboard:v1.17.0
+          image: docker.io/projectsveltos/dashboard:v1.18.0
           command: ["sh", "-c", "cp -R /app/dist/. /work/"]
           securityContext:
             allowPrivilegeEscalation: false
@@ -36,12 +36,12 @@ spec:
               mountPath: /work
       containers:
         - name: dashboard
-          image: docker.io/projectsveltos/dashboard:v1.17.0
+          image: docker.io/projectsveltos/dashboard:v1.18.0
           ports:
             - containerPort: 5173
           env:
             - name: VITE_APP_VERSION
-              value: v1.17.0
+              value: v1.18.0
           securityContext:
             allowPrivilegeEscalation: false
             readOnlyRootFilesystem: true
